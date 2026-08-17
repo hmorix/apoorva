@@ -62,14 +62,25 @@ export default function AboutPage() {
           </div>
 
           <div className="panel" style={{ border: "none", borderLeft: "1px solid var(--line)", padding: "0 0 0 40px" }}>
-            {/* Photo placeholder */}
+            {/* Real Portrait Photo */}
             <div style={{
               width: "100%", aspectRatio: "4/5", borderRadius: 8, marginBottom: 24,
-              background: "linear-gradient(160deg,#e6c9b8,#b98a6f 60%,#8a5b42)",
-              position: "relative", overflow: "hidden",
+              overflow: "hidden", border: "1px solid var(--line)",
+              position: "relative", boxShadow: "0 8px 24px rgba(21,32,73,0.1)",
             }}>
-              <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 35% 25%, rgba(255,255,255,.25), transparent 55%)" }} />
-              <div style={{ position: "absolute", bottom: 20, left: 20, color: "white", fontFamily: "Caveat, cursive", fontSize: 28, fontWeight: 700 }}>Apoorva Kaushal</div>
+              <img
+                src="/photos/IMG-20260205-WA0035.jpg"
+                alt="Apoorva Kaushal — Hathras, UP"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0,
+                background: "linear-gradient(to top, rgba(21,32,73,0.85), transparent)",
+                padding: "20px 20px 14px", color: "white"
+              }}>
+                <div style={{ fontFamily: "Caveat, cursive", fontSize: 30, fontWeight: 700, color: "#f5c6ca" }}>Apoorva Kaushal</div>
+                <div style={{ fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", opacity: 0.9 }}>Hathras, Uttar Pradesh · India</div>
+              </div>
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               {["Hathras, UP 🇮🇳", "@apoorva_kaushal", "She/Her", "Hindi · English"].map((b) => (

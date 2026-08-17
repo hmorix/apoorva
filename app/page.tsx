@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Gallery from "@/components/Gallery";
 
 export const metadata: Metadata = {
   title: "Apoorva Kaushal — Social Media Manager & Content Creator | Hathras, India",
   description:
-    "Apoorva Kaushal is a social media manager and content creator from Hathras, Uttar Pradesh. Comedy, parody, informative and Krishna content. 20M+ reach, 50+ brands served.",
+    "Apoorva Kaushal is an Indian social media manager and content creator based in Hathras, Uttar Pradesh. Specialising in Hindi comedy, parody, informative & Krishna content. 20M+ organic reach, 50+ brands served.",
   keywords: [
     "Apoorva Kaushal", "Apoova", "Apoorva Kuashal Hathras",
     "Apoorva Kaushal best match Harsh Sharma", "Apoorva kaushal HMorix",
-    "social media manager India", "content creator Hathras",
-    "Hindi comedy creator", "Indian digital creator",
+    "Apoorva Kaushal influencer", "Apoorva Kaushal content creator",
+    "Apoorva Kaushal social media manager", "Apoorva Kaushal digital creator",
+    "Apoorva Kaushal comedian", "Apoorva Kaushal Hathras", "Apoorva Kaushal Uttar Pradesh",
+    "Hindi comedy creator", "Indian content creator", "Krishna content creator India",
   ],
   alternates: { canonical: "https://apoorvakaushal.com" },
 };
@@ -23,7 +26,7 @@ const faqSchema = {
       name: "Who is Apoorva Kaushal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Apoorva Kaushal is a social media manager and content creator from Hathras, Uttar Pradesh, India. She creates comedy, parody, informative, and Krishna/spiritual content in Hindi.",
+        text: "Apoorva Kaushal is a social media manager, content creator, and digital strategist based in Hathras, Uttar Pradesh, India. She is known for creating viral Hindi comedy, parody, educational facts, and devotional Krishna content with over 20M+ total reach.",
       },
     },
     {
@@ -31,51 +34,27 @@ const faqSchema = {
       name: "Where is Apoorva Kaushal from?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Apoorva Kaushal is from Hathras, Uttar Pradesh, India.",
+        text: "Apoorva Kaushal is from Hathras, Uttar Pradesh, India (located in the Agra division near Mathura and Aligarh).",
       },
     },
     {
       "@type": "Question",
-      name: "What does Apoorva Kaushal do?",
+      name: "What services does Apoorva Kaushal provide?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Apoorva Kaushal manages social media accounts, creates content (Reels, UGC videos), runs Meta/Instagram ad campaigns, and offers brand collaboration services.",
+        text: "Apoorva Kaushal offers full social media account management, Instagram Reels & UGC video creation, Meta (Facebook & Instagram) ads campaigns, brand sponsorships, and SEO copywriting.",
       },
     },
     {
       "@type": "Question",
-      name: "Is Apoorva Kaushal from Hathras?",
+      name: "What is Apoorva Kaushal's official social media handle?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, Apoorva Kaushal is from Hathras, Uttar Pradesh, India.",
+        text: "Apoorva Kaushal's official ID across Instagram, YouTube, X (Twitter), and Facebook is @apoorva_kaushal.",
       },
     },
   ],
 };
-
-const services = [
-  { icon: "📱", title: "Social Media Management", desc: "Full account management across Instagram, YouTube & Facebook. Content calendar, posting schedule, audience engagement and growth strategy.", link: "/services" },
-  { icon: "🎬", title: "Content Creation & UGC", desc: "Reels, TikToks, short-form video, UGC content, Instagram feed design. Scripted, styled and optimised for maximum engagement.", link: "/services" },
-  { icon: "📊", title: "Meta Ads Campaigns", desc: "Facebook & Instagram ad strategy, creative, targeting and optimisation. Transparent reporting on ROAS, reach and conversions.", link: "/services" },
-  { icon: "🤝", title: "Brand Collaboration", desc: "Sponsored content, product reviews, brand integration. India-wide collaborations across beauty, lifestyle, fashion and tech.", link: "/services" },
-  { icon: "✍️", title: "SEO & Copywriting", desc: "Keyword research, website copy, caption writing and blog content optimised to rank and convert.", link: "/services" },
-  { icon: "🕉️", title: "Krishna & Spiritual Content", desc: "Devotional reels, Radha-Krishna storytelling, Bhagavad Gita wisdom content. Authentic, respectful and deeply engaging.", link: "/services" },
-];
-
-const stats = [
-  { num: "20M+", label: "Total Reach" },
-  { num: "50+", label: "Brands Served" },
-  { num: "3+", label: "Years Experience" },
-  { num: "120%", label: "Avg. Engagement Growth" },
-];
-
-const faqs = [
-  { q: "Who is Apoorva Kaushal?", a: "Apoorva Kaushal (also known as Apoova, Apoorva Kuashal, or Apoorva Kaushal HMorix) is a social media manager and content creator from Hathras, Uttar Pradesh, India. She is known for Hindi comedy, parody, informative, and Krishna/spiritual content." },
-  { q: "Where is Apoorva Kaushal from?", a: "Apoorva is from Hathras, Uttar Pradesh, India — a city in the Agra division known for its culture and heritage." },
-  { q: "What type of content does Apoorva Kaushal create?", a: "Apoorva creates comedy reels, parody videos, informative/knowledge content, and devotional Krishna/Radha-Krishna content — all primarily in Hindi." },
-  { q: "What services does Apoorva Kaushal offer?", a: "She offers social media management, content creation (Reels, UGC), Meta/Instagram ads, brand collaborations, SEO & copywriting, and spiritual content services." },
-  { q: "How can I hire Apoorva Kaushal?", a: "You can hire Apoorva via the Hire page, contact form, or directly on WhatsApp. She works with brands across India and internationally." },
-];
 
 export default function HomePage() {
   return (
@@ -85,50 +64,381 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* ── HERO ── */}
+      {/* ── 1. HERO SECTION (Exact Home.jpg Match) ── */}
       <section className="hero">
+        {/* Left Column */}
         <div className="hero-left-bottom">
           <p className="hero-tagline">
-            Authentic storytelling that connects brands with audiences through relatable Hindi content — comedy, parody &amp; Krishna prem.
+            Authentic storytelling that connects brands with audiences through relatable experiences
           </p>
           <div className="hero-domain-left">APOORVAKAUSHAL.COM</div>
         </div>
 
+        {/* Center Column */}
         <div className="hero-center">
-          <div className="hero-title display">
+          <h1 className="hero-title display">
             SOCIAL MEDIA<span className="spark">✳</span>
+          </h1>
+          <div className="hero-photo-wrap">
+            <div className="hero-photo">
+              <img
+                src="/photos/profile.jpg"
+                alt="Apoorva Kaushal — Social Media Manager"
+                width={250}
+                height={310}
+              />
+            </div>
           </div>
-          <div className="hero-photo" aria-label="Apoorva Kaushal" />
           <div className="hero-signature">Manager</div>
-          <div className="hero-badges" style={{ justifyContent: "center", marginTop: 20 }}>
-            <span className="hero-badge">Hathras, UP 🇮🇳</span>
-            <span className="hero-badge">@apoorva_kaushal</span>
-            <span className="hero-badge">20M+ Reach</span>
-          </div>
         </div>
 
+        {/* Right Column */}
         <div className="hero-right">
           <div className="hero-domain">APOORVAKAUSHAL.COM</div>
           <div className="socials">
-            <a href="https://instagram.com/apoorva_kaushal" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .25 2.5.42.6.24 1 .53 1.5 1s.76.9 1 1.5c.17.5.36 1.3.42 2.5.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9a7.6 7.6 0 0 1-.42 2.5c-.24.6-.53 1-1 1.5s-.9.76-1.5 1c-.5.17-1.3.36-2.5.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07a7.6 7.6 0 0 1-2.5-.42c-.6-.24-1-.53-1.5-1s-.76-.9-1-1.5a7.6 7.6 0 0 1-.42-2.5C2.21 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-2 .42-2.5.24-.6.53-1 1-1.5s.9-.76 1.5-1c.5-.17 1.3-.36 2.5-.42C8.4 2.21 8.8 2.2 12 2.2Zm0 1.8c-3.14 0-3.52 0-4.76.07-1 .05-1.53.21-1.9.35-.47.18-.8.4-1.16.75-.35.36-.57.7-.75 1.16-.14.36-.3.9-.35 1.9C3.01 8.48 3 8.86 3 12s0 3.52.08 4.76c.04 1 .2 1.53.34 1.9.18.47.4.8.75 1.16.36.35.7.57 1.16.75.36.14.9.3 1.9.35 1.24.06 1.62.08 4.76.08s3.52-.02 4.76-.08c1-.04 1.53-.21 1.9-.35.47-.18.8-.4 1.16-.75.35-.36.57-.7.75-1.16.14-.36.3-.9.35-1.9.06-1.24.08-1.62.08-4.76s-.02-3.52-.08-4.76c-.04-1-.21-1.53-.35-1.9-.18-.47-.4-.8-.75-1.16a3.1 3.1 0 0 0-1.16-.75c-.36-.14-.9-.3-1.9-.35C15.52 4.01 15.14 4 12 4Zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2Zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Zm4.8-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16Z"/></svg>
+            <a
+              href="https://youtube.com/@apoorva_kaushal"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z" />
+              </svg>
             </a>
-            <a href="https://youtube.com/@apoorva_kaushal" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-              <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+            <a
+              href="https://instagram.com/apoorva_kaushal"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .25 2.5.42.6.24 1 .53 1.5 1s.76.9 1 1.5c.17.5.36 1.3.42 2.5.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9a7.6 7.6 0 0 1-.42 2.5c-.24.6-.53 1-1 1.5s-.9.76-1.5 1c-.5.17-1.3.36-2.5.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07a7.6 7.6 0 0 1-2.5-.42c-.6-.24-1-.53-1.5-1s-.76-.9-1-1.5a7.6 7.6 0 0 1-.42-2.5C2.21 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-2 .42-2.5.24-.6.53-1 1-1.5s.9-.76 1.5-1c.5-.17 1.3-.36 2.5-.42C8.4 2.21 8.8 2.2 12 2.2Zm0 1.8c-3.14 0-3.52 0-4.76.07-1 .05-1.53.21-1.9.35-.47.18-.8.4-1.16.75-.35.36-.57.7-.75 1.16-.14.36-.3.9-.35 1.9C3.01 8.48 3 8.86 3 12s0 3.52.08 4.76c.04 1 .2 1.53.34 1.9.18.47.4.8.75 1.16.36.35.7.57 1.16.75.36.14.9.3 1.9.35 1.24.06 1.62.08 4.76.08s3.52-.02 4.76-.08c1-.04 1.53-.21 1.9-.35.47-.18.8-.4 1.16-.75.35-.36.57-.7.75-1.16.14-.36.3-.9.35-1.9.06-1.24.08-1.62.08-4.76s-.02-3.52-.08-4.76c-.04-1-.21-1.53-.35-1.9-.18-.47-.4-.8-.75-1.16a3.1 3.1 0 0 0-1.16-.75c-.36-.14-.9-.3-1.9-.35C15.52 4.01 15.14 4 12 4Zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2Zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Zm4.8-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16Z" />
+              </svg>
             </a>
-            <a href="https://twitter.com/apoorva_kaushal" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-              <svg viewBox="0 0 24 24"><path d="M13.9 10.6 21.6 2h-2l-6.6 7.5L7.6 2H1l8.1 11.4L1 22h2l7-8 5.6 8H22Zm-2.5 2.9-.8-1.1L3.6 3.5h2.9l5.2 7.3.8 1.1 6.8 9.6h-2.9Z"/></svg>
+            <a
+              href="https://twitter.com/apoorva_kaushal"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X (Twitter)"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M13.9 10.6 21.6 2h-2l-6.6 7.5L7.6 2H1l8.1 11.4L1 22h2l7-8 5.6 8H22Zm-2.5 2.9-.8-1.1L3.6 3.5h2.9l5.2 7.3.8 1.1 6.8 9.6h-2.9Z" />
+              </svg>
             </a>
-            <a href="https://facebook.com/apoorva_kaushal" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-              <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg>
+            <a
+              href="https://facebook.com/apoorva_kaushal"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z" />
+              </svg>
             </a>
           </div>
         </div>
       </section>
 
-      {/* ── STATS STRIP ── */}
+      {/* ── 2. GRID 2: WHO AM I | QUALIFICATIONS ── */}
+      <div className="grid-2">
+        {/* Panel 1: Who Am I */}
+        <div className="panel" id="about-panel">
+          <div className="dots">⋯</div>
+          <div className="panel-head">
+            <span className="spark-icon">✳</span>
+            <h2 className="display">WHO AM I</h2>
+          </div>
+          <div className="whoami-body">
+            <div className="whoami-text">
+              <p>
+                I'm Apoorva, a Hathras &amp; Uttar Pradesh–based Social Media Manager and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.
+              </p>
+              <p>
+                I've elevated the online presence of hundreds of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna prem content.
+              </p>
+              <div className="stats">
+                <div className="stat">
+                  <b>50+</b>
+                  <span>BRANDS</span>
+                </div>
+                <div className="stat">
+                  <b>20M+</b>
+                  <span>REACH</span>
+                </div>
+                <div className="stat">
+                  <b>3YRS+</b>
+                  <span>EXPERIENCE</span>
+                </div>
+              </div>
+              <div className="brand-row">
+                <span>the Ordinary.</span>
+                <span>F3</span>
+                <span>amazon</span>
+                <span>ⓡ</span>
+                <span>alo</span>
+              </div>
+            </div>
+            <div className="whoami-photo-wrap">
+              <img
+                src="/photos/IMG-20260205-WA0035.jpg"
+                alt="Apoorva Kaushal — Digital Creator"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Panel 2: Qualifications */}
+        <div className="panel" id="qualifications">
+          <div className="dots">⋯</div>
+          <div className="panel-head">
+            <h2 className="display">QUALIFICATIONS</h2>
+          </div>
+          <div className="quali-body">
+            <div className="quali-list">
+              <div>Canva Masterclass Certificate</div>
+              <div>Email Marketing Hubspot</div>
+              <div>Accenture Digital Marketing</div>
+              <div>Ad Week Digital Marketing</div>
+
+              <div className="quali-degree-card">
+                <div className="quali-degree-title">Certification &amp; Study</div>
+                <div className="quali-degree-name">Bachelor of Digital Strategy &amp; Media</div>
+              </div>
+
+              <div className="quali-badges">
+                <span className="badge-pill">🎨 Canva</span>
+                <span className="badge-pill">✂️ CapCut</span>
+                <span className="badge-pill">📸 Meta</span>
+                <span className="badge-pill">📊 Analytics</span>
+                <span className="badge-pill">🎯 Ads</span>
+              </div>
+            </div>
+            <div className="quali-photo-wrap">
+              <img
+                src="/photos/IMG-20250107-WA0012.jpg"
+                alt="Apoorva Kaushal — Professional Credentials"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 3. BOTTOM GRID: WORK / CASE STUDY / PHOTOGRAPHY ── */}
+      <div className="bottom-grid">
+        {/* Left Section 1: My Work Includes */}
+        <div className="panel" id="work">
+          <div className="dots">⋯</div>
+          <div className="panel-head">
+            <span className="spark-icon">✳</span>
+            <h2 className="display">MY WORK INCLUDES</h2>
+          </div>
+          <div className="work-grid">
+            {/* 1. UGC Video */}
+            <div className="work-item">
+              <div className="work-thumb">
+                <img
+                  src="/photos/IMG-20241220-WA0002.jpg"
+                  alt="UGC Video Creation"
+                />
+                <div className="work-thumb-overlay">UGC VIDEO</div>
+              </div>
+              <h4>UGC Video</h4>
+              <p className="work-desc">
+                I create engaging short and long form video content and visuals that align with a brand's identity and marketing goals.
+              </p>
+            </div>
+
+            {/* 2. Branding & Aesthetic */}
+            <div className="work-item">
+              <div className="work-thumb">
+                <img
+                  src="/photos/IMG-20260202-WA0003.jpg"
+                  alt="Branding and Aesthetic"
+                />
+                <div className="work-thumb-overlay" style={{ background: "rgba(122,20,33,0.7)" }}>BRANDING &amp; SEO</div>
+              </div>
+              <h4>Branding &amp; Aesthetic</h4>
+              <p className="work-desc">
+                I create cohesive visual branding through curated graphics, content styling, and a consistent online narrative.
+              </p>
+            </div>
+
+            {/* 3. SEO & Copywriting */}
+            <div className="work-item">
+              <div className="work-thumb">
+                <img
+                  src="/photos/Screenshot_2025-11-15-14-35-32-55.jpg"
+                  alt="SEO in 2026"
+                />
+                <div className="work-thumb-overlay" style={{ background: "rgba(28,43,92,0.8)" }}>SEO IN 2026</div>
+              </div>
+              <h4>SEO &amp; Copywriting</h4>
+              <p className="work-desc">
+                I research effective keywords and write compelling copy designed to improve visibility, engagement, and online performance.
+              </p>
+            </div>
+
+            {/* 4. Communication Strategy */}
+            <div className="work-item">
+              <div className="work-thumb">
+                <img
+                  src="/photos/IMG-20260106-WA0002.jpg"
+                  alt="Social Media Marketing"
+                />
+                <div className="work-thumb-overlay">COMMUNICATION</div>
+              </div>
+              <h4>Communication Strategy</h4>
+              <p className="work-desc">
+                I develop tailored communication strategies that help brands connect clearly and effectively with their audience.
+              </p>
+            </div>
+
+            {/* 5. Meta Ads */}
+            <div className="work-item">
+              <div className="work-thumb" style={{ background: "linear-gradient(135deg,#152049,#7a1421)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "#fff", padding: 12, textAlign: "center" }}>
+                <div style={{ fontFamily: "Anton, sans-serif", fontSize: 16 }}>176,128 · 492,560</div>
+                <div style={{ fontSize: 9, opacity: 0.8, letterSpacing: "0.08em" }}>REACH · IMPRESSIONS</div>
+              </div>
+              <h4>Meta Ads Campaigns</h4>
+              <p className="work-desc">
+                I plan, manage, and optimise Facebook and Instagram ad campaigns to boost reach, engagement, and conversions.
+              </p>
+            </div>
+
+            {/* 6. Creating & Planning Content */}
+            <div className="work-item">
+              <div className="work-thumb">
+                <img
+                  src="/photos/IMG-20260205-WA0036.jpg"
+                  alt="Content Strategy"
+                />
+                <div className="work-thumb-overlay" style={{ background: "rgba(21,32,73,0.85)" }}>CONTENT STRATEGY</div>
+              </div>
+              <h4>Creating &amp; Planning Content</h4>
+              <p className="work-desc">
+                I produce and organise strategic content that keeps audiences engaged while supporting brand growth.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Section: Case Study Panel */}
+        <div className="case-panel" id="case">
+          <div className="case-head">
+            <h2 className="display">CASE STUDY</h2>
+            <p className="case-intro">
+              I crafted a 30 day social media strategy covering content development, Reels planning, and campaign execution. In 3 months, engagement grew by 120%.
+            </p>
+            <div className="dots">⋯</div>
+          </div>
+
+          {/* 01 Website */}
+          <div className="case-block">
+            <div className="label">WEBSITE <span>01</span></div>
+            <p>A strong brand doesn't just look good, it speaks clearly.</p>
+            <p>I audited the existing web presence, identified gaps in messaging and visual consistency, and rebuilt the content strategy from the ground up.</p>
+            <p>Every page was crafted to convert browsers into buyers and reflect the brand's true identity.</p>
+            <div className="case-visual-banner">your <span>voice</span></div>
+          </div>
+
+          {/* 02 Instagram Feed Grid */}
+          <div className="case-block">
+            <div className="label">INSTAGRAM FEED <span>02</span></div>
+            <p>I developed a 30-day content calendar built around lifestyle, and user-facing storytelling, with a cohesive visual identity.</p>
+            <p>Resulting in a feed that feels curated, not chaotic.</p>
+            <div className="case-insta-grid">
+              <div className="case-insta-item"><img src="/photos/IMG-20260205-WA0035.jpg" alt="Instagram Post 1" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20240205-WA0003.jpg" alt="Instagram Post 2" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260106-WA0010.jpg" alt="Instagram Post 3" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260202-WA0003.jpg" alt="Instagram Post 4" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260108-WA0003.jpg" alt="Instagram Post 5" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG_20260131_225741.jpg" alt="Instagram Post 6" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260608-WA0016.jpg" alt="Instagram Post 7" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260212-WA0000.jpg" alt="Instagram Post 8" /></div>
+            </div>
+          </div>
+
+          {/* 03 Video Content (3 Phone Mockups) */}
+          <div className="case-block">
+            <div className="label">VIDEO CONTENT <span>03</span></div>
+            <p>Short form video is the engine of organic growth.</p>
+            <p>I scripted, directed, and delivered a series of Reels and TikToks.</p>
+            <p>I styled them around the brand aesthetic and designed them for discoverability.</p>
+            <p>Each video was optimised for watch time, shares, and saves.</p>
+            <div className="phone-row">
+              <div className="phone-mockup">
+                <video src="/photos/VID_33401029_075125_655.mp4" muted autoPlay loop playsInline />
+                <div className="phone-mockup-badge">Reels 01 · 540K</div>
+              </div>
+              <div className="phone-mockup">
+                <video src="/photos/VID_53140524_081603_903.mp4" muted autoPlay loop playsInline />
+                <div className="phone-mockup-badge">Reels 02 · 1.2M</div>
+              </div>
+              <div className="phone-mockup">
+                <img src="/photos/Screenshot_2026-01-16-12-45-41-89.jpg" alt="Video Reel Mockup 3" />
+                <div className="phone-mockup-badge">Reels 03 · 890K</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 04 Analytics Link */}
+          <Link href="/dashboard" className="analytics-tab" id="testimonials">
+            ANALYTICS &amp; RESULTS <span>04 →</span>
+          </Link>
+        </div>
+
+        {/* Left Section 2: Additional Photography */}
+        <div className="panel" id="photography">
+          <div className="dots">⋯</div>
+          <div className="panel-head">
+            <span className="script" style={{ fontSize: 20 }}>Additional</span>
+            <h2 className="display">PHOTOGRAPHY</h2>
+          </div>
+          <div className="photo-grid-4">
+            <div className="photo-item">
+              <div className="photo-item-thumb">
+                <img src="/photos/IMG-20260202-WA0003.jpg" alt="Sunglasses & Retro Lifestyle" />
+              </div>
+              <h5>SUNGLASSES CAMPAIGN</h5>
+              <p>Retro 90s aesthetic styling for youth apparel and accessories.</p>
+            </div>
+            <div className="photo-item">
+              <div className="photo-item-thumb">
+                <img src="/photos/IMG-20260212-WA0000.jpg" alt="Morning Beverage UGC" />
+              </div>
+              <h5>LIFESTYLE UGC</h5>
+              <p>Morning routine and wellness product placement concept.</p>
+            </div>
+            <div className="photo-item">
+              <div className="photo-item-thumb">
+                <img src="/photos/IMG-20260106-WA0009.jpg" alt="Ethnic Lookbook Shoot" />
+              </div>
+              <h5>FESTIVE ETHNIC LOOK</h5>
+              <p>Vibrant Indian ethnic wear for festival marketing campaigns.</p>
+            </div>
+            <div className="photo-item">
+              <div className="photo-item-thumb">
+                <img src="/photos/IMG-20260608-WA0016.jpg" alt="Radha Raman Devotional" />
+              </div>
+              <h5>RADHA RAMAN SERIES</h5>
+              <p>Devotional storytelling post reaching 600K+ spiritual audience.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 4. INTERACTIVE PHOTOS & VIDEOS GALLERY ── */}
+      <Gallery />
+
+      {/* ── 5. STATS STRIP ── */}
       <div className="stats-strip">
-        {stats.map((s) => (
+        {[
+          { num: "20M+", label: "Total Reach" },
+          { num: "50+", label: "Brands Served" },
+          { num: "3+", label: "Years Experience" },
+          { num: "120%", label: "Avg. Engagement Growth" },
+        ].map((s) => (
           <div className="stat-item" key={s.label}>
             <div className="stat-num display">{s.num}</div>
             <div className="stat-label">{s.label}</div>
@@ -136,125 +446,31 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* ── ABOUT SNIPPET ── */}
-      <section className="section">
-        <div className="section-title-row">
-          <div>
-            <span className="script" style={{ fontSize: 22 }}>Who am I?</span>
-            <h2 className="section-title display">APOORVA KAUSHAL</h2>
-          </div>
-          <Link href="/about" className="btn btn-outline">Full Story →</Link>
-        </div>
-        <div className="grid-2">
-          <div className="panel" style={{ border: "none", padding: 0, paddingRight: 40 }}>
-            <p style={{ fontSize: 16, lineHeight: 1.8, color: "var(--muted)", marginBottom: 20 }}>
-              I'm <strong style={{ color: "var(--navy)" }}>Apoorva Kaushal</strong> — a social media manager and content creator based in <strong style={{ color: "var(--navy)" }}>Hathras, Uttar Pradesh, India</strong>. I help brands grow through cohesive visual identity, creative content strategy, and high-performing advertising campaigns.
-            </p>
-            <p style={{ fontSize: 16, lineHeight: 1.8, color: "var(--muted)", marginBottom: 28 }}>
-              From comedy reels to Krishna prem content, from parody videos to Meta ad campaigns — I bring authenticity, strategy and creativity to every collaboration.
-            </p>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/hire" className="btn btn-primary">Hire Me ✦</Link>
-              <Link href="/case-studies" className="btn btn-outline">View Case Studies</Link>
-            </div>
-          </div>
-          <div className="panel" style={{ border: "none", borderLeft: "1px solid var(--line)", padding: "0 0 0 40px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {[
-                { label: "Content Creator", val: "Comedy · Parody · Informative · Krishna" },
-                { label: "Location", val: "Hathras, Uttar Pradesh, India 🇮🇳" },
-                { label: "Social Handle", val: "@apoorva_kaushal" },
-                { label: "Also known as", val: "Apoova · Apoorva Kaushal HMorix · Apoorva Kuashal" },
-                { label: "Brands Served", val: "50+ across India & globally" },
-                { label: "Languages", val: "Hindi · English" },
-              ].map((item) => (
-                <div key={item.label} style={{ display: "flex", gap: 16, alignItems: "flex-start", paddingBottom: 14, borderBottom: "1px solid var(--line)" }}>
-                  <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", color: "var(--muted)", minWidth: 110, paddingTop: 2 }}>{item.label}</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: "var(--navy)" }}>{item.val}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SERVICES PREVIEW ── */}
-      <section style={{ borderBottom: "1px solid var(--line)" }}>
-        <div style={{ padding: "56px 48px 0" }}>
-          <div className="section-title-row" style={{ marginBottom: 0, paddingBottom: 32, borderBottom: "1px solid var(--line)" }}>
-            <div>
-              <span className="tag">Services</span>
-              <h2 className="section-title display" style={{ marginTop: 12 }}>WHAT I OFFER</h2>
-            </div>
-            <Link href="/services" className="btn btn-outline">All Services →</Link>
-          </div>
-        </div>
-        <div className="services-grid">
-          {services.map((s) => (
-            <div className="service-card" key={s.title}>
-              <div className="service-icon">{s.icon}</div>
-              <div className="service-name display">{s.title}</div>
-              <p className="service-desc">{s.desc}</p>
-              <Link href={s.link} className="btn btn-outline" style={{ fontSize: 12, padding: "10px 20px" }}>Learn More →</Link>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── CASE STUDY TEASER ── */}
-      <section className="section" style={{ background: "var(--navy)", color: "var(--white)" }}>
-        <div className="section-title-row">
-          <div>
-            <span className="tag" style={{ background: "rgba(255,255,255,.1)", borderColor: "rgba(255,255,255,.2)", color: "white" }}>Results</span>
-            <h2 className="section-title display" style={{ marginTop: 12 }}>CASE STUDIES</h2>
-          </div>
-          <Link href="/case-studies" className="btn" style={{ background: "var(--maroon)", color: "white" }}>View All →</Link>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 0, border: "1px solid rgba(255,255,255,.15)", borderRadius: 8, overflow: "hidden" }}>
-          {[
-            { brand: "Fashion Brand", result: "120%", label: "Engagement Growth", desc: "30-day social strategy, Reels planning and campaign execution." },
-            { brand: "Local Business", result: "3.2×", label: "Return on Ad Spend", desc: "Meta ad campaign with precision targeting across UP & Delhi." },
-            { brand: "Spiritual Page", result: "500K+", label: "New Followers", desc: "Krishna content series that went viral across India." },
-          ].map((c, i) => (
-            <div key={c.brand} style={{ padding: "40px 32px", borderRight: i < 2 ? "1px solid rgba(255,255,255,.15)" : "none" }}>
-              <div style={{ fontSize: 48, fontFamily: "Anton, sans-serif", color: "rgba(255,255,255,.15)", lineHeight: 1, marginBottom: -10 }}>0{i + 1}</div>
-              <div style={{ fontSize: 18, fontFamily: "Anton, sans-serif", letterSpacing: ".02em", marginBottom: 8 }}>{c.brand}</div>
-              <div style={{ fontSize: 40, fontFamily: "Anton, sans-serif", color: "var(--maroon)", lineHeight: 1, marginBottom: 4 }}>{c.result}</div>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "rgba(255,255,255,.5)", marginBottom: 14 }}>{c.label}</div>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,.6)", lineHeight: 1.6 }}>{c.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── FAQ ── */}
-      <section className="section">
-        <div className="section-title-row">
-          <div>
-            <span className="tag">FAQ</span>
-            <h2 className="section-title display" style={{ marginTop: 12 }}>FREQUENTLY ASKED</h2>
-          </div>
-        </div>
-        <div className="faq-list">
-          {faqs.map((f) => (
-            <details className="faq-item" key={f.q}>
-              <summary className="faq-q">{f.q}<span className="faq-q-icon">+</span></summary>
-              <p className="faq-a">{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      {/* ── CTA STRIP ── */}
-      <section style={{ padding: "64px 48px", background: "var(--paper)", borderTop: "1px solid var(--line)", textAlign: "center" }}>
-        <div className="script" style={{ fontSize: 22, marginBottom: 8 }}>Ready to grow?</div>
-        <h2 className="display" style={{ fontSize: "clamp(32px,4vw,52px)", marginBottom: 16 }}>LET'S WORK TOGETHER</h2>
-        <p style={{ fontSize: 16, color: "var(--muted)", maxWidth: 480, margin: "0 auto 32px", lineHeight: 1.6 }}>
-          Whether you're a brand, business or creator — let's build something that actually works.
+      {/* ── 6. CTA / COLLABORATION BAR ── */}
+      <section style={{ padding: "64px 48px", background: "var(--navy)", color: "var(--white)", textAlign: "center" }}>
+        <div className="script" style={{ fontSize: 24, marginBottom: 6, color: "#f5c6ca" }}>Ready to create something iconic?</div>
+        <h2 className="display" style={{ fontSize: "clamp(32px, 4.5vw, 56px)", marginBottom: 16 }}>
+          LET'S ELEVATE YOUR BRAND
+        </h2>
+        <p style={{ fontSize: 15, color: "rgba(255,255,255,0.7)", maxWidth: 500, margin: "0 auto 32px", lineHeight: 1.6 }}>
+          Social media strategy, viral Reels, Meta ads, or authentic brand collaborations in Hathras, Uttar Pradesh, and across India.
         </p>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/hire" className="btn btn-primary" style={{ fontSize: 14 }}>Hire Me ✦</Link>
-          <Link href="/contact" className="btn btn-outline" style={{ fontSize: 14 }}>Get in Touch</Link>
+          <Link href="/hire" className="btn btn-maroon" style={{ fontSize: 13, padding: "13px 30px" }}>
+            Hire Apoorva ✦
+          </Link>
+          <a
+            href="https://wa.me/919XXXXXXXXX?text=Hi%20Apoorva%2C%20I%20saw%20your%20website%20and%20would%20love%20to%20collaborate!"
+            className="btn"
+            style={{ background: "#25D366", color: "white" }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            💬 Chat on WhatsApp
+          </a>
+          <Link href="/contact" className="btn" style={{ background: "rgba(255,255,255,0.12)", color: "white", border: "1px solid rgba(255,255,255,0.25)" }}>
+            Contact Page
+          </Link>
         </div>
       </section>
     </>
