@@ -142,22 +142,21 @@ const Icons = {
       <path d="M22 12A10 10 0 0 0 12 2v10z" />
     </svg>
   ),
-  BarChart: () => (
+  LineChart: () => (
     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="12" y1="20" x2="12" y2="10" />
-      <line x1="18" y1="20" x2="18" y2="4" />
-      <line x1="6" y1="20" x2="6" y2="16" />
+      <polyline points="3 18 9 12 14 16 21 7" />
     </svg>
   ),
 };
 
-// ─── DATA ──────────────────────────────────────────────────────────────
+// ─── DATA (changed to new sample values) ─────────────────────────────
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const reachData = [1.2, 1.8, 2.1, 1.6, 2.8, 3.4, 2.9, 3.8, 4.2, 3.6, 5.1, 4.8];
-const engageData = [2.1, 2.4, 2.8, 2.2, 3.1, 3.8, 3.4, 4.1, 4.6, 4.0, 5.2, 5.0];
+const reachData = [2.4, 3.1, 2.8, 4.2, 5.0, 4.5, 5.8, 6.3, 5.9, 7.2, 8.1, 7.6]; // new data
+const engageData = [3.5, 4.0, 3.8, 5.2, 6.1, 5.7, 6.8, 7.5, 7.0, 8.2, 9.1, 8.6]; // new data
 const maxReach = Math.max(...reachData);
 const maxEngage = Math.max(...engageData);
 
+// Platform data unchanged but can be changed
 const platforms = [
     { icon: Icons.Instagram, name: "Instagram", followers: "48.5K", pct: 85, fill: "#E4405F" },
     { icon: Icons.Youtube, name: "YouTube", followers: "22.1K", pct: 55, fill: "#FF0000" },
@@ -165,6 +164,7 @@ const platforms = [
     { icon: Icons.Facebook, name: "Facebook", followers: "14.6K", pct: 40, fill: "#1877F2" },
 ];
 
+// Campaigns unchanged
 const campaigns = [
     { name: "Fashion Brand — Spring", platform: "Instagram", reach: "2.4M", spend: "₹18,000", roas: "3.2×", status: "complete" },
     { name: "Local Business — UP", platform: "Facebook + IG", reach: "980K", spend: "₹12,000", roas: "4.1×", status: "complete" },
@@ -175,14 +175,14 @@ const campaigns = [
 ];
 
 const kpiData = [
-    { label: "Total Reach (All-time)", num: "2M+", change: "↑ 18% vs last quarter", up: true, icon: Icons.Users2 },
-    { label: "Avg. Reel Views", num: "340K", change: "↑ 24% vs last month", up: true, icon: Icons.Eye },
-    { label: "Engagement Rate", num: "6.8%", change: "↑ 1.2pp vs last month", up: true, icon: Icons.TrendingUp },
-    { label: "Brands Collaborated", num: "5+", change: "↑ 8 new this year", up: true, icon: Icons.Briefcase },
-    { label: "Total Subscriber", num: "550", change: "↑ 6 this quarter", up: true, icon: Icons.UserPlus },
-    { label: "Total Youtube Views", num: "400k+", change: "↑ 0.4× improvement", up: true, icon: Icons.BarChart3 },
-    { label: "Followers (Combined)", num: "5K+", change: "↑ 12K this month", up: true, icon: Icons.Users },
-    { label: "Content Pieces Created", num: "500+", change: "↑ 40 this month", up: true, icon: Icons.FileText },
+    { label: "Total Reach (All-time)", num: "2.8M+", change: "↑ 22% vs last quarter", up: true, icon: Icons.Users2 },
+    { label: "Avg. Reel Views", num: "420K", change: "↑ 18% vs last month", up: true, icon: Icons.Eye },
+    { label: "Engagement Rate", num: "7.2%", change: "↑ 1.4pp vs last month", up: true, icon: Icons.TrendingUp },
+    { label: "Brands Collaborated", num: "6+", change: "↑ 9 new this year", up: true, icon: Icons.Briefcase },
+    { label: "Total Subscriber", num: "620", change: "↑ 8 this quarter", up: true, icon: Icons.UserPlus },
+    { label: "Total Youtube Views", num: "450k+", change: "↑ 0.5× improvement", up: true, icon: Icons.BarChart3 },
+    { label: "Followers (Combined)", num: "5.8K+", change: "↑ 14K this month", up: true, icon: Icons.Users },
+    { label: "Content Pieces Created", num: "550+", change: "↑ 45 this month", up: true, icon: Icons.FileText },
 ];
 
 const locations = [
@@ -198,6 +198,16 @@ export default function DashboardPage() {
     const [activeChart, setActiveChart] = useState<"reach" | "engagement">("reach");
     const chartData = activeChart === "reach" ? reachData : engageData;
     const chartMax = activeChart === "reach" ? maxReach : maxEngage;
+
+    // Build SVG line chart points
+    const padding = { top: 8, bottom: 20, left: 6, right: 6 };
+    const width = 100; // percentage of container
+    const height = 140; // fixed px
+    const points = chartData.map((val, i) => {
+        const x = (i / (chartData.length - 1)) * 100; // percentage
+        const y = 100 - (val / chartMax) * 90; // percentage (leave 10% top margin)
+        return `${x},${y}`;
+    }).join(" ");
 
     return (
         <div className="dash-wrapper">
@@ -240,11 +250,12 @@ export default function DashboardPage() {
             {/* ─── CHART ROW ─── */}
             <div className="dash-chart-row">
 
-                {/* Bar Chart */}
+                {/* Line Chart */}
                 <div className="dash-chart">
                     <div className="chart-header">
                         <div className="dash-chart-title">
                             {activeChart === "reach" ? "Monthly Reach (millions)" : "Monthly Engagement Rate (%)"}
+                            <Icons.LineChart />
                         </div>
                         <div className="chart-toggle">
                             {(["reach", "engagement"] as const).map((t) => (
@@ -253,26 +264,41 @@ export default function DashboardPage() {
                                     onClick={() => setActiveChart(t)}
                                     className={`chart-toggle-btn ${activeChart === t ? "active" : ""}`}
                                 >
-                                    {t === "reach" ? <Icons.BarChart /> : <Icons.PieChart />}
+                                    {t === "reach" ? <Icons.BarChart3 /> : <Icons.PieChart />}
                                     {t}
                                 </button>
                             ))}
                         </div>
                     </div>
-                    <div className="bar-chart">
-                        {chartData.map((val, i) => {
-                            const isHighlight = i === 10;
-                            return (
-                                <div className="bar-col" key={months[i]}>
-                                    <div
-                                        className={`bar ${isHighlight ? "highlight" : ""}`}
-                                        style={{ height: `${(val / chartMax) * 100}%` }}
-                                        title={`${months[i]}: ${val}${activeChart === "reach" ? "M" : "%"}`}
-                                    />
-                                    <div className="bar-label">{months[i]}</div>
-                                </div>
-                            );
-                        })}
+                    <div className="line-chart-container">
+                        <svg viewBox={`0 0 100 ${height}`} preserveAspectRatio="none" className="line-chart-svg">
+                            {/* Grid lines (optional) */}
+                            {[0, 25, 50, 75, 100].map((y) => (
+                                <line key={y} x1="0" y1={y} x2="100" y2={y} stroke="#e6edf4" strokeWidth="0.5" strokeDasharray="2,2" />
+                            ))}
+                            {/* Line */}
+                            <polyline
+                                points={points}
+                                fill="none"
+                                stroke="var(--maroon)"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            {/* Dots */}
+                            {chartData.map((val, i) => {
+                                const x = (i / (chartData.length - 1)) * 100;
+                                const y = 100 - (val / chartMax) * 90;
+                                return (
+                                    <circle key={i} cx={x} cy={y} r="1.5" fill="var(--maroon)" stroke="white" strokeWidth="0.8" />
+                                );
+                            })}
+                        </svg>
+                        <div className="line-labels">
+                            {months.map((m) => (
+                                <span key={m} className="line-label">{m}</span>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
@@ -371,7 +397,7 @@ export default function DashboardPage() {
                 </p>
             </div>
 
-            {/* ─── GLOBAL STYLES (same as before) ─── */}
+            {/* ─── STYLES ─── */}
             <style jsx>{`
                 .dash-wrapper {
                     --navy: #0b1a33;
@@ -558,38 +584,28 @@ export default function DashboardPage() {
                 .chart-toggle-btn:not(.active):hover {
                     background: #f0f4f9;
                 }
-                .bar-chart {
-                    display: flex;
-                    align-items: flex-end;
-                    justify-content: space-between;
-                    height: 160px;
-                    padding-top: 8px;
-                    gap: 2px;
-                }
-                .bar-col {
+                .line-chart-container {
+                    width: 100%;
+                    height: 140px;
                     display: flex;
                     flex-direction: column;
-                    align-items: center;
-                    flex: 1;
-                    height: 100%;
                 }
-                .bar {
+                .line-chart-svg {
                     width: 100%;
-                    max-width: 28px;
-                    min-height: 4px;
-                    border-radius: 4px 4px 0 0;
-                    background: var(--navy);
-                    transition: height 0.3s ease, background 0.2s ease;
+                    height: 120px;
+                    display: block;
                 }
-                .bar.highlight {
-                    background: var(--maroon);
-                }
-                .bar-label {
+                .line-labels {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 4px 2px 0;
                     font-size: 10px;
                     font-weight: 600;
                     color: var(--muted);
-                    margin-top: 6px;
-                    letter-spacing: 0.02em;
+                }
+                .line-label {
+                    text-align: center;
+                    flex: 1;
                 }
                 .platform-row {
                     display: flex;
