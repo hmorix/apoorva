@@ -136,9 +136,9 @@ export default function DashboardPage() {
       </div>
 
       {/* ── CAMPAIGNS TABLE ── */}
-      <div style={{ padding: "40px 48px", borderTop: "1px solid var(--line)" }}>
+      <div style={{ padding: "36px 32px", borderTop: "1px solid var(--line)" }}>
         <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 20 }}>Campaign Overview</div>
-        <div style={{ overflowX: "auto" }}>
+        <div className="dash-table-wrap">
           <table className="dash-table">
             <thead>
               <tr>

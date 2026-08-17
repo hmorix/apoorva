@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export interface GalleryItem {
   id: string;
   type: "photo" | "video";
   src: string;
-  poster?: string;
+  poster: string;
   title: string;
   category: "portrait" | "video" | "ugc" | "devotional" | "lifestyle";
   caption: string;
@@ -47,6 +47,7 @@ const galleryItems: GalleryItem[] = [
     id: "p1",
     type: "photo",
     src: "/photos/IMG-20260205-WA0035.jpg",
+    poster: "/photos/IMG-20260205-WA0035.jpg",
     title: "Editorial Portrait — Apoorva Kaushal",
     category: "portrait",
     caption: "Creative director and social media manager portrait in Hathras, UP.",
@@ -56,6 +57,7 @@ const galleryItems: GalleryItem[] = [
     id: "p2",
     type: "photo",
     src: "/photos/IMG-20260106-WA0010.jpg",
+    poster: "/photos/IMG-20260106-WA0010.jpg",
     title: "Festive & Ethnic Lookbook Campaign",
     category: "portrait",
     caption: "Traditional Indian wear styling for festival and cultural campaigns.",
@@ -65,6 +67,7 @@ const galleryItems: GalleryItem[] = [
     id: "p3",
     type: "photo",
     src: "/photos/IMG-20260202-WA0003.jpg",
+    poster: "/photos/IMG-20260202-WA0003.jpg",
     title: "Retro Sunglasses & Vinyl Aesthetic",
     category: "ugc",
     caption: "Vintage pastel aesthetic shot for lifestyle product integration.",
@@ -74,6 +77,7 @@ const galleryItems: GalleryItem[] = [
     id: "p4",
     type: "photo",
     src: "/photos/IMG-20241220-WA0002.jpg",
+    poster: "/photos/IMG-20241220-WA0002.jpg",
     title: "Casual Creator Behind-the-Scenes",
     category: "lifestyle",
     caption: "Everyday creator energy and relatable mood for student and youth audiences.",
@@ -83,6 +87,7 @@ const galleryItems: GalleryItem[] = [
     id: "p5",
     type: "photo",
     src: "/photos/IMG-20260608-WA0016.jpg",
+    poster: "/photos/IMG-20260608-WA0016.jpg",
     title: "Radha Raman Devotional Quote Post",
     category: "devotional",
     caption: "'When the world falls silent under the midnight sky, Radha Raman's love shines bright.'",
@@ -92,6 +97,7 @@ const galleryItems: GalleryItem[] = [
     id: "p6",
     type: "photo",
     src: "/photos/IMG-20250107-WA0012.jpg",
+    poster: "/photos/IMG-20250107-WA0012.jpg",
     title: "Corporate Blazer & Business Portfolio",
     category: "portrait",
     caption: "Professional digital strategist and brand consultant profile shot.",
@@ -101,6 +107,7 @@ const galleryItems: GalleryItem[] = [
     id: "p7",
     type: "photo",
     src: "/photos/IMG-20240205-WA0003.jpg",
+    poster: "/photos/IMG-20240205-WA0003.jpg",
     title: "Playful Pop-Art Mehndi & Filters",
     category: "ugc",
     caption: "Youth-centric pop stickers and Mehndi art for creative campaigns.",
@@ -110,6 +117,7 @@ const galleryItems: GalleryItem[] = [
     id: "p8",
     type: "photo",
     src: "/photos/IMG-20260108-WA0003.jpg",
+    poster: "/photos/IMG-20260108-WA0003.jpg",
     title: "Natural Light Floral Portrait",
     category: "portrait",
     caption: "Authentic, relatable everyday look with delicate floral accent.",
@@ -119,6 +127,7 @@ const galleryItems: GalleryItem[] = [
     id: "p9",
     type: "photo",
     src: "/photos/IMG-20260212-WA0000.jpg",
+    poster: "/photos/IMG-20260212-WA0000.jpg",
     title: "Morning Routine & Sunflower Mug UGC",
     category: "ugc",
     caption: "Wellness and morning beverage product review creative concept.",
@@ -128,6 +137,7 @@ const galleryItems: GalleryItem[] = [
     id: "p10",
     type: "photo",
     src: "/photos/IMG_20260131_225741.jpg",
+    poster: "/photos/IMG_20260131_225741.jpg",
     title: "Desi Art & Festival Vibes",
     category: "devotional",
     caption: "Traditional Indian Mehndi patterns and cultural celebration moments.",
@@ -137,6 +147,7 @@ const galleryItems: GalleryItem[] = [
     id: "p11",
     type: "photo",
     src: "/photos/Screenshot_2025-11-15-14-35-32-55.jpg",
+    poster: "/photos/Screenshot_2025-11-15-14-35-32-55.jpg",
     title: "Classic Retro Hindi Cinema Story",
     category: "lifestyle",
     caption: "Nostalgic storytelling referencing timeless Hindi music and film classics.",
@@ -146,6 +157,7 @@ const galleryItems: GalleryItem[] = [
     id: "p12",
     type: "photo",
     src: "/photos/Screenshot_2026-01-16-12-45-41-89.jpg",
+    poster: "/photos/Screenshot_2026-01-16-12-45-41-89.jpg",
     title: "Pink Cozy Knit & Music Vibes",
     category: "lifestyle",
     caption: "Casual cozy creator mood with doodle art and music overlay.",
@@ -156,6 +168,15 @@ const galleryItems: GalleryItem[] = [
 export default function Gallery() {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedItem(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const filteredItems = galleryItems.filter((item) => {
     if (activeTab === "all") return true;
@@ -170,19 +191,19 @@ export default function Gallery() {
   return (
     <section className="gallery-section" id="gallery">
       {/* Header */}
-      <div className="gallery-header">
+      <div className="gallery-header animate-fade-in">
         <div>
           <span className="script" style={{ fontSize: 22 }}>Visual Portfolio</span>
-          <h2 className="display" style={{ fontSize: "clamp(28px, 3.5vw, 44px)", color: "var(--navy)" }}>
+          <h2 className="display" style={{ fontSize: "clamp(26px, 3.2vw, 42px)", color: "var(--navy)" }}>
             PHOTOS &amp; VIDEOS GALLERY
           </h2>
-          <p style={{ fontSize: 13.5, color: "var(--muted)", marginTop: 6, maxWidth: 520 }}>
-            Explore high-performing Reels, UGC shoots, creative photography, and devotional storyboards created by Apoorva Kaushal.
+          <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 4, maxWidth: 500, lineHeight: 1.5 }}>
+            Explore high-performing Reels, UGC shoots, creative photography, and devotional storyboards. Click any card to preview.
           </p>
         </div>
 
         {/* Filter Tabs */}
-        <div className="gallery-filter-tabs">
+        <div className="gallery-filter-tabs" role="tablist">
           {[
             { key: "all", label: `All (${galleryItems.length})` },
             { key: "videos", label: `Videos & Reels (3)` },
@@ -193,6 +214,8 @@ export default function Gallery() {
           ].map((tab) => (
             <button
               key={tab.key}
+              role="tab"
+              aria-selected={activeTab === tab.key}
               className={`gallery-tab-btn ${activeTab === tab.key ? "active" : ""}`}
               onClick={() => setActiveTab(tab.key)}
             >
@@ -207,29 +230,31 @@ export default function Gallery() {
         {filteredItems.map((item) => (
           <div
             key={item.id}
-            className="gallery-card"
+            className="gallery-card animate-fade-in"
             onClick={() => setSelectedItem(item)}
+            tabIndex={0}
+            role="button"
+            aria-label={`View ${item.title}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setSelectedItem(item);
+              }
+            }}
           >
             <div className="gallery-card-media">
               <span className="gallery-card-badge">{item.tag}</span>
 
               {item.type === "video" ? (
                 <>
-                  <video
-                    src={item.src}
-                    muted
-                    playsInline
-                    loop
-                    preload="metadata"
-                    onMouseEnter={(e) => (e.target as HTMLVideoElement).play().catch(() => {})}
-                    onMouseLeave={(e) => {
-                      const v = e.target as HTMLVideoElement;
-                      v.pause();
-                      v.currentTime = 0;
-                    }}
+                  <img
+                    src={item.poster}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                   />
-                  <div className="gallery-card-play-btn">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="var(--navy)">
+                  <div className="gallery-card-play-btn" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--navy)">
                       <path d="M8 5v14l11-7z" />
                     </svg>
                   </div>
@@ -239,6 +264,7 @@ export default function Gallery() {
                   src={item.src}
                   alt={item.title}
                   loading="lazy"
+                  decoding="async"
                 />
               )}
             </div>
@@ -253,12 +279,18 @@ export default function Gallery() {
 
       {/* Modal / Lightbox */}
       {selectedItem && (
-        <div className="modal-backdrop" onClick={() => setSelectedItem(null)}>
+        <div
+          className="modal-backdrop"
+          onClick={() => setSelectedItem(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedItem.title}
+        >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button
               className="modal-close-btn"
               onClick={() => setSelectedItem(null)}
-              aria-label="Close modal"
+              aria-label="Close preview modal"
             >
               ✕
             </button>
@@ -270,13 +302,15 @@ export default function Gallery() {
                   controls
                   autoPlay
                   playsInline
-                  style={{ maxHeight: "70vh", width: "auto" }}
+                  preload="metadata"
+                  style={{ maxHeight: "68vh", width: "100%" }}
                 />
               ) : (
                 <img
                   src={selectedItem.src}
                   alt={selectedItem.title}
-                  style={{ maxHeight: "70vh", objectFit: "contain" }}
+                  decoding="async"
+                  style={{ maxHeight: "68vh", objectFit: "contain" }}
                 />
               )}
             </div>

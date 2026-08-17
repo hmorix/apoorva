@@ -148,7 +148,7 @@ export default function ServicesPage() {
             <h2 className="section-title display" style={{ marginTop: 12 }}>THE PROCESS</h2>
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 0, border: "1px solid var(--line)", borderRadius: 8, overflow: "hidden" }}>
+        <div className="service-process-grid">
           {[
             { step: "01", title: "Discovery Call", desc: "We discuss your brand, goals, target audience and budget over WhatsApp or call." },
             { step: "02", title: "Strategy & Proposal", desc: "I prepare a customised strategy and detailed proposal within 48 hours." },
@@ -156,7 +156,7 @@ export default function ServicesPage() {
             { step: "04", title: "Report & Optimise", desc: "Monthly performance reports with clear data. We optimise and scale what works." },
           ].map((p, i) => (
             <div key={p.step} style={{
-              padding: "40px 28px",
+              padding: "36px 24px",
               borderRight: i < 3 ? "1px solid var(--line)" : "none",
             }}>
               <div className="display" style={{ fontSize: 48, color: "var(--line)", lineHeight: 1, marginBottom: 8 }}>{p.step}</div>

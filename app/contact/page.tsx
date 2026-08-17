@@ -117,7 +117,7 @@ export default function ContactPage() {
             method="POST"
             style={{ display: "flex", flexDirection: "column", gap: 18 }}
           >
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+            <div className="form-row-2">
               <div className="form-group">
                 <label className="form-label" htmlFor="contact-name">Name *</label>
                 <input id="contact-name" name="name" type="text" className="form-input" placeholder="Your full name" required />
@@ -127,7 +127,7 @@ export default function ContactPage() {
                 <input id="contact-email" name="email" type="email" className="form-input" placeholder="your@email.com" required />
               </div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+            <div className="form-row-2">
               <div className="form-group">
                 <label className="form-label" htmlFor="contact-phone">WhatsApp / Phone</label>
                 <input id="contact-phone" name="phone" type="tel" className="form-input" placeholder="+91 XXXXXXXXXX" />

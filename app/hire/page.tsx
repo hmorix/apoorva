@@ -114,7 +114,7 @@ export default function HirePage() {
             <h2 className="section-title display" style={{ marginTop: 12 }}>I ALSO OFFER</h2>
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 0, border: "1px solid var(--line)", borderRadius: 8, overflow: "hidden" }}>
+        <div className="service-process-grid">
           {[
             { icon: "🤝", title: "Brand Collaboration", desc: "Sponsored Reels, product reviews, brand integrations across India." },
             { icon: "🎤", title: "Speaking & Events", desc: "Digital marketing workshops, brand strategy sessions, creator panels." },
@@ -138,9 +138,9 @@ export default function HirePage() {
             <h2 className="section-title display" style={{ marginTop: 12 }}>START A CONVERSATION</h2>
           </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 48 }}>
+        <div className="contact-grid">
           {/* Left: Contact info */}
-          <div>
+          <div className="contact-info">
             <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.7, marginBottom: 28 }}>
               The fastest way to reach me is WhatsApp. For formal inquiries, use the contact form or email. I respond to all messages within 24 hours.
             </p>
@@ -171,9 +171,10 @@ export default function HirePage() {
           <form
             action="https://formspree.io/f/YOUR_FORM_ID"
             method="POST"
+            className="contact-form-wrap"
             style={{ display: "flex", flexDirection: "column", gap: 18 }}
           >
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+            <div className="form-row-2">
               <div className="form-group">
                 <label className="form-label" htmlFor="hire-name">Your Name *</label>
                 <input id="hire-name" name="name" type="text" className="form-input" placeholder="Your full name" required />
@@ -183,7 +184,7 @@ export default function HirePage() {
                 <input id="hire-email" name="email" type="email" className="form-input" placeholder="your@email.com" required />
               </div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+            <div className="form-row-2">
               <div className="form-group">
                 <label className="form-label" htmlFor="hire-phone">WhatsApp / Phone</label>
                 <input id="hire-phone" name="phone" type="tel" className="form-input" placeholder="+91 XXXXXXXXXX" />

@@ -64,7 +64,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* ── 1. HERO SECTION (Exact Home.jpg Match) ── */}
+      {/* ── 1. HERO SECTION (Home.jpg Exact Match) ── */}
       <section className="hero">
         {/* Left Column */}
         <div className="hero-left-bottom">
@@ -84,8 +84,10 @@ export default function HomePage() {
               <img
                 src="/photos/profile.jpg"
                 alt="Apoorva Kaushal — Social Media Manager"
-                width={250}
-                height={310}
+                width={240}
+                height={300}
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
           </div>
@@ -183,6 +185,8 @@ export default function HomePage() {
               <img
                 src="/photos/IMG-20260205-WA0035.jpg"
                 alt="Apoorva Kaushal — Digital Creator"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -218,6 +222,8 @@ export default function HomePage() {
               <img
                 src="/photos/IMG-20250107-WA0012.jpg"
                 alt="Apoorva Kaushal — Professional Credentials"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -240,6 +246,8 @@ export default function HomePage() {
                 <img
                   src="/photos/IMG-20241220-WA0002.jpg"
                   alt="UGC Video Creation"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="work-thumb-overlay">UGC VIDEO</div>
               </div>
@@ -255,6 +263,8 @@ export default function HomePage() {
                 <img
                   src="/photos/IMG-20260202-WA0003.jpg"
                   alt="Branding and Aesthetic"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="work-thumb-overlay" style={{ background: "rgba(122,20,33,0.7)" }}>BRANDING &amp; SEO</div>
               </div>
@@ -270,6 +280,8 @@ export default function HomePage() {
                 <img
                   src="/photos/Screenshot_2025-11-15-14-35-32-55.jpg"
                   alt="SEO in 2026"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="work-thumb-overlay" style={{ background: "rgba(28,43,92,0.8)" }}>SEO IN 2026</div>
               </div>
@@ -285,6 +297,8 @@ export default function HomePage() {
                 <img
                   src="/photos/IMG-20260106-WA0002.jpg"
                   alt="Social Media Marketing"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="work-thumb-overlay">COMMUNICATION</div>
               </div>
@@ -296,9 +310,9 @@ export default function HomePage() {
 
             {/* 5. Meta Ads */}
             <div className="work-item">
-              <div className="work-thumb" style={{ background: "linear-gradient(135deg,#152049,#7a1421)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "#fff", padding: 12, textAlign: "center" }}>
-                <div style={{ fontFamily: "Anton, sans-serif", fontSize: 16 }}>176,128 · 492,560</div>
-                <div style={{ fontSize: 9, opacity: 0.8, letterSpacing: "0.08em" }}>REACH · IMPRESSIONS</div>
+              <div className="work-thumb" style={{ background: "linear-gradient(135deg,#152049,#7a1421)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "#fff", padding: 10, textAlign: "center" }}>
+                <div style={{ fontFamily: "Anton, sans-serif", fontSize: 15 }}>176,128 · 492,560</div>
+                <div style={{ fontSize: 8.5, opacity: 0.8, letterSpacing: "0.08em" }}>REACH · IMPRESSIONS</div>
               </div>
               <h4>Meta Ads Campaigns</h4>
               <p className="work-desc">
@@ -312,6 +326,8 @@ export default function HomePage() {
                 <img
                   src="/photos/IMG-20260205-WA0036.jpg"
                   alt="Content Strategy"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="work-thumb-overlay" style={{ background: "rgba(21,32,73,0.85)" }}>CONTENT STRATEGY</div>
               </div>
@@ -348,14 +364,14 @@ export default function HomePage() {
             <p>I developed a 30-day content calendar built around lifestyle, and user-facing storytelling, with a cohesive visual identity.</p>
             <p>Resulting in a feed that feels curated, not chaotic.</p>
             <div className="case-insta-grid">
-              <div className="case-insta-item"><img src="/photos/IMG-20260205-WA0035.jpg" alt="Instagram Post 1" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20240205-WA0003.jpg" alt="Instagram Post 2" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260106-WA0010.jpg" alt="Instagram Post 3" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260202-WA0003.jpg" alt="Instagram Post 4" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260108-WA0003.jpg" alt="Instagram Post 5" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG_20260131_225741.jpg" alt="Instagram Post 6" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260608-WA0016.jpg" alt="Instagram Post 7" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260212-WA0000.jpg" alt="Instagram Post 8" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260205-WA0035.jpg" alt="Instagram Post 1" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20240205-WA0003.jpg" alt="Instagram Post 2" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260106-WA0010.jpg" alt="Instagram Post 3" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260202-WA0003.jpg" alt="Instagram Post 4" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260108-WA0003.jpg" alt="Instagram Post 5" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG_20260131_225741.jpg" alt="Instagram Post 6" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260608-WA0016.jpg" alt="Instagram Post 7" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src="/photos/IMG-20260212-WA0000.jpg" alt="Instagram Post 8" loading="lazy" decoding="async" /></div>
             </div>
           </div>
 
@@ -365,18 +381,17 @@ export default function HomePage() {
             <p>Short form video is the engine of organic growth.</p>
             <p>I scripted, directed, and delivered a series of Reels and TikToks.</p>
             <p>I styled them around the brand aesthetic and designed them for discoverability.</p>
-            <p>Each video was optimised for watch time, shares, and saves.</p>
             <div className="phone-row">
               <div className="phone-mockup">
-                <video src="/photos/VID_33401029_075125_655.mp4" muted autoPlay loop playsInline />
+                <img src="/photos/profile.jpg" alt="Reel 1 Poster" loading="lazy" decoding="async" />
                 <div className="phone-mockup-badge">Reels 01 · 540K</div>
               </div>
               <div className="phone-mockup">
-                <video src="/photos/VID_53140524_081603_903.mp4" muted autoPlay loop playsInline />
+                <img src="/photos/IMG-20260205-WA0035.jpg" alt="Reel 2 Poster" loading="lazy" decoding="async" />
                 <div className="phone-mockup-badge">Reels 02 · 1.2M</div>
               </div>
               <div className="phone-mockup">
-                <img src="/photos/Screenshot_2026-01-16-12-45-41-89.jpg" alt="Video Reel Mockup 3" />
+                <img src="/photos/Screenshot_2026-01-16-12-45-41-89.jpg" alt="Reel 3 Poster" loading="lazy" decoding="async" />
                 <div className="phone-mockup-badge">Reels 03 · 890K</div>
               </div>
             </div>
@@ -398,28 +413,28 @@ export default function HomePage() {
           <div className="photo-grid-4">
             <div className="photo-item">
               <div className="photo-item-thumb">
-                <img src="/photos/IMG-20260202-WA0003.jpg" alt="Sunglasses & Retro Lifestyle" />
+                <img src="/photos/IMG-20260202-WA0003.jpg" alt="Sunglasses & Retro Lifestyle" loading="lazy" decoding="async" />
               </div>
               <h5>SUNGLASSES CAMPAIGN</h5>
               <p>Retro 90s aesthetic styling for youth apparel and accessories.</p>
             </div>
             <div className="photo-item">
               <div className="photo-item-thumb">
-                <img src="/photos/IMG-20260212-WA0000.jpg" alt="Morning Beverage UGC" />
+                <img src="/photos/IMG-20260212-WA0000.jpg" alt="Morning Beverage UGC" loading="lazy" decoding="async" />
               </div>
               <h5>LIFESTYLE UGC</h5>
               <p>Morning routine and wellness product placement concept.</p>
             </div>
             <div className="photo-item">
               <div className="photo-item-thumb">
-                <img src="/photos/IMG-20260106-WA0009.jpg" alt="Ethnic Lookbook Shoot" />
+                <img src="/photos/IMG-20260106-WA0009.jpg" alt="Ethnic Lookbook Shoot" loading="lazy" decoding="async" />
               </div>
               <h5>FESTIVE ETHNIC LOOK</h5>
               <p>Vibrant Indian ethnic wear for festival marketing campaigns.</p>
             </div>
             <div className="photo-item">
               <div className="photo-item-thumb">
-                <img src="/photos/IMG-20260608-WA0016.jpg" alt="Radha Raman Devotional" />
+                <img src="/photos/IMG-20260608-WA0016.jpg" alt="Radha Raman Devotional" loading="lazy" decoding="async" />
               </div>
               <h5>RADHA RAMAN SERIES</h5>
               <p>Devotional storytelling post reaching 600K+ spiritual audience.</p>
@@ -447,16 +462,16 @@ export default function HomePage() {
       </div>
 
       {/* ── 6. CTA / COLLABORATION BAR ── */}
-      <section style={{ padding: "64px 48px", background: "var(--navy)", color: "var(--white)", textAlign: "center" }}>
+      <section style={{ padding: "56px 32px", background: "var(--navy)", color: "var(--white)", textAlign: "center" }}>
         <div className="script" style={{ fontSize: 24, marginBottom: 6, color: "#f5c6ca" }}>Ready to create something iconic?</div>
-        <h2 className="display" style={{ fontSize: "clamp(32px, 4.5vw, 56px)", marginBottom: 16 }}>
+        <h2 className="display" style={{ fontSize: "clamp(28px, 4vw, 50px)", marginBottom: 14 }}>
           LET'S ELEVATE YOUR BRAND
         </h2>
-        <p style={{ fontSize: 15, color: "rgba(255,255,255,0.7)", maxWidth: 500, margin: "0 auto 32px", lineHeight: 1.6 }}>
+        <p style={{ fontSize: 14.5, color: "rgba(255,255,255,0.7)", maxWidth: 480, margin: "0 auto 28px", lineHeight: 1.6 }}>
           Social media strategy, viral Reels, Meta ads, or authentic brand collaborations in Hathras, Uttar Pradesh, and across India.
         </p>
-        <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/hire" className="btn btn-maroon" style={{ fontSize: 13, padding: "13px 30px" }}>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <Link href="/hire" className="btn btn-maroon" style={{ fontSize: 12.5, padding: "12px 28px" }}>
             Hire Apoorva ✦
           </Link>
           <a
@@ -466,7 +481,7 @@ export default function HomePage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            💬 Chat on WhatsApp
+            💬 WhatsApp Me
           </a>
           <Link href="/contact" className="btn" style={{ background: "rgba(255,255,255,0.12)", color: "white", border: "1px solid rgba(255,255,255,0.25)" }}>
             Contact Page
