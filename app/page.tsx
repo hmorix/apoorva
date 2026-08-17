@@ -71,13 +71,13 @@ export default function HomePage() {
           <p className="hero-tagline">
             Authentic storytelling that connects brands with audiences through relatable experiences
           </p>
-          <div className="hero-domain-left">APOORVAKAUSHAL.COM</div>
+          <div className="hero-domain-left">apoorvakaushal.vercel.app</div>
         </div>
 
         {/* Center Column */}
         <div className="hero-center">
           <h1 className="hero-title display">
-            SOCIAL MEDIA<span className="spark">✳</span>
+            Apoorva Kaushal<span className="spark">✳</span>
           </h1>
           <div className="hero-photo-wrap">
             <div className="hero-photo">
@@ -91,15 +91,15 @@ export default function HomePage() {
               />
             </div>
           </div>
-          <div className="hero-signature">Manager</div>
+          <div className="hero-signature">Appu</div>
         </div>
 
         {/* Right Column */}
         <div className="hero-right">
-          <div className="hero-domain">APOORVAKAUSHAL.COM</div>
+          <div className="hero-domain">apoorvakaushal.app</div>
           <div className="socials">
             <a
-              href="https://youtube.com/@apoorva_kaushal"
+              href="https://youtube.com/@_apoorva7__"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
@@ -109,7 +109,7 @@ export default function HomePage() {
               </svg>
             </a>
             <a
-              href="https://instagram.com/apoorva_kaushal"
+              href="https://instagram.com/apoorva__kaushal"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -154,18 +154,18 @@ export default function HomePage() {
           <div className="whoami-body">
             <div className="whoami-text">
               <p>
-                I'm Apoorva, a Hathras &amp; Uttar Pradesh–based Social Media Manager and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.
+                I'm Apoorva, a Hathras &amp; Uttar Pradesh–based Social Media Influncer and content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.
               </p>
               <p>
-                I've elevated the online presence of hundreds of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna prem content.
+                I've elevated the online presence of your brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and religonus content.
               </p>
               <div className="stats">
                 <div className="stat">
-                  <b>50+</b>
+                  <b>5+</b>
                   <span>BRANDS</span>
                 </div>
                 <div className="stat">
-                  <b>20M+</b>
+                  <b>2M+</b>
                   <span>REACH</span>
                 </div>
                 <div className="stat">
@@ -200,14 +200,14 @@ export default function HomePage() {
           </div>
           <div className="quali-body">
             <div className="quali-list">
-              <div>Canva Masterclass Certificate</div>
-              <div>Email Marketing Hubspot</div>
-              <div>Accenture Digital Marketing</div>
-              <div>Ad Week Digital Marketing</div>
+              <div>Class 12 graduate</div>
+              <div>Email Marketing </div>
+              <div>Digital Marketing Cretifiacate HMorix</div>
+              <div>Script Writing</div>
 
               <div className="quali-degree-card">
                 <div className="quali-degree-title">Certification &amp; Study</div>
-                <div className="quali-degree-name">Bachelor of Digital Strategy &amp; Media</div>
+                <div className="quali-degree-name">Graduation from SOLE</div>
               </div>
 
               <div className="quali-badges">
@@ -449,8 +449,8 @@ export default function HomePage() {
       {/* ── 5. STATS STRIP ── */}
       <div className="stats-strip">
         {[
-          { num: "20M+", label: "Total Reach" },
-          { num: "50+", label: "Brands Served" },
+          { num: "2M+", label: "Total Reach" },
+          { num: "5+", label: "Brands Served" },
           { num: "3+", label: "Years Experience" },
           { num: "120%", label: "Avg. Engagement Growth" },
         ].map((s) => (
@@ -472,10 +472,10 @@ export default function HomePage() {
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <Link href="/hire" className="btn btn-maroon" style={{ fontSize: 12.5, padding: "12px 28px" }}>
-            Hire Apoorva ✦
+            Check Pricing ✦
           </Link>
           <a
-            href="https://wa.me/919XXXXXXXXX?text=Hi%20Apoorva%2C%20I%20saw%20your%20website%20and%20would%20love%20to%20collaborate!"
+            href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%20saw%20your%20website%20and%20would%20love%20to%20collaborate!"
             className="btn"
             style={{ background: "#25D366", color: "white" }}
             target="_blank"
@@ -484,7 +484,7 @@ export default function HomePage() {
             💬 WhatsApp Me
           </a>
           <Link href="/contact" className="btn" style={{ background: "rgba(255,255,255,0.12)", color: "white", border: "1px solid rgba(255,255,255,0.25)" }}>
-            Contact Page
+            Contact
           </Link>
         </div>
       </section>
