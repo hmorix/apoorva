@@ -1,14 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  HandshakeIcon,
+  MicIcon,
+  SpiritualIcon,
+  BuildingIcon,
+  WhatsAppIcon,
+  MailIcon,
+  InstagramIcon,
+  MapPinIcon,
+  StarIcon,
+  CheckIcon,
+  ArrowRightIcon,
+} from "@/components/Icons";
 
 export const metadata: Metadata = {
   title: "Hire Apoorva Kaushal — Social Media Manager & Content Creator India",
   description:
     "Hire Apoorva Kaushal for social media management, content creation, Meta ads or brand collaboration. Based in Hathras, UP. Serving brands across India. Contact via form or WhatsApp.",
   keywords: [
-    "hire Apoorva Kaushal", "hire social media manager India",
-    "hire content creator India", "brand collaboration India",
-    "hire influencer Uttar Pradesh", "social media manager for hire India",
+    "hire Apoorva Kaushal",
+    "hire social media manager India",
+    "hire content creator India",
+    "brand collaboration India",
+    "hire influencer Uttar Pradesh",
+    "social media manager for hire India",
   ],
   alternates: { canonical: "https://apoorvakaushal.com/hire" },
 };
@@ -18,13 +34,13 @@ const packages = [
     name: "STARTER",
     price: "₹15,000",
     period: "per month",
-    desc: "Perfect for small businesses and local brands starting their social media journey.",
+    desc: "Perfect for local businesses and small brands starting their social media journey.",
     features: [
       "1 platform managed (Instagram or Facebook)",
-      "12 posts per month",
-      "Basic content calendar",
-      "Monthly performance report",
-      "Hashtag strategy",
+      "12 curated posts per month",
+      "Content calendar & hashtag strategy",
+      "Audience engagement monitoring",
+      "Monthly performance growth report",
     ],
     cta: "Get Started",
     featured: false,
@@ -33,14 +49,14 @@ const packages = [
     name: "GROWTH",
     price: "₹35,000",
     period: "per month",
-    desc: "For brands serious about growth. Full management, content creation and ads included.",
+    desc: "For brands serious about scaling. Full social management, viral Reels and Meta ads included.",
     features: [
       "2 platforms managed (Instagram + Facebook)",
-      "24 posts + 8 Reels per month",
-      "Meta Ads (up to ₹15K spend)",
-      "Weekly performance reports",
-      "Content strategy & calendar",
-      "Monthly strategy call",
+      "20 feed posts + 8 scripted Reels per month",
+      "Meta Ads campaign management (up to ₹15K spend)",
+      "Weekly analytics & conversion tracking",
+      "Full content strategy & monthly planning call",
+      "Trend-aligned viral audio research",
     ],
     cta: "Most Popular",
     featured: true,
@@ -49,17 +65,61 @@ const packages = [
     name: "PREMIUM",
     price: "₹65,000",
     period: "per month",
-    desc: "Complete digital presence management for established brands and businesses.",
+    desc: "Complete 360° digital presence management for established businesses and fast-growing brands.",
     features: [
-      "All platforms (IG + FB + YouTube)",
-      "Unlimited content creation",
-      "Meta Ads (up to ₹40K spend)",
-      "SEO & blog content",
-      "Weekly strategy calls",
-      "Priority WhatsApp support",
+      "All platforms (Instagram + YouTube + Facebook)",
+      "Unlimited high-converting UGC & video reels",
+      "Meta Ads management (up to ₹40K spend)",
+      "SEO copywriting & blog content strategy",
+      "Bi-weekly strategic growth calls",
+      "Direct priority WhatsApp VIP support",
     ],
     cta: "Contact for Details",
     featured: false,
+  },
+];
+
+const collabTypes = [
+  {
+    icon: <HandshakeIcon size={24} />,
+    title: "Brand Collaboration",
+    desc: "Sponsored Reels, authentic product reviews, and brand integrations reaching 2M+ Hindi audience.",
+  },
+  {
+    icon: <MicIcon size={24} />,
+    title: "Speaking & Workshops",
+    desc: "Digital marketing workshops, content creation masterclasses, and creator panels.",
+  },
+  {
+    icon: <SpiritualIcon size={24} />,
+    title: "Spiritual Campaigns",
+    desc: "Dedicated Krishna and devotional storytelling campaigns for wellness & spiritual brands.",
+  },
+  {
+    icon: <BuildingIcon size={24} />,
+    title: "Agency Partnerships",
+    desc: "White-label UGC video production and social media strategy for digital advertising agencies.",
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "Apoorva completely transformed our Instagram. In 3 months, we went from barely visible to having our best-performing content ever. She understands Hindi audiences like nobody else.",
+    name: "Priya Sharma",
+    role: "Founder, Fashion Boutique (Hathras)",
+  },
+  {
+    quote:
+      "The Meta ad campaign she ran for us was exceptional. 3.4× ROAS and a 64% drop in acquisition cost. The Hindi ad copy she wrote converted with high engagement.",
+    name: "Rohit Gupta",
+    role: "Owner, Local Retail Business (UP)",
+  },
+  {
+    quote:
+      "The Krishna content series she created for our spiritual page was authentic, moving and viral. Pure organic storytelling magic.",
+    name: "Ananya Verma",
+    role: "Admin, Spiritual Page (Mathura)",
   },
 ];
 
@@ -68,10 +128,13 @@ export default function HirePage() {
     <>
       {/* ── PAGE HERO ── */}
       <section className="page-hero">
-        <span className="tag">Hire Me</span>
-        <h1 className="page-hero-title display">LET'S WORK TOGETHER</h1>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
+          <span className="tag">Hire Me</span>
+          <span className="tag tag-maroon">Direct Collaboration</span>
+        </div>
+        <h1 className="page-hero-title display">LET&apos;S WORK TOGETHER</h1>
         <p className="page-hero-sub">
-          Choose a package or reach out directly. I work with brands, businesses and creators across India and internationally.
+          Choose a monthly management package or request a custom quote. Serving brands, local businesses, and creators across India and internationally.
         </p>
       </section>
 
@@ -80,27 +143,57 @@ export default function HirePage() {
         {packages.map((p) => (
           <div className={`hire-pkg${p.featured ? " featured" : ""}`} key={p.name}>
             {p.featured && <div className="recommended-badge">Most Popular</div>}
-            <span className="tag" style={p.featured ? { background: "rgba(255,255,255,.15)", borderColor: "rgba(255,255,255,.25)", color: "white" } : {}}>Package</span>
-            <div className="pkg-name display" style={{ marginTop: 12 }}>{p.name}</div>
+            <span
+              className="tag"
+              style={
+                p.featured
+                  ? {
+                      background: "rgba(255,255,255,.15)",
+                      borderColor: "rgba(255,255,255,.25)",
+                      color: "white",
+                    }
+                  : {}
+              }
+            >
+              Package
+            </span>
+            <div className="pkg-name display" style={{ marginTop: 12 }}>
+              {p.name}
+            </div>
             <div className="pkg-price display">{p.price}</div>
             <div className="pkg-period muted">{p.period}</div>
             <p className="service-desc">{p.desc}</p>
             <div className="service-features" style={{ marginBottom: 28 }}>
               {p.features.map((f) => (
-                <div className="service-feature" key={f}>{f}</div>
+                <div className="service-feature" key={f}>
+                  <CheckIcon size={14} className="feature-check-icon" />
+                  <span>{f}</span>
+                </div>
               ))}
             </div>
             <a
-              href="https://wa.me/919XXXXXXXXX?text=Hi%20Apoorva%2C%20I%27m%20interested%20in%20your%20services!"
+              href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%27m%20interested%20in%20your%20package!"
               className="btn"
-              style={p.featured
-                ? { background: "var(--maroon)", color: "white", width: "100%", justifyContent: "center" }
-                : { background: "var(--navy)", color: "white", width: "100%", justifyContent: "center" }
+              style={
+                p.featured
+                  ? {
+                      background: "var(--maroon)",
+                      color: "white",
+                      width: "100%",
+                      justifyContent: "center",
+                    }
+                  : {
+                      background: "var(--navy)",
+                      color: "white",
+                      width: "100%",
+                      justifyContent: "center",
+                    }
               }
               target="_blank"
               rel="noopener noreferrer"
             >
-              {p.cta} →
+              <span>{p.cta}</span>
+              <ArrowRightIcon size={14} />
             </a>
           </div>
         ))}
@@ -111,20 +204,29 @@ export default function HirePage() {
         <div className="section-title-row">
           <div>
             <span className="tag">Collaborations</span>
-            <h2 className="section-title display" style={{ marginTop: 12 }}>I ALSO OFFER</h2>
+            <h2 className="section-title display" style={{ marginTop: 12 }}>
+              ADDITIONAL SERVICES
+            </h2>
           </div>
         </div>
         <div className="service-process-grid">
-          {[
-            { icon: "🤝", title: "Brand Collaboration", desc: "Sponsored Reels, product reviews, brand integrations across India." },
-            { icon: "🎤", title: "Speaking & Events", desc: "Digital marketing workshops, brand strategy sessions, creator panels." },
-            { icon: "🕉️", title: "Spiritual Campaigns", desc: "Krishna/devotional content for spiritual brands and pages." },
-            { icon: "🏢", title: "Agency Partnerships", desc: "White-label content creation and strategy for digital agencies." },
-          ].map((c, i) => (
-            <div key={c.title} style={{ padding: "36px 28px", borderRight: i < 3 ? "1px solid var(--line)" : "none" }}>
-              <div style={{ fontSize: 28, marginBottom: 12 }}>{c.icon}</div>
-              <div className="display" style={{ fontSize: 15, marginBottom: 8 }}>{c.title}</div>
-              <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6 }}>{c.desc}</p>
+          {collabTypes.map((c, i) => (
+            <div
+              key={c.title}
+              style={{
+                padding: "36px 28px",
+                borderRight: i < 3 ? "1px solid var(--line)" : "none",
+              }}
+            >
+              <div style={{ marginBottom: 14, color: "var(--maroon)" }}>
+                {c.icon}
+              </div>
+              <div className="display" style={{ fontSize: 16, marginBottom: 8, color: "var(--navy)" }}>
+                {c.title}
+              </div>
+              <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6 }}>
+                {c.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -134,36 +236,106 @@ export default function HirePage() {
       <section className="section">
         <div className="section-title-row">
           <div>
-            <span className="tag">Get in Touch</span>
-            <h2 className="section-title display" style={{ marginTop: 12 }}>START A CONVERSATION</h2>
+            <span className="tag">Inquiries</span>
+            <h2 className="section-title display" style={{ marginTop: 12 }}>
+              START A PROJECT
+            </h2>
           </div>
         </div>
         <div className="contact-grid">
           {/* Left: Contact info */}
           <div className="contact-info">
             <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.7, marginBottom: 28 }}>
-              The fastest way to reach me is WhatsApp. For formal inquiries, use the contact form or email. I respond to all messages within 24 hours.
+              The fastest way to reach me is WhatsApp. For formal proposals and inquiries, please fill out the form below or send an email.
             </p>
-            {[
-              { icon: "💬", label: "WhatsApp (Fastest)", val: "+91 9XXXXXXXXX", href: "https://wa.me/919XXXXXXXXX" },
-              { icon: "📧", label: "Email", val: "apoorva@apoorvakaushal.com", href: "mailto:apoorva@apoorvakaushal.com" },
-              { icon: "📸", label: "Instagram DM", val: "@apoorva_kaushal", href: "https://instagram.com/apoorva_kaushal" },
-              { icon: "📍", label: "Location", val: "Hathras, Uttar Pradesh, India", href: null },
-            ].map((c) => (
-              <div className="contact-info-item" key={c.label}>
-                <span className="contact-info-icon">{c.icon}</span>
-                <div>
-                  <div className="contact-info-label">{c.label}</div>
-                  {c.href
-                    ? <a href={c.href} className="contact-info-val" style={{ textDecoration: "underline" }} target="_blank" rel="noopener noreferrer">{c.val}</a>
-                    : <div className="contact-info-val">{c.val}</div>
-                  }
-                </div>
+
+            <div className="contact-info-item">
+              <span className="contact-info-icon">
+                <WhatsAppIcon size={18} />
+              </span>
+              <div>
+                <div className="contact-info-label">WhatsApp (Fastest)</div>
+                <a
+                  href="https://wa.me/919368153189?text=Hi%20Apoorva!"
+                  className="contact-info-val"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "underline" }}
+                >
+                  +91 9368153189
+                </a>
               </div>
-            ))}
-            <div style={{ marginTop: 28, padding: "20px 24px", background: "var(--paper)", borderRadius: 8, border: "1px solid var(--line)" }}>
-              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 8 }}>Response Time</div>
-              <div style={{ fontSize: 14, color: "var(--muted)" }}>WhatsApp: within 2 hours<br />Email: within 24 hours</div>
+            </div>
+
+            <div className="contact-info-item">
+              <span className="contact-info-icon">
+                <MailIcon size={18} />
+              </span>
+              <div>
+                <div className="contact-info-label">Email</div>
+                <a
+                  href="mailto:apoorva@apoorvakaushal.com"
+                  className="contact-info-val"
+                  style={{ textDecoration: "underline" }}
+                >
+                  apoorva@apoorvakaushal.com
+                </a>
+              </div>
+            </div>
+
+            <div className="contact-info-item">
+              <span className="contact-info-icon">
+                <InstagramIcon size={18} />
+              </span>
+              <div>
+                <div className="contact-info-label">Instagram DM</div>
+                <a
+                  href="https://instagram.com/apoorva__kaushal"
+                  className="contact-info-val"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "underline" }}
+                >
+                  @apoorva__kaushal
+                </a>
+              </div>
+            </div>
+
+            <div className="contact-info-item">
+              <span className="contact-info-icon">
+                <MapPinIcon size={18} />
+              </span>
+              <div>
+                <div className="contact-info-label">Location</div>
+                <div className="contact-info-val">Hathras, Uttar Pradesh, India</div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                marginTop: 28,
+                padding: "20px 24px",
+                background: "var(--paper)",
+                borderRadius: 8,
+                border: "1px solid var(--line)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: ".06em",
+                  textTransform: "uppercase",
+                  marginBottom: 8,
+                  color: "var(--navy)",
+                }}
+              >
+                Guaranteed Response Time
+              </div>
+              <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6 }}>
+                WhatsApp: within 2 hours<br />
+                Email / Form: within 24 hours
+              </div>
             </div>
           </div>
 
@@ -176,21 +348,49 @@ export default function HirePage() {
           >
             <div className="form-row-2">
               <div className="form-group">
-                <label className="form-label" htmlFor="hire-name">Your Name *</label>
-                <input id="hire-name" name="name" type="text" className="form-input" placeholder="Your full name" required />
+                <label className="form-label" htmlFor="hire-name">
+                  Your Name *
+                </label>
+                <input
+                  id="hire-name"
+                  name="name"
+                  type="text"
+                  className="form-input"
+                  placeholder="Your full name"
+                  required
+                />
               </div>
               <div className="form-group">
-                <label className="form-label" htmlFor="hire-email">Email *</label>
-                <input id="hire-email" name="email" type="email" className="form-input" placeholder="your@email.com" required />
+                <label className="form-label" htmlFor="hire-email">
+                  Email *
+                </label>
+                <input
+                  id="hire-email"
+                  name="email"
+                  type="email"
+                  className="form-input"
+                  placeholder="your@email.com"
+                  required
+                />
               </div>
             </div>
             <div className="form-row-2">
               <div className="form-group">
-                <label className="form-label" htmlFor="hire-phone">WhatsApp / Phone</label>
-                <input id="hire-phone" name="phone" type="tel" className="form-input" placeholder="+91 XXXXXXXXXX" />
+                <label className="form-label" htmlFor="hire-phone">
+                  WhatsApp / Phone
+                </label>
+                <input
+                  id="hire-phone"
+                  name="phone"
+                  type="tel"
+                  className="form-input"
+                  placeholder="+91 9XXXXXXXXX"
+                />
               </div>
               <div className="form-group">
-                <label className="form-label" htmlFor="hire-service">Service Needed *</label>
+                <label className="form-label" htmlFor="hire-service">
+                  Service Needed *
+                </label>
                 <select id="hire-service" name="service" className="form-select" required>
                   <option value="">Select a service...</option>
                   <option>Social Media Management</option>
@@ -205,22 +405,36 @@ export default function HirePage() {
               </div>
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="hire-budget">Monthly Budget</label>
+              <label className="form-label" htmlFor="hire-budget">
+                Monthly Budget
+              </label>
               <select id="hire-budget" name="budget" className="form-select">
                 <option value="">Select budget range...</option>
-                <option>Under ₹10,000</option>
-                <option>₹10,000 – ₹25,000</option>
-                <option>₹25,000 – ₹50,000</option>
-                <option>₹50,000 – ₹1,00,000</option>
+                <option>Under ₹15,000</option>
+                <option>₹15,000 – ₹35,000</option>
+                <option>₹35,000 – ₹65,000</option>
+                <option>₹65,000 – ₹1,00,000</option>
                 <option>₹1,00,000+</option>
               </select>
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="hire-message">Tell Me About Your Brand *</label>
-              <textarea id="hire-message" name="message" className="form-textarea" placeholder="What does your brand do? What are your goals? What's your target audience?" required />
+              <label className="form-label" htmlFor="hire-message">
+                Tell Me About Your Brand *
+              </label>
+              <textarea
+                id="hire-message"
+                name="message"
+                className="form-textarea"
+                placeholder="What does your business do? What are your growth goals? What's your target audience?"
+                required
+              />
             </div>
-            <button type="submit" className="btn btn-primary" style={{ alignSelf: "flex-start", paddingLeft: 36, paddingRight: 36 }}>
-              Send Enquiry ✦
+            <button
+              type="submit"
+              className="btn btn-primary"
+              style={{ alignSelf: "flex-start", paddingLeft: 36, paddingRight: 36 }}
+            >
+              Send Project Inquiry ✦
             </button>
           </form>
         </div>
@@ -231,17 +445,19 @@ export default function HirePage() {
         <div className="section-title-row">
           <div>
             <span className="tag">Testimonials</span>
-            <h2 className="section-title display" style={{ marginTop: 12 }}>WHAT BRANDS SAY</h2>
+            <h2 className="section-title display" style={{ marginTop: 12 }}>
+              WHAT BRANDS SAY
+            </h2>
           </div>
         </div>
         <div className="testi-grid">
-          {[
-            { quote: "Apoorva completely transformed our Instagram. In 3 months, we went from barely visible to having our best-performing content ever. She understands Hindi audiences like nobody else.", name: "Priya Sharma", role: "Founder, Fashion Boutique, Hathras" },
-            { quote: "The Meta ad campaign she ran for us was exceptional. 3.2× ROAS and a 64% drop in acquisition cost. The Hindi ad copy she wrote converted incredibly well.", name: "Rohit Gupta", role: "Owner, Local Business, UP" },
-            { quote: "The Krishna content series she created for our spiritual page was beautiful, authentic and viral. We went from 0 to 500K followers organically. Pure magic.", name: "Ananya Verma", role: "Admin, Spiritual Content Page" },
-          ].map((t) => (
+          {testimonials.map((t) => (
             <div className="testi-card" key={t.name}>
-              <div className="testi-stars">★★★★★</div>
+              <div className="testi-stars-row">
+                {[...Array(5)].map((_, idx) => (
+                  <StarIcon key={idx} size={15} className="star-icon-filled" />
+                ))}
+              </div>
               <p className="testi-quote">&quot;{t.quote}&quot;</p>
               <div className="testi-author">
                 <div className="testi-avatar" />

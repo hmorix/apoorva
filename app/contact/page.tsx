@@ -1,14 +1,26 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  WhatsAppIcon,
+  MailIcon,
+  InstagramIcon,
+  YouTubeIcon,
+  MapPinIcon,
+  CompassIcon,
+  ArrowRightIcon,
+} from "@/components/Icons";
 
 export const metadata: Metadata = {
   title: "Contact Apoorva Kaushal — Hathras, Uttar Pradesh, India",
   description:
     "Contact Apoorva Kaushal for social media management, content creation, brand collaboration or any inquiry. Located in Hathras, Uttar Pradesh, India. WhatsApp, email and contact form available.",
   keywords: [
-    "contact Apoorva Kaushal", "Apoorva Kaushal contact",
-    "social media manager contact India", "content creator contact Hathras",
-    "Apoorva Kaushal WhatsApp", "apoorva@apoorvakaushal.com",
+    "contact Apoorva Kaushal",
+    "Apoorva Kaushal contact",
+    "social media manager contact India",
+    "content creator contact Hathras",
+    "Apoorva Kaushal WhatsApp",
+    "apoorva@apoorvakaushal.com",
   ],
   alternates: { canonical: "https://apoorvakaushal.com/contact" },
 };
@@ -19,7 +31,7 @@ const localBusinessSchema = {
   name: "Apoorva Kaushal — Social Media Management",
   description: "Social media management, content creation and digital marketing services.",
   url: "https://apoorvakaushal.com",
-  telephone: "+91-9XXXXXXXXX",
+  telephone: "+91-9368153189",
   email: "apoorva@apoorvakaushal.com",
   address: {
     "@type": "PostalAddress",
@@ -38,10 +50,61 @@ const localBusinessSchema = {
     { "@type": "Country", name: "India" },
   ],
   sameAs: [
-    "https://instagram.com/apoorva_kaushal",
-    "https://youtube.com/@apoorva_kaushal",
+    "https://instagram.com/apoorva__kaushal",
+    "https://youtube.com/@_apoorva7__",
   ],
 };
+
+const contactChannels = [
+  {
+    icon: <WhatsAppIcon size={20} />,
+    label: "WhatsApp",
+    val: "+91 9368153189",
+    href: "https://wa.me/919368153189?text=Hi%20Apoorva!",
+    sub: "Fastest response — typically within 2 hours",
+  },
+  {
+    icon: <MailIcon size={20} />,
+    label: "Email",
+    val: "apoorva@apoorvakaushal.com",
+    href: "mailto:apoorva@apoorvakaushal.com",
+    sub: "Detailed inquiries — response within 24 hours",
+  },
+  {
+    icon: <InstagramIcon size={20} />,
+    label: "Instagram DM",
+    val: "@apoorva__kaushal",
+    href: "https://instagram.com/apoorva__kaushal",
+    sub: "Direct message for quick collaboration inquiries",
+  },
+  {
+    icon: <YouTubeIcon size={20} />,
+    label: "YouTube",
+    val: "@_apoorva7__",
+    href: "https://youtube.com/@_apoorva7__",
+    sub: "Official video channel & community updates",
+  },
+  {
+    icon: <MapPinIcon size={20} />,
+    label: "Location",
+    val: "Hathras, Uttar Pradesh, India (204101)",
+    href: null,
+    sub: "Serving clients across India & internationally",
+  },
+];
+
+const coverageAreas = [
+  "Hathras",
+  "Agra",
+  "Mathura",
+  "Aligarh",
+  "Uttar Pradesh",
+  "Delhi NCR",
+  "Mumbai",
+  "Bengaluru",
+  "Pan India",
+  "International",
+];
 
 export default function ContactPage() {
   return (
@@ -53,10 +116,13 @@ export default function ContactPage() {
 
       {/* ── PAGE HERO ── */}
       <section className="page-hero">
-        <span className="tag">Contact</span>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
+          <span className="tag">Contact</span>
+          <span className="tag tag-maroon">Hathras, UP</span>
+        </div>
         <h1 className="page-hero-title display">GET IN TOUCH</h1>
         <p className="page-hero-sub">
-          Based in Hathras, Uttar Pradesh, India 🇮🇳 — serving brands across India and internationally. Reach out via WhatsApp, email, or this form.
+          Based in Hathras, Uttar Pradesh, India — serving brands and creators across India and internationally. Reach out via WhatsApp, email, or this form.
         </p>
       </section>
 
@@ -65,53 +131,77 @@ export default function ContactPage() {
         {/* Left: Info */}
         <div className="contact-info">
           <div style={{ marginBottom: 32 }}>
-            <div className="display" style={{ fontSize: 22, marginBottom: 6 }}>CONTACT INFORMATION</div>
+            <div className="display" style={{ fontSize: 22, marginBottom: 6, color: "var(--navy)" }}>
+              DIRECT CHANNELS
+            </div>
             <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.6 }}>
-              I work with brands across all of India. The fastest response is always WhatsApp.
+              Whether you need end-to-end social media management or a sponsored UGC campaign, let&apos;s talk.
             </p>
           </div>
 
-          {[
-            { icon: "💬", label: "WhatsApp", val: "+91 9XXXXXXXXX", href: "https://wa.me/919XXXXXXXXX?text=Hi%20Apoorva!", sub: "Fastest response — within 2 hours" },
-            { icon: "📧", label: "Email", val: "apoorva@apoorvakaushal.com", href: "mailto:apoorva@apoorvakaushal.com", sub: "Response within 24 hours" },
-            { icon: "📸", label: "Instagram", val: "@apoorva_kaushal", href: "https://instagram.com/apoorva_kaushal", sub: "DM for quick questions" },
-            { icon: "▶️", label: "YouTube", val: "@apoorva_kaushal", href: "https://youtube.com/@apoorva_kaushal", sub: "Subscribe for content updates" },
-            { icon: "📍", label: "Location", val: "Hathras, Uttar Pradesh, India", href: null, sub: "Serving clients across India & globally" },
-          ].map((c) => (
+          {contactChannels.map((c) => (
             <div className="contact-info-item" key={c.label}>
               <span className="contact-info-icon">{c.icon}</span>
               <div>
                 <div className="contact-info-label">{c.label}</div>
-                {c.href
-                  ? <a href={c.href} className="contact-info-val" style={{ textDecoration: "underline" }} target="_blank" rel="noopener noreferrer">{c.val}</a>
-                  : <div className="contact-info-val">{c.val}</div>
-                }
-                {c.sub && <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{c.sub}</div>}
+                {c.href ? (
+                  <a
+                    href={c.href}
+                    className="contact-info-val"
+                    style={{ textDecoration: "underline" }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {c.val}
+                  </a>
+                ) : (
+                  <div className="contact-info-val">{c.val}</div>
+                )}
+                {c.sub && (
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>
+                    {c.sub}
+                  </div>
+                )}
               </div>
             </div>
           ))}
 
-          {/* India Map Placeholder */}
-          <div style={{
-            marginTop: 28, borderRadius: 8, overflow: "hidden",
-            border: "1px solid var(--line)", background: "var(--paper)",
-            padding: "32px 24px", textAlign: "center",
-          }}>
-            <div style={{ fontSize: 48, marginBottom: 8 }}>🗺️</div>
-            <div className="display" style={{ fontSize: 16, marginBottom: 4 }}>HATHRAS, UP</div>
-            <p style={{ fontSize: 13, color: "var(--muted)" }}>Uttar Pradesh · India · 204101</p>
+          {/* Location Details Card */}
+          <div
+            style={{
+              marginTop: 28,
+              borderRadius: 8,
+              overflow: "hidden",
+              border: "1px solid var(--line)",
+              background: "var(--paper)",
+              padding: "28px 24px",
+              textAlign: "center",
+            }}
+          >
+            <div style={{ color: "var(--navy)", marginBottom: 10, display: "flex", justifyContent: "center" }}>
+              <CompassIcon size={36} />
+            </div>
+            <div className="display" style={{ fontSize: 18, marginBottom: 4, color: "var(--navy)" }}>
+              HATHRAS, UTTAR PRADESH
+            </div>
+            <p style={{ fontSize: 13, color: "var(--muted)" }}>
+              Postal Code: 204101 · Agra Division · India
+            </p>
             <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 8 }}>
-              Agra Division · 50 km from Mathura · 85 km from Agra
+              50 km from Mathura · 85 km from Agra · 170 km from Delhi NCR
             </p>
           </div>
         </div>
 
         {/* Right: Form */}
         <div className="contact-form-wrap">
-          <div className="display" style={{ fontSize: 22, marginBottom: 6 }}>SEND A MESSAGE</div>
+          <div className="display" style={{ fontSize: 22, marginBottom: 6, color: "var(--navy)" }}>
+            SEND A MESSAGE
+          </div>
           <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 28, lineHeight: 1.6 }}>
-            Whether you want to hire me, collaborate, ask a question or just say hello — fill in the form and I'll get back to you.
+            Fill out this quick form with your project details and I&apos;ll get back to you with ideas and next steps.
           </p>
+
           <form
             action="https://formspree.io/f/YOUR_FORM_ID"
             method="POST"
@@ -119,50 +209,98 @@ export default function ContactPage() {
           >
             <div className="form-row-2">
               <div className="form-group">
-                <label className="form-label" htmlFor="contact-name">Name *</label>
-                <input id="contact-name" name="name" type="text" className="form-input" placeholder="Your full name" required />
+                <label className="form-label" htmlFor="contact-name">
+                  Name *
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  className="form-input"
+                  placeholder="Your full name"
+                  required
+                />
               </div>
               <div className="form-group">
-                <label className="form-label" htmlFor="contact-email">Email *</label>
-                <input id="contact-email" name="email" type="email" className="form-input" placeholder="your@email.com" required />
+                <label className="form-label" htmlFor="contact-email">
+                  Email *
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  className="form-input"
+                  placeholder="your@email.com"
+                  required
+                />
               </div>
             </div>
             <div className="form-row-2">
               <div className="form-group">
-                <label className="form-label" htmlFor="contact-phone">WhatsApp / Phone</label>
-                <input id="contact-phone" name="phone" type="tel" className="form-input" placeholder="+91 XXXXXXXXXX" />
+                <label className="form-label" htmlFor="contact-phone">
+                  WhatsApp / Phone
+                </label>
+                <input
+                  id="contact-phone"
+                  name="phone"
+                  type="tel"
+                  className="form-input"
+                  placeholder="+91 9XXXXXXXXX"
+                />
               </div>
               <div className="form-group">
-                <label className="form-label" htmlFor="contact-city">City / State</label>
-                <input id="contact-city" name="city" type="text" className="form-input" placeholder="e.g. Hathras, UP" />
+                <label className="form-label" htmlFor="contact-city">
+                  City / State
+                </label>
+                <input
+                  id="contact-city"
+                  name="city"
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. Hathras, UP / Delhi"
+                />
               </div>
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="contact-subject">Subject *</label>
+              <label className="form-label" htmlFor="contact-subject">
+                Subject *
+              </label>
               <select id="contact-subject" name="subject" className="form-select" required>
-                <option value="">What is this about?</option>
-                <option>Hire for Social Media Management</option>
-                <option>Hire for Content Creation</option>
-                <option>Brand Collaboration</option>
-                <option>Meta Ads Campaign</option>
-                <option>General Inquiry</option>
-                <option>Media / Press</option>
+                <option value="">What is this regarding?</option>
+                <option>Social Media Management Inquiry</option>
+                <option>Content Creation &amp; UGC Video</option>
+                <option>Brand Collaboration / Sponsorship</option>
+                <option>Meta Ads Campaign Strategy</option>
+                <option>General Question</option>
+                <option>Media &amp; Press</option>
                 <option>Other</option>
               </select>
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="contact-message">Message *</label>
-              <textarea id="contact-message" name="message" className="form-textarea" placeholder="Tell me about your project, brand or question..." required />
+              <label className="form-label" htmlFor="contact-message">
+                Message *
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                className="form-textarea"
+                placeholder="Tell me about your project, brand goals, or specific question..."
+                required
+              />
             </div>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button type="submit" className="btn btn-primary">Send Message ✦</button>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+              <button type="submit" className="btn btn-primary">
+                Send Message ✦
+              </button>
               <a
-                href="https://wa.me/919XXXXXXXXX?text=Hi%20Apoorva%2C%20I%27d%20like%20to%20connect!"
-                className="btn btn-outline"
+                href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%27d%20like%20to%20connect!"
+                className="btn"
+                style={{ background: "#25D366", color: "white" }}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                💬 WhatsApp Instead
+                <WhatsAppIcon size={16} />
+                <span>Chat on WhatsApp</span>
               </a>
             </div>
           </form>
@@ -174,25 +312,36 @@ export default function ContactPage() {
         <div className="section-title-row">
           <div>
             <span className="tag">Coverage</span>
-            <h2 className="section-title display" style={{ marginTop: 12 }}>WHERE I WORK</h2>
+            <h2 className="section-title display" style={{ marginTop: 12 }}>
+              SERVICE LOCATIONS &amp; REACH
+            </h2>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          {[
-            "Hathras", "Agra", "Mathura", "Aligarh", "Uttar Pradesh",
-            "Delhi NCR", "Mumbai", "Bengaluru", "Pan India", "International",
-          ].map((loc) => (
-            <span key={loc} style={{
-              padding: "10px 20px", border: "1.5px solid var(--navy)",
-              borderRadius: 24, fontSize: 13, fontWeight: 700,
-              fontFamily: "Anton, sans-serif", letterSpacing: ".03em",
-            }}>
-              📍 {loc}
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          {coverageAreas.map((loc) => (
+            <span
+              key={loc}
+              style={{
+                padding: "8px 18px",
+                border: "1.5px solid var(--navy)",
+                borderRadius: 24,
+                fontSize: 13,
+                fontWeight: 700,
+                fontFamily: "Anton, sans-serif",
+                letterSpacing: ".03em",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                background: "var(--white)",
+              }}
+            >
+              <MapPinIcon size={14} />
+              <span>{loc}</span>
             </span>
           ))}
         </div>
         <p style={{ fontSize: 14, color: "var(--muted)", marginTop: 24, lineHeight: 1.7 }}>
-          I am based in <strong style={{ color: "var(--navy)" }}>Hathras, Uttar Pradesh</strong> and work with clients across all of India — from Tier-1 metros to Tier-2 and Tier-3 cities. I understand the Hindi-speaking market deeply and can create content that resonates with audiences from UP, Delhi, MP, Rajasthan and beyond.
+          I am based in <strong style={{ color: "var(--navy)" }}>Hathras, Uttar Pradesh</strong> and partner with clients across India — from major metros (Delhi NCR, Mumbai, Bengaluru) to vibrant Tier-2 and Tier-3 cities. With deep cultural understanding of Hindi-speaking audiences, my campaigns deliver high engagement across UP, MP, Rajasthan, Haryana, and beyond.
         </p>
       </section>
     </>

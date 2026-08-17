@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { CloseIcon } from "@/components/Icons";
 
 export interface GalleryItem {
   id: string;
@@ -292,7 +293,7 @@ export default function Gallery() {
               onClick={() => setSelectedItem(null)}
               aria-label="Close preview modal"
             >
-              ✕
+              <CloseIcon size={18} />
             </button>
 
             <div className="modal-media-container">

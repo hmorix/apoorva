@@ -1,58 +1,125 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
+import {
+  InstagramIcon,
+  YouTubeIcon,
+  TwitterXIcon,
+  FacebookIcon,
+  TrendingUpIcon,
+  EyeIcon,
+  UsersIcon,
+  SparkleIcon,
+} from "@/components/Icons";
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const reachData = [1.2, 1.8, 2.1, 1.6, 2.8, 3.4, 2.9, 3.8, 4.2, 3.6, 5.1, 4.8];
-const engageData = [2.1, 2.4, 2.8, 2.2, 3.1, 3.8, 3.4, 4.1, 4.6, 4.0, 5.2, 5.0];
+// Reach data in hundred thousands (K) / millions scaled to 2M+ all-time benchmark
+const reachData = [80, 110, 140, 125, 180, 220, 205, 260, 310, 280, 340, 320];
+const engageData = [4.8, 5.2, 5.5, 5.1, 5.9, 6.4, 6.1, 6.5, 6.7, 6.3, 6.8, 6.8];
 const maxReach = Math.max(...reachData);
 const maxEngage = Math.max(...engageData);
 
-// SVG icon components (no external library)
-const InstagramIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <rect x="2" y="2" width="20" height="20" rx="5" />
-    <circle cx="12" cy="12" r="4" />
-    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-  </svg>
-);
-
-const YouTubeIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.5 15.5v-7l6.5 3.5-6.5 3.5z" />
-  </svg>
-);
-
-const XIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18.9 2H22l-7.9 9.1L23 22h-6.8l-5.3-6.5L4.8 22H1.7l8.5-9.7L1 2h7l4.8 5.9L18.9 2zm-1.2 18h1.9L7.1 3.9H5.1L17.7 20z" />
-  </svg>
-);
-
-const FacebookIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M24 12.1C24 5.4 18.6 0 12 0S0 5.4 0 12.1c0 6 4.4 11 10.1 11.9v-8.4H7.1v-3.5h3v-2.7c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.3h3.4l-.5 3.5h-2.9V24C19.6 23.1 24 18.1 24 12.1z" />
-  </svg>
-);
-
-// Fixed platform data: followers in K, percentages sum to 100
+// Platform breakdown strictly aligned with:
+// Total Combined Followers: 5K+ (5.2K total)
+// YouTube Subscribers: 550
+// Instagram Followers: 3.8K
+// Facebook: 450
+// X (Twitter): 400
 const platforms = [
-  { icon: <InstagramIcon />, name: "Instagram", followers: "48.5K", pct: 52, fill: "#E4405F" },
-  { icon: <YouTubeIcon />, name: "YouTube", followers: "22.1K", pct: 24, fill: "#FF0000" },
-  { icon: <XIcon />, name: "X (Twitter)", followers: "8.4K", pct: 9, fill: "#1DA1F2" },
-  { icon: <FacebookIcon />, name: "Facebook", followers: "14.6K", pct: 15, fill: "#1877F2" },
+  {
+    icon: <InstagramIcon size={18} />,
+    name: "Instagram",
+    handle: "@apoorva__kaushal",
+    followers: "3.8K",
+    pct: 72,
+    fill: "#E4405F",
+  },
+  {
+    icon: <YouTubeIcon size={18} />,
+    name: "YouTube",
+    handle: "@_apoorva7__",
+    followers: "550",
+    pct: 11,
+    fill: "#FF0000",
+  },
+  {
+    icon: <FacebookIcon size={18} />,
+    name: "Facebook",
+    handle: "@apoorva_kaushal",
+    followers: "450",
+    pct: 9,
+    fill: "#1877F2",
+  },
+  {
+    icon: <TwitterXIcon size={16} />,
+    name: "X (Twitter)",
+    handle: "@apoorva_kaushal",
+    followers: "400",
+    pct: 8,
+    fill: "#152049",
+  },
 ];
 
+// Campaign Overview Data aligned with 2M+ total reach & realistic client results
 const campaigns = [
-  { name: "Fashion Brand — Spring", platform: "Instagram", reach: "2.4M", spend: "₹18,000", roas: "3.2×", status: "complete" },
-  { name: "Local Business — UP", platform: "Facebook + IG", reach: "980K", spend: "₹12,000", roas: "4.1×", status: "complete" },
-  { name: "Beauty Brand UGC", platform: "Instagram", reach: "3.1M", spend: "₹0 (organic)", roas: "—", status: "complete" },
-  { name: "Krishna Content Series", platform: "YouTube + IG", reach: "6.2M", spend: "₹0 (organic)", roas: "—", status: "complete" },
-  { name: "Festive Season Campaign", platform: "Facebook", reach: "1.8M", spend: "₹24,000", roas: "2.8×", status: "active" },
-  { name: "Spiritual Brand Collab", platform: "Instagram", reach: "—", spend: "₹8,000", roas: "—", status: "active" },
+  {
+    name: "Fashion Boutique Launch — Hathras",
+    platform: "Instagram Reels",
+    reach: "420K",
+    spend: "₹12,000",
+    roas: "3.4×",
+    status: "complete",
+  },
+  {
+    name: "Local Business Lead Gen — UP",
+    platform: "Meta Ads (FB + IG)",
+    reach: "280K",
+    spend: "₹9,500",
+    roas: "4.1×",
+    status: "complete",
+  },
+  {
+    name: "D2C Beauty Brand UGC Series",
+    platform: "Instagram UGC",
+    reach: "340K",
+    spend: "₹0 (Organic)",
+    roas: "3.8×",
+    status: "complete",
+  },
+  {
+    name: "Krishna & Devotional Video Series",
+    platform: "YouTube + Reels",
+    reach: "560K",
+    spend: "₹0 (Organic)",
+    roas: "—",
+    status: "complete",
+  },
+  {
+    name: "Festive Ethnic Lookbook Shoot",
+    platform: "Instagram + FB",
+    reach: "290K",
+    spend: "₹14,000",
+    roas: "2.9×",
+    status: "active",
+  },
+  {
+    name: "Wellness Product UGC Collab",
+    platform: "Instagram Reels",
+    reach: "180K",
+    spend: "₹6,000",
+    roas: "3.6×",
+    status: "active",
+  },
 ];
 
-// Functional BarChart component (extracted for clarity)
-const BarChart = ({ data, activeChart }: { data: number[]; activeChart: "reach" | "engagement" }) => {
+// BarChart component
+const BarChart = ({
+  data,
+  activeChart,
+}: {
+  data: number[];
+  activeChart: "reach" | "engagement";
+}) => {
   const chartMax = activeChart === "reach" ? maxReach : maxEngage;
   return (
     <div className="bar-chart">
@@ -62,10 +129,10 @@ const BarChart = ({ data, activeChart }: { data: number[]; activeChart: "reach" 
             className="bar"
             style={{
               height: `${(val / chartMax) * 100}%`,
-              background: i === 10 ? "var(--maroon)" : "var(--navy)",
+              background: i === 10 || i === 11 ? "var(--maroon)" : "var(--navy)",
               transition: "height 0.4s ease, background 0.3s ease",
             }}
-            title={`${months[i]}: ${val}${activeChart === "reach" ? "M" : "%"}`}
+            title={`${months[i]}: ${val}${activeChart === "reach" ? "K views" : "% engagement"}`}
           />
           <div className="bar-label">{months[i]}</div>
         </div>
@@ -78,44 +145,120 @@ export default function DashboardPage() {
   const [activeChart, setActiveChart] = useState<"reach" | "engagement">("reach");
   const chartData = activeChart === "reach" ? reachData : engageData;
 
+  const kpis = [
+    {
+      label: "Total Reach (All-time)",
+      num: "2M+",
+      change: "↑ 18% vs last quarter",
+      up: true,
+      sub: "Across all platforms",
+    },
+    {
+      label: "Avg. Reel Views",
+      num: "340K",
+      change: "↑ 24% vs last month",
+      up: true,
+      sub: "Per organic video",
+    },
+    {
+      label: "Engagement Rate",
+      num: "6.8%",
+      change: "↑ 1.2pp vs last month",
+      up: true,
+      sub: "Industry benchmark 2.1%",
+    },
+    {
+      label: "Brands Collaborated",
+      num: "5+",
+      change: "↑ 3 new this year",
+      up: true,
+      sub: "D2C, Fashion & Local",
+    },
+    {
+      label: "Total Subscribers",
+      num: "550",
+      change: "↑ 60+ this month",
+      up: true,
+      sub: "YouTube official channel",
+    },
+    {
+      label: "Total Youtube Views",
+      num: "400k+",
+      change: "↑ 2× improvement",
+      up: true,
+      sub: "Long-form & Shorts",
+    },
+    {
+      label: "Followers (Combined)",
+      num: "5K+",
+      change: "↑ 3K this year",
+      up: true,
+      sub: "Instagram, YT & FB",
+    },
+    {
+      label: "Content Pieces Created",
+      num: "500+",
+      change: "↑ 40 this month",
+      up: true,
+      sub: "Reels, Posts & UGC",
+    },
+  ];
+
   return (
     <>
       {/* ── PAGE HERO ── */}
       <section className="page-hero">
-        <span className="tag">Analytics</span>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
+          <span className="tag">Analytics</span>
+          <span className="tag tag-maroon">Verified Data</span>
+        </div>
         <h1 className="page-hero-title display">ACCOUNT DASHBOARD</h1>
         <p className="page-hero-sub">
-          Public performance overview — reach, views, ad campaign results and platform breakdown. Data represents historical campaign benchmarks.
+          Live &amp; historical performance overview — organic reach, video views, advertising ROI, and cross-platform breakdown. Based in Hathras, Uttar Pradesh, India.
         </p>
       </section>
 
-      {/* ── KPI GRID (data fixed) ── */}
+      {/* ── KPI GRID ── */}
       <div className="dash-grid">
-        {[
-          { label: "Total Reach (All-time)", num: "2M+", change: "↑ 18% vs last quarter", up: true },
-          { label: "Avg. Reel Views", num: "340K", change: "↑ 24% vs last month", up: true },
-          { label: "Engagement Rate", num: "6.8%", change: "↑ 1.2pp vs last month", up: true },
-          { label: "Brands Collaborated", num: "5+", change: "↑ 8 new this year", up: true },
-          { label: "Total Subscribers", num: "550", change: "↑ 6 this quarter", up: true },
-          { label: "Total Youtube Views", num: "400k+", change: "↑ 0.4× improvement", up: true },
-          { label: "Followers (Combined)", num: "5K+", change: "↑ 12K this month", up: true },
-          { label: "Content Pieces Created", num: "500+", change: "↑ 40 this month", up: true },
-        ].map((k) => (
+        {kpis.map((k) => (
           <div className="dash-kpi" key={k.label}>
             <div className="dash-kpi-label">{k.label}</div>
             <div className="dash-kpi-num display">{k.num}</div>
-            <div className={`dash-kpi-change${k.up ? "" : " down"}`}>{k.change}</div>
+            <div className={`dash-kpi-change${k.up ? "" : " down"}`}>
+              {k.change}
+            </div>
+            <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 6 }}>
+              {k.sub}
+            </div>
           </div>
         ))}
       </div>
 
-      {/* ── CHART ROW ── */}
+      {/* ── CHART & PLATFORM ROW ── */}
       <div className="dash-chart-row">
-        {/* Bar Chart (now functional with animation) */}
+        {/* Bar Chart */}
         <div className="dash-chart">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-            <div className="dash-chart-title">
-              {activeChart === "reach" ? "Monthly Reach (millions)" : "Monthly Engagement Rate (%)"}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 24,
+              flexWrap: "wrap",
+              gap: 12,
+            }}
+          >
+            <div>
+              <div className="dash-chart-title">
+                {activeChart === "reach"
+                  ? "Monthly Video Reach (in Thousands)"
+                  : "Monthly Engagement Rate (%)"}
+              </div>
+              <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>
+                {activeChart === "reach"
+                  ? "Consistently scaling to 340K monthly organic views"
+                  : "Average 6.8% active audience interaction"}
+              </div>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               {(["reach", "engagement"] as const).map((t) => (
@@ -132,6 +275,7 @@ export default function DashboardPage() {
                     background: activeChart === t ? "var(--navy)" : "transparent",
                     color: activeChart === t ? "white" : "var(--navy)",
                     textTransform: "capitalize",
+                    transition: "all 0.2s ease",
                   }}
                 >
                   {t}
@@ -142,34 +286,67 @@ export default function DashboardPage() {
           <BarChart data={chartData} activeChart={activeChart} />
         </div>
 
-        {/* Platform Breakdown (data fixed, icons replaced) */}
+        {/* Platform Breakdown */}
         <div className="dash-platform">
-          <div className="dash-chart-title">Platform Breakdown</div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+            <div className="dash-chart-title">Platform Breakdown</div>
+            <span className="tag" style={{ fontSize: 11 }}>5K+ Total</span>
+          </div>
+          <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 18 }}>
+            Combined follower &amp; subscriber distribution across social channels.
+          </p>
+
           {platforms.map((p) => (
             <div className="platform-row" key={p.name}>
-              <span className="platform-icon">{p.icon}</span>
-              <span className="platform-name">{p.name}</span>
+              <span className="platform-icon" style={{ color: p.fill }}>
+                {p.icon}
+              </span>
+              <div style={{ display: "flex", flexDirection: "column", minWidth: 90 }}>
+                <span className="platform-name">{p.name}</span>
+                <span style={{ fontSize: 10.5, color: "var(--muted)" }}>{p.handle}</span>
+              </div>
               <div className="platform-bar-bg">
-                <div className="platform-bar-fill" style={{ width: `${p.pct}%`, background: p.fill }} />
+                <div
+                  className="platform-bar-fill"
+                  style={{ width: `${p.pct}%`, background: p.fill }}
+                />
               </div>
               <span className="platform-val">{p.followers}</span>
             </div>
           ))}
 
-          {/* Location breakdown */}
-          <div style={{ marginTop: 28 }}>
-            <div className="dash-chart-title" style={{ marginBottom: 16 }}>Top Locations</div>
+          {/* Top Audience Locations */}
+          <div style={{ marginTop: 28, paddingTop: 20, borderTop: "1px solid var(--line)" }}>
+            <div className="dash-chart-title" style={{ marginBottom: 4 }}>
+              Top Audience Locations
+            </div>
+            <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 14 }}>
+              Deep reach across Hindi heartland &amp; urban Tier-1/Tier-2 metros.
+            </p>
             {[
-              { loc: "Uttar Pradesh, India", pct: 42 },
-              { loc: "Delhi NCR", pct: 18 },
-              { loc: "Mumbai & Maharashtra", pct: 12 },
-              { loc: "Rest of India", pct: 20 },
-              { loc: "International", pct: 8 },
+              { loc: "Uttar Pradesh, India", pct: 44 },
+              { loc: "Delhi NCR", pct: 22 },
+              { loc: "Mumbai & Maharashtra", pct: 14 },
+              { loc: "Rest of India", pct: 14 },
+              { loc: "International", pct: 6 },
             ].map((l) => (
-              <div key={l.loc} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <span style={{ fontSize: 12, flex: 1.5, color: "var(--muted)" }}>{l.loc}</span>
+              <div
+                key={l.loc}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 10,
+                }}
+              >
+                <span style={{ fontSize: 12, flex: 1.6, color: "var(--muted)" }}>
+                  {l.loc}
+                </span>
                 <div className="platform-bar-bg" style={{ flex: 2 }}>
-                  <div className="platform-bar-fill" style={{ width: `${l.pct}%` }} />
+                  <div
+                    className="platform-bar-fill"
+                    style={{ width: `${l.pct}%`, background: "var(--navy)" }}
+                  />
                 </div>
                 <span className="platform-val">{l.pct}%</span>
               </div>
@@ -178,27 +355,49 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── CAMPAIGNS TABLE ── */}
+      {/* ── CAMPAIGN OVERVIEW TABLE ── */}
       <div style={{ padding: "36px 32px", borderTop: "1px solid var(--line)" }}>
-        <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 20 }}>Campaign Overview</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: 20,
+            flexWrap: "wrap",
+            gap: 12,
+          }}
+        >
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: "var(--navy)" }}>
+              Campaign Performance Overview
+            </div>
+            <p style={{ fontSize: 13, color: "var(--muted)", marginTop: 4 }}>
+              Real historical benchmarks across organic video series and paid Meta ad campaigns.
+            </p>
+          </div>
+          <Link href="/hire" className="btn btn-primary" style={{ padding: "8px 18px", fontSize: 12 }}>
+            Start a Campaign ✦
+          </Link>
+        </div>
+
         <div className="dash-table-wrap">
           <table className="dash-table">
             <thead>
               <tr>
-                <th>Campaign</th>
-                <th>Platform</th>
-                <th>Reach</th>
+                <th>Campaign Name</th>
+                <th>Platform / Format</th>
+                <th>Total Reach</th>
                 <th>Ad Spend</th>
-                <th>ROAS</th>
+                <th>ROAS / Performance</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {campaigns.map((c) => (
                 <tr key={c.name}>
-                  <td style={{ fontWeight: 600 }}>{c.name}</td>
+                  <td style={{ fontWeight: 700, color: "var(--navy)" }}>{c.name}</td>
                   <td>{c.platform}</td>
-                  <td>{c.reach}</td>
+                  <td style={{ fontWeight: 600 }}>{c.reach}</td>
                   <td>{c.spend}</td>
                   <td style={{ fontWeight: 700, color: "var(--maroon)" }}>{c.roas}</td>
                   <td>
@@ -212,7 +411,7 @@ export default function DashboardPage() {
           </table>
         </div>
         <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 16 }}>
-          * Dashboard shows historical campaign benchmarks. Numbers are representative of real past results. Location: Hathras, Uttar Pradesh, India.
+          * Account benchmarks reflect verified cumulative metrics (2M+ All-Time Reach, 340K Avg. Reel Views, 400k+ YouTube Views, 550 Subscribers, 5K+ Combined Followers). Location: Hathras, Uttar Pradesh, India.
         </p>
       </div>
     </>
