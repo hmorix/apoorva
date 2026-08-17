@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: "https://apoorvakaushal.com" },
   verification: {
-    google: "google-site-verification-apoorvakaushal",
+    google: "J3Ye67XomlkhUSkpLf7AIDPo_qXhc2YMDB6c1BkR5yQ",
   },
   other: {
     "geo.region": "IN-UP",
