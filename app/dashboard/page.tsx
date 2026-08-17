@@ -42,14 +42,14 @@ export default function DashboardPage() {
       {/* ── KPI GRID ── */}
       <div className="dash-grid">
         {[
-          { label: "Total Reach (All-time)", num: "20M+", change: "↑ 18% vs last quarter", up: true },
+          { label: "Total Reach (All-time)", num: "2M+", change: "↑ 18% vs last quarter", up: true },
           { label: "Avg. Reel Views", num: "340K", change: "↑ 24% vs last month", up: true },
-          { label: "Engagement Rate", num: "5.8%", change: "↑ 1.2pp vs last month", up: true },
-          { label: "Brands Collaborated", num: "50+", change: "↑ 8 new this year", up: true },
-          { label: "Ad Campaigns Run", num: "32", change: "↑ 6 this quarter", up: true },
-          { label: "Avg. ROAS Delivered", num: "3.4×", change: "↑ 0.4× improvement", up: true },
-          { label: "Followers (Combined)", num: "93.3K", change: "↑ 12K this month", up: true },
-          { label: "Content Pieces Created", num: "480+", change: "↑ 40 this month", up: true },
+          { label: "Engagement Rate", num: "6.8%", change: "↑ 1.2pp vs last month", up: true },
+          { label: "Brands Collaborated", num: "5+", change: "↑ 8 new this year", up: true },
+          { label: "Total Subscriber", num: "550", change: "↑ 6 this quarter", up: true },
+          { label: "Total Youtube Views", num: "400k+", change: "↑ 0.4× improvement", up: true },
+          { label: "Followers (Combined)", num: "5K+", change: "↑ 12Khis month", up: true },
+          { label: "Content Pieces Created", num: "500+", change: "↑ 40 this month", up: true },
         ].map((k) => (
           <div className="dash-kpi" key={k.label}>
             <div className="dash-kpi-label">{k.label}</div>
