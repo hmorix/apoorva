@@ -8,6 +8,18 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/api/", "/_next/"],
       },
+      {
+        userAgent: "Googlebot",
+        allow: "/",
+      },
+      {
+        userAgent: "Googlebot-Image",
+        allow: ["/photos/", "/"],
+      },
+      {
+        userAgent: "Googlebot-Video",
+        allow: ["/photos/", "/"],
+      },
     ],
     sitemap: "https://apoorvakaushal.com/sitemap.xml",
     host: "https://apoorvakaushal.com",
