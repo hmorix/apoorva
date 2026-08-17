@@ -14,12 +14,12 @@ export const metadata: Metadata = {
 };
 
 const qualifications = [
-  "Canva Masterclass Certificate",
+  "Canva Masterclass Certificate (HMorix)",
   "Email Marketing — HubSpot",
   "Accenture Digital Marketing",
-  "Ad Week Digital Marketing",
+  "Ads Digital Campaign ",
   "Meta Blueprint — Facebook Ads",
-  "Google Digital Garage — Fundamentals",
+  "Higher Secondary School Certificate — Fundamentals",
 ];
 
 const contentTypes = [
@@ -53,7 +53,7 @@ export default function AboutPage() {
               I'm <strong style={{ color: "var(--navy)" }}>Apoorva Kaushal</strong> — born and raised in <strong style={{ color: "var(--navy)" }}>Hathras, Uttar Pradesh</strong>, a city known for its culture and heritage. My journey into content creation began with a simple idea: create something that feels real, relatable and rooted in Indian values.
             </p>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: "var(--muted)", marginBottom: 16 }}>
-              What started as comedy reels for friends quickly grew into a multi-platform digital presence reaching <strong style={{ color: "var(--navy)" }}>20 million+ people</strong>. Today I work with brands across India, helping them connect authentically with Hindi-speaking audiences.
+              What started as comedy reels for friends quickly grew into a multi-platform digital presence reaching <strong style={{ color: "var(--navy)" }}>5 million+ views and 6k followers</strong>. Today I work with brands across India, helping them connect authentically with Hindi-speaking audiences.
             </p>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: "var(--muted)", marginBottom: 28 }}>
               My content spans four pillars: <strong style={{ color: "var(--navy)" }}>comedy</strong>, <strong style={{ color: "var(--navy)" }}>parody</strong>, <strong style={{ color: "var(--navy)" }}>informative</strong> and <strong style={{ color: "var(--navy)" }}>Krishna/spiritual</strong> content — all deeply rooted in the culture of Uttar Pradesh and delivered in authentic Hindi.
@@ -94,8 +94,8 @@ export default function AboutPage() {
       {/* ── STATS ── */}
       <div className="stats-strip">
         {[
-          { num: "20M+", label: "Total Reach" },
-          { num: "50+", label: "Brands Served" },
+          { num: "2M+", label: "Monthly Reach" },
+          { num: "5k+", label: "Instagram Followers" },
           { num: "3+", label: "Years Active" },
           { num: "4", label: "Content Pillars" },
         ].map((s) => (
@@ -159,11 +159,11 @@ export default function AboutPage() {
         <div className="section-title-row">
           <div>
             <span className="tag">Collaborations</span>
-            <h2 className="section-title display" style={{ marginTop: 12 }}>BRANDS I'VE WORKED WITH</h2>
+            <h2 className="section-title display" style={{ marginTop: 12 }}>READY TO WORK WITH</h2>
           </div>
         </div>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center" }}>
-          {["Fashion Brands", "Beauty & Skincare", "Local Businesses", "Spiritual & Wellness", "Tech Startups", "Food & Lifestyle", "Education Brands", "E-Commerce"].map((b) => (
+          {["Fashion Brands", "Beauty & Skincare", "Local Businesses", "Spiritual & Wellness", "Tech Startups", "Food & Lifestyle", "Education Brands", "E-Commerce", "Other"].map((b) => (
             <span key={b} style={{
               padding: "10px 22px",
               border: "1px solid var(--line)",
@@ -186,7 +186,7 @@ export default function AboutPage() {
           Brands, businesses and creators across India — let's build content that connects.
         </p>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/hire" className="btn btn-maroon">Hire Me ✦</Link>
+          <Link href="/hire" className="btn btn-maroon">Pricing ✦</Link>
           <Link href="/contact" className="btn" style={{ background: "rgba(255,255,255,.1)", color: "white", border: "1px solid rgba(255,255,255,.2)" }}>Contact Me</Link>
         </div>
       </section>
