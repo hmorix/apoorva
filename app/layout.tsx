@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://apoorvakaushal.com",
+    url: "https://apoorvakaushal.vercel.app",
     siteName: "Apoorva Kaushal",
     title: "Apoorva Kaushal — Social Media Manager & Content Creator | Hathras, India",
     description:
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: { canonical: "https://apoorvakaushal.com" },
+  alternates: { canonical: "https://apoorvakaushal.vercel.app" },
   verification: {
     google: "J3Ye67XomlkhUSkpLf7AIDPo_qXhc2YMDB6c1BkR5yQ",
   },
