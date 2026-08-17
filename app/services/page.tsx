@@ -10,6 +10,7 @@ import {
   CheckIcon,
   WhatsAppIcon,
   ArrowRightIcon,
+  SparkleIcon,
 } from "@/components/Icons";
 
 export const metadata: Metadata = {
@@ -159,9 +160,10 @@ export default function ServicesPage() {
             <Link
               href="/hire"
               className="btn btn-primary"
-              style={{ width: "100%", justifyContent: "center" }}
+              style={{ width: "100%", justifyContent: "center", display: "inline-flex", alignItems: "center", gap: 8 }}
             >
-              Get Started ✦
+              <SparkleIcon size={13} />
+              <span>Get Started</span>
             </Link>
           </div>
         ))}

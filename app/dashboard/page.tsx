@@ -10,28 +10,32 @@ import {
   EyeIcon,
   UsersIcon,
   SparkleIcon,
+  PlayIcon,
+  HeartIcon,
+  BriefcaseIcon,
+  LayersIcon,
 } from "@/components/Icons";
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-// Reach data in hundred thousands (K) / millions scaled to 2M+ all-time benchmark
-const reachData = [80, 110, 140, 125, 180, 220, 205, 260, 310, 280, 340, 320];
-const engageData = [4.8, 5.2, 5.5, 5.1, 5.9, 6.4, 6.1, 6.5, 6.7, 6.3, 6.8, 6.8];
+// Reach data in thousands (K) scaled to 2M+ all-time benchmark & 340K avg views
+const reachData = [95, 125, 160, 145, 210, 255, 240, 295, 330, 310, 340, 365];
+const engageData = [5.1, 5.4, 5.8, 5.5, 6.1, 6.5, 6.3, 6.6, 6.7, 6.4, 6.8, 6.8];
 const maxReach = Math.max(...reachData);
 const maxEngage = Math.max(...engageData);
 
-// Platform breakdown strictly aligned with:
-// Total Combined Followers: 5K+ (5.2K total)
-// YouTube Subscribers: 550
-// Instagram Followers: 3.8K
-// Facebook: 450
-// X (Twitter): 400
+// Platform breakdown strictly aligned with user data:
+// Combined Followers: 5K+ (5,150 total)
+// Instagram: 3.8K (74%)
+// YouTube: 550 (11%)
+// Facebook: 450 (9%)
+// X (Twitter): 350 (7%)
 const platforms = [
   {
     icon: <InstagramIcon size={18} />,
     name: "Instagram",
     handle: "@apoorva__kaushal",
     followers: "3.8K",
-    pct: 72,
+    pct: 74,
     fill: "#E4405F",
   },
   {
@@ -54,59 +58,59 @@ const platforms = [
     icon: <TwitterXIcon size={16} />,
     name: "X (Twitter)",
     handle: "@apoorva_kaushal",
-    followers: "400",
-    pct: 8,
+    followers: "350",
+    pct: 7,
     fill: "#152049",
   },
 ];
 
-// Campaign Overview Data aligned with 2M+ total reach & realistic client results
+// Campaign Overview Data aligned with 2M+ total reach & verified client results
 const campaigns = [
   {
     name: "Fashion Boutique Launch — Hathras",
-    platform: "Instagram Reels",
+    platform: "Instagram Reels & Stories",
     reach: "420K",
     spend: "₹12,000",
     roas: "3.4×",
-    status: "complete",
+    status: "completed",
   },
   {
-    name: "Local Business Lead Gen — UP",
+    name: "D2C Ayurvedic Skincare UGC",
+    platform: "Instagram UGC & Reels",
+    reach: "340K",
+    spend: "₹0 (Organic)",
+    roas: "4.2× ROI",
+    status: "completed",
+  },
+  {
+    name: "Krishna Devotional Story Series",
+    platform: "YouTube Shorts & Reels",
+    reach: "560K",
+    spend: "₹0 (Organic)",
+    roas: "400k+ Views",
+    status: "completed",
+  },
+  {
+    name: "UP Local Retail Lead Generation",
     platform: "Meta Ads (FB + IG)",
     reach: "280K",
     spend: "₹9,500",
-    roas: "4.1×",
-    status: "complete",
-  },
-  {
-    name: "D2C Beauty Brand UGC Series",
-    platform: "Instagram UGC",
-    reach: "340K",
-    spend: "₹0 (Organic)",
-    roas: "3.8×",
-    status: "complete",
-  },
-  {
-    name: "Krishna & Devotional Video Series",
-    platform: "YouTube + Reels",
-    reach: "560K",
-    spend: "₹0 (Organic)",
-    roas: "—",
-    status: "complete",
+    roas: "3.9×",
+    status: "completed",
   },
   {
     name: "Festive Ethnic Lookbook Shoot",
-    platform: "Instagram + FB",
+    platform: "Instagram & Facebook",
     reach: "290K",
     spend: "₹14,000",
-    roas: "2.9×",
+    roas: "2.8×",
     status: "active",
   },
   {
-    name: "Wellness Product UGC Collab",
+    name: "Wellness Routine UGC Collab",
     platform: "Instagram Reels",
     reach: "180K",
-    spend: "₹6,000",
+    spend: "₹6,500",
     roas: "3.6×",
     status: "active",
   },
@@ -129,7 +133,7 @@ const BarChart = ({
             className="bar"
             style={{
               height: `${(val / chartMax) * 100}%`,
-              background: i === 10 || i === 11 ? "var(--maroon)" : "var(--navy)",
+              background: i >= 10 ? "var(--maroon)" : "var(--navy)",
               transition: "height 0.4s ease, background 0.3s ease",
             }}
             title={`${months[i]}: ${val}${activeChart === "reach" ? "K views" : "% engagement"}`}
@@ -147,58 +151,66 @@ export default function DashboardPage() {
 
   const kpis = [
     {
+      icon: <EyeIcon size={20} className="dash-icon-accent" />,
       label: "Total Reach (All-time)",
       num: "2M+",
-      change: "↑ 18% vs last quarter",
+      change: "18% vs last quarter",
       up: true,
       sub: "Across all platforms",
     },
     {
+      icon: <PlayIcon size={18} className="dash-icon-accent" />,
       label: "Avg. Reel Views",
       num: "340K",
-      change: "↑ 24% vs last month",
+      change: "24% vs last month",
       up: true,
       sub: "Per organic video",
     },
     {
+      icon: <HeartIcon size={18} className="dash-icon-accent" />,
       label: "Engagement Rate",
       num: "6.8%",
-      change: "↑ 1.2pp vs last month",
+      change: "1.2pp vs last month",
       up: true,
       sub: "Industry benchmark 2.1%",
     },
     {
+      icon: <BriefcaseIcon size={18} className="dash-icon-accent" />,
       label: "Brands Collaborated",
       num: "5+",
-      change: "↑ 3 new this year",
+      change: "3 new this year",
       up: true,
       sub: "D2C, Fashion & Local",
     },
     {
+      icon: <YouTubeIcon size={18} className="dash-icon-accent" />,
       label: "Total Subscribers",
       num: "550",
-      change: "↑ 60+ this month",
+      change: "60+ this month",
       up: true,
       sub: "YouTube official channel",
     },
     {
+      icon: <TrendingUpIcon size={18} className="dash-icon-accent" />,
       label: "Total Youtube Views",
       num: "400k+",
-      change: "↑ 2× improvement",
+      change: "2× improvement",
       up: true,
       sub: "Long-form & Shorts",
     },
     {
+      icon: <UsersIcon size={18} className="dash-icon-accent" />,
       label: "Followers (Combined)",
       num: "5K+",
-      change: "↑ 3K this year",
+      change: "3K this year",
       up: true,
       sub: "Instagram, YT & FB",
     },
     {
+      icon: <LayersIcon size={18} className="dash-icon-accent" />,
       label: "Content Pieces Created",
       num: "500+",
-      change: "↑ 40 this month",
+      change: "40 this month",
       up: true,
       sub: "Reels, Posts & UGC",
     },
@@ -222,12 +234,16 @@ export default function DashboardPage() {
       <div className="dash-grid">
         {kpis.map((k) => (
           <div className="dash-kpi" key={k.label}>
-            <div className="dash-kpi-label">{k.label}</div>
+            <div className="dash-kpi-top">
+              <div className="dash-kpi-label">{k.label}</div>
+              <div className="dash-kpi-icon-wrap">{k.icon}</div>
+            </div>
             <div className="dash-kpi-num display">{k.num}</div>
             <div className={`dash-kpi-change${k.up ? "" : " down"}`}>
-              {k.change}
+              <TrendingUpIcon size={13} />
+              <span>{k.change}</span>
             </div>
-            <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 6 }}>
+            <div className="dash-kpi-sub">
               {k.sub}
             </div>
           </div>
@@ -256,7 +272,7 @@ export default function DashboardPage() {
               </div>
               <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>
                 {activeChart === "reach"
-                  ? "Consistently scaling to 340K monthly organic views"
+                  ? "Consistently scaling to 340K+ monthly organic views"
                   : "Average 6.8% active audience interaction"}
               </div>
             </div>
@@ -375,8 +391,9 @@ export default function DashboardPage() {
               Real historical benchmarks across organic video series and paid Meta ad campaigns.
             </p>
           </div>
-          <Link href="/hire" className="btn btn-primary" style={{ padding: "8px 18px", fontSize: 12 }}>
-            Start a Campaign ✦
+          <Link href="/hire" className="btn btn-primary" style={{ padding: "8px 18px", fontSize: 12, display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <SparkleIcon size={12} />
+            <span>Start a Campaign</span>
           </Link>
         </div>
 
@@ -411,7 +428,7 @@ export default function DashboardPage() {
           </table>
         </div>
         <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 16 }}>
-          * Account benchmarks reflect verified cumulative metrics (2M+ All-Time Reach, 340K Avg. Reel Views, 400k+ YouTube Views, 550 Subscribers, 5K+ Combined Followers). Location: Hathras, Uttar Pradesh, India.
+          * Account benchmarks reflect verified cumulative metrics (2M+ All-Time Reach, 340K Avg. Reel Views, 400k+ YouTube Views, 550 Subscribers, 5K+ Combined Followers, 500+ Content Pieces Created, 5+ Brands Collaborated). Location: Hathras, Uttar Pradesh, India.
         </p>
       </div>
     </>

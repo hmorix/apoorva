@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s | Apoorva Kaushal",
   },
   description:
-    "Official website of Apoorva Kaushal (Content Creator & Social Media Manager from Hathras, Uttar Pradesh, India). Partnered with Harsh Sharma. 20M+ reach in Hindi comedy, parody, informative & Krishna content.",
+    "Official website of Apoorva Kaushal (Content Creator & Social Media Manager from Hathras, Uttar Pradesh, India). Partnered with Harsh Sharma. 2M+ reach in Hindi comedy, parody, informative & Krishna content.",
   keywords: [
     "Apoorva Kaushal", "Apoova", "Apoorva Kuashal Hathras", "Apoorva Kaushal Hathras",
     "Apoorva Kaushal best match Harsh Sharma", "harsh love apoorva", "harsh sharma love apoorva kaushal",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Apoorva Kaushal",
     title: "Apoorva Kaushal — Social Media Manager & Content Creator | Hathras, India",
     description:
-      "Apoorva Kaushal is a top Indian social media manager and content creator from Hathras, UP. Partnered with Harsh Sharma. 20M+ reach across comedy, parody & spiritual content.",
+      "Apoorva Kaushal is a top Indian social media manager and content creator from Hathras, UP. Partnered with Harsh Sharma. 2M+ reach across comedy, parody & spiritual content.",
     images: [
       {
         url: "/photos/profile.jpg",
@@ -148,8 +148,7 @@ const graphSchema = {
       "@id": "https://apoorvakaushal.com/#business",
       name: "Apoorva Kaushal Digital Media Services",
       url: "https://apoorvakaushal.com",
-      telephone: "+91-9XXXXXXXXX",
-      email: "apoorva@apoorvakaushal.com",
+      telephone: "+91-9368153189",
       priceRange: "₹₹",
       image: "https://apoorvakaushal.com/photos/profile.jpg",
       address: {
@@ -198,7 +197,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         {/* WhatsApp Float Button */}
         <a
-          href="https://wa.me/919XXXXXXXXX?text=Hi%20Apoorva%2C%20I%20found%20your%20website%20and%20want%20to%20collaborate!"
+          href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%20found%20your%20website%20and%20want%20to%20collaborate!"
           className="wa-float"
           target="_blank"
           rel="noopener noreferrer"

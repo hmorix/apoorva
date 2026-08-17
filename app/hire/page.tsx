@@ -12,6 +12,7 @@ import {
   StarIcon,
   CheckIcon,
   ArrowRightIcon,
+  SparkleIcon,
 } from "@/components/Icons";
 
 export const metadata: Metadata = {
@@ -432,9 +433,10 @@ export default function HirePage() {
             <button
               type="submit"
               className="btn btn-primary"
-              style={{ alignSelf: "flex-start", paddingLeft: 36, paddingRight: 36 }}
+              style={{ alignSelf: "flex-start", paddingLeft: 36, paddingRight: 36, display: "inline-flex", alignItems: "center", gap: 8 }}
             >
-              Send Project Inquiry ✦
+              <SparkleIcon size={14} />
+              <span>Send Project Inquiry</span>
             </button>
           </form>
         </div>

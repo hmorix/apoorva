@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SparkleIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
   title: "Case Studies — Real Results by Apoorva Kaushal",
@@ -150,7 +151,10 @@ export default function CaseStudiesPage() {
           Every brand has a story worth telling. Let's make yours one that people remember.
         </p>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/hire" className="btn btn-primary">Start a Project ✦</Link>
+          <Link href="/hire" className="btn btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <SparkleIcon size={14} />
+            <span>Start a Project</span>
+          </Link>
           <Link href="/contact" className="btn btn-outline">Ask a Question</Link>
         </div>
       </section>

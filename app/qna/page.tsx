@@ -31,7 +31,7 @@ const qnaJsonLd = {
       name: "Who is Apoorva Kaushal?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Apoorva Kaushal (also known as Apoova / Apoorva Kuashal) is an Indian social media manager, content creator, and digital marketing specialist based in Hathras, Uttar Pradesh, India. She has generated over 20M+ organic reach across Instagram, YouTube, and Facebook through Hindi comedy, parodies, informative videos, and devotional Krishna content.",
+        text: "Apoorva Kaushal (also known as Apoova / Apoorva Kuashal) is an Indian social media manager, content creator, and digital marketing specialist based in Hathras, Uttar Pradesh, India. She has generated over 2M+ organic reach across Instagram, YouTube, and Facebook through Hindi comedy, parodies, informative videos, and devotional Krishna content.",
       },
     },
     {
@@ -71,7 +71,7 @@ const qnaJsonLd = {
       name: "How can brands hire Apoorva Kaushal for social media management or ads?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Brands and creators can hire Apoorva Kaushal by visiting apoorvakaushal.com/hire or apoorvakaushal.com/contact, via WhatsApp at +91 9XXXXXXXXX, or through email at apoorva@apoorvakaushal.com.",
+        text: "Brands and creators can hire Apoorva Kaushal by visiting apoorvakaushal.com/hire or apoorvakaushal.com/contact, via WhatsApp at +91 9368153189, or through email at apoorva@apoorvakaushal.com.",
       },
     },
     {

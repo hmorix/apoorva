@@ -7,6 +7,9 @@ import {
   WhatsAppIcon,
   MailIcon,
   MapPinIcon,
+  SparkleIcon,
+  TrendingUpIcon,
+  CheckCircleIcon,
 } from "@/components/Icons";
 
 export default function Footer() {
@@ -14,6 +17,29 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      {/* Top Highlights Banner */}
+      <div className="footer-highlights">
+        <div className="footer-hl-item">
+          <TrendingUpIcon size={16} className="footer-hl-icon" />
+          <span><strong>2M+</strong> All-Time Reach</span>
+        </div>
+        <div className="footer-hl-dot" />
+        <div className="footer-hl-item">
+          <SparkleIcon size={14} className="footer-hl-icon" />
+          <span><strong>340K</strong> Avg. Reel Views</span>
+        </div>
+        <div className="footer-hl-dot" />
+        <div className="footer-hl-item">
+          <CheckCircleIcon size={16} className="footer-hl-icon" />
+          <span><strong>5+</strong> Brand Collaborations</span>
+        </div>
+        <div className="footer-hl-dot" />
+        <div className="footer-hl-item">
+          <MapPinIcon size={15} className="footer-hl-icon" />
+          <span>Hathras, Uttar Pradesh, India</span>
+        </div>
+      </div>
+
       <div className="footer-inner">
         {/* Brand Column */}
         <div className="footer-brand-col">
@@ -21,65 +47,64 @@ export default function Footer() {
             APOORVA KAUSHAL
           </Link>
           <p className="footer-brand-desc">
-            Social Media Manager &amp; Content Creator from Hathras, Uttar Pradesh, India.
-            Hindi Comedy · Parody · Informative · Krishna &amp; Spiritual Content.
+            Social Media Manager &amp; Digital Content Creator based in Hathras, Uttar Pradesh, India. Specializing in authentic Hindi comedy, parody skits, educational explainers, and devotional Krishna content.
           </p>
           <div className="footer-socials">
-            {/* Instagram */}
             <a
               href="https://instagram.com/apoorva__kaushal"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram"
+              aria-label="Instagram (@apoorva__kaushal)"
               className="social-btn"
+              title="Instagram"
             >
               <InstagramIcon size={16} />
             </a>
-            {/* YouTube */}
             <a
               href="https://youtube.com/@_apoorva7__"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="YouTube"
+              aria-label="YouTube (@_apoorva7__)"
               className="social-btn"
+              title="YouTube"
             >
               <YouTubeIcon size={16} />
             </a>
-            {/* X/Twitter */}
             <a
               href="https://twitter.com/apoorva_kaushal"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X (Twitter)"
               className="social-btn"
+              title="X (Twitter)"
             >
               <TwitterXIcon size={15} />
             </a>
-            {/* Facebook */}
             <a
               href="https://facebook.com/apoorva_kaushal"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
               className="social-btn"
+              title="Facebook"
             >
               <FacebookIcon size={16} />
             </a>
-            {/* WhatsApp */}
             <a
               href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%20visited%20your%20website%20and%20would%20love%20to%20collaborate!"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="WhatsApp"
+              aria-label="WhatsApp (+91 9368153189)"
               className="social-btn"
+              title="WhatsApp"
             >
               <WhatsAppIcon size={16} />
             </a>
-            {/* Email */}
             <a
               href="mailto:apoorva@apoorvakaushal.com"
-              aria-label="Email"
+              aria-label="Email (apoorva@apoorvakaushal.com)"
               className="social-btn"
+              title="Email"
             >
               <MailIcon size={16} />
             </a>
@@ -96,6 +121,7 @@ export default function Footer() {
             <li><Link href="/services">Services &amp; Pricing</Link></li>
             <li><Link href="/case-studies">Case Studies</Link></li>
             <li><Link href="/dashboard">Account Dashboard</Link></li>
+            <li><Link href="/#gallery">Interactive Gallery</Link></li>
             <li><Link href="/qna">Questions &amp; Answers</Link></li>
           </ul>
         </div>
@@ -119,10 +145,15 @@ export default function Footer() {
           <ul className="footer-contact-list">
             <li>
               <Link href="/hire" className="footer-hire-link">
-                Hire Me ✦
+                <SparkleIcon size={13} />
+                <span>Hire Me</span>
               </Link>
             </li>
-            <li><Link href="/contact">Contact Form</Link></li>
+            <li>
+              <Link href="/contact" className="footer-icon-link">
+                <span>Contact Form</span>
+              </Link>
+            </li>
             <li>
               <a href="mailto:apoorva@apoorvakaushal.com" className="footer-icon-link">
                 <MailIcon size={14} />
@@ -152,7 +183,7 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p className="footer-copy">
-          © {year} Apoorva Kaushal. All rights reserved. Content Creator &amp; Social Media Manager · Hathras, Uttar Pradesh, India.
+          &copy; {year} Apoorva Kaushal. All rights reserved. Content Creator &amp; Social Media Manager &middot; Hathras, Uttar Pradesh, India.
         </p>
         <div className="footer-legal">
           <Link href="/terms">Terms of Service</Link>

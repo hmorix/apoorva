@@ -8,20 +8,25 @@ import {
   CheckIcon,
   MapPinIcon,
   InstagramIcon,
+  YouTubeIcon,
   GlobeIcon,
   UsersIcon,
-  AwardIcon,
   TrendingUpIcon,
   SparkleIcon,
   WhatsAppIcon,
-  ArrowRightIcon,
   ChartIcon,
+  EyeIcon,
+  PlayIcon,
+  HeartIcon,
+  BriefcaseIcon,
+  LayersIcon,
+  MailIcon,
 } from "@/components/Icons";
 
 export const metadata: Metadata = {
   title: "About Apoorva Kaushal — Content Creator & Social Media Manager from Hathras, UP",
   description:
-    "Learn about Apoorva Kaushal — social media manager and content creator from Hathras, Uttar Pradesh, India. 2M+ reach, 340K avg reel views, Hindi comedy, parodies & Krishna content.",
+    "Learn about Apoorva Kaushal — social media manager and digital content creator from Hathras, Uttar Pradesh, India. 2M+ reach, 340K avg reel views, Hindi comedy, parodies & Krishna content.",
   keywords: [
     "Apoorva Kaushal biography",
     "Apoorva Kaushal life and journey",
@@ -45,28 +50,28 @@ const qualifications = [
 
 const contentPillars = [
   {
-    icon: <LaughIcon size={28} className="about-pillar-icon" />,
+    icon: <LaughIcon size={26} className="about-pillar-icon" />,
     title: "Comedy & Sketches",
     desc: "Relatable Hindi comedy reels capturing everyday family dynamics, college moments, and desi situations.",
     stats: "340K avg. views",
   },
   {
-    icon: <MaskIcon size={28} className="about-pillar-icon" />,
+    icon: <MaskIcon size={26} className="about-pillar-icon" />,
     title: "Character Parodies",
     desc: "Creative character roleplays and situational satire in conversational Hindi that resonate across age groups.",
     stats: "High share rate",
   },
   {
-    icon: <BookIcon size={28} className="about-pillar-icon" />,
+    icon: <BookIcon size={26} className="about-pillar-icon" />,
     title: "Informative Content",
     desc: "Bite-sized knowledge videos, interesting cultural facts, digital tips, and educational explainers in Hindi.",
     stats: "Top save rate",
   },
   {
-    icon: <SpiritualIcon size={28} className="about-pillar-icon" />,
+    icon: <SpiritualIcon size={26} className="about-pillar-icon" />,
     title: "Krishna & Spiritual",
     desc: "Heartfelt Radha-Krishna devotional stories, Bhagavad Gita wisdom, and lyrical spiritual poetry.",
-    stats: "680K+ impressions",
+    stats: "560K+ reach",
   },
 ];
 
@@ -85,17 +90,68 @@ const creatorValues = [
   {
     icon: <TrendingUpIcon size={22} />,
     title: "Organic-First Engagement",
-    desc: "Focusing on hooks, storytelling, and cultural connection rather than hollow trends.",
+    desc: "Focusing on strong hooks, authentic storytelling, and deep cultural connection rather than hollow trends.",
   },
   {
     icon: <UsersIcon size={22} />,
     title: "Hindi Heartland Reach",
-    desc: "Deep resonance with Tier-1, Tier-2, and Tier-3 Hindi-speaking audiences across North India.",
+    desc: "Deep resonance with Tier-1, Tier-2, and Tier-3 Hindi-speaking audiences across North India and Uttar Pradesh.",
   },
   {
     icon: <ChartIcon size={22} />,
     title: "Measurable ROI for Brands",
-    desc: "Transparent performance reporting, high save rates, and conversion-focused UGC campaigns.",
+    desc: "Transparent performance reporting, high save rates, and conversion-focused UGC campaigns with proven ROI.",
+  },
+];
+
+const verifiedStats = [
+  {
+    icon: <EyeIcon size={18} />,
+    num: "2M+",
+    label: "Total Reach (All-time)",
+    sub: "18% vs last quarter",
+  },
+  {
+    icon: <PlayIcon size={16} />,
+    num: "340K",
+    label: "Avg. Reel Views",
+    sub: "24% vs last month",
+  },
+  {
+    icon: <HeartIcon size={16} />,
+    num: "6.8%",
+    label: "Engagement Rate",
+    sub: "1.2pp vs last month",
+  },
+  {
+    icon: <BriefcaseIcon size={16} />,
+    num: "5+",
+    label: "Brands Collaborated",
+    sub: "3 new this year",
+  },
+  {
+    icon: <YouTubeIcon size={16} />,
+    num: "550",
+    label: "Total Subscribers",
+    sub: "60+ this month",
+  },
+  {
+    icon: <TrendingUpIcon size={16} />,
+    num: "400k+",
+    label: "Total Youtube Views",
+    sub: "2× improvement",
+  },
+  {
+    icon: <UsersIcon size={16} />,
+    num: "5K+",
+    label: "Followers (Combined)",
+    sub: "3K this year",
+  },
+  {
+    icon: <LayersIcon size={16} />,
+    num: "500+",
+    label: "Content Pieces Created",
+    sub: "40 this month",
   },
 ];
 
@@ -110,7 +166,7 @@ export default function AboutPage() {
         </div>
         <h1 className="page-hero-title display">APOORVA KAUSHAL</h1>
         <p className="page-hero-sub">
-          Social Media Manager &amp; Content Creator · Hathras, Uttar Pradesh, India
+          Social Media Manager &amp; Content Creator &middot; Hathras, Uttar Pradesh, India
         </p>
       </section>
 
@@ -126,8 +182,8 @@ export default function AboutPage() {
 
             <div className="about-story-text">
               <p>
-                I&apos;m <strong className="highlight">Apoorva Kaushal</strong> — born and raised in{" "}
-                <strong className="highlight">Hathras, Uttar Pradesh</strong>, a historic cultural hub in the Braj/Agra region. My journey into social media strategy began with a conviction: audiences don&apos;t just watch content; they connect with authenticity, cultural nuance, and relatable humor.
+                I&apos;m <strong className="highlight">Apoorva Kaushal</strong> &mdash; born and raised in{" "}
+                <strong className="highlight">Hathras, Uttar Pradesh</strong>, a historic cultural hub in the Braj/Agra region. My journey into social media strategy began with a clear conviction: audiences don&apos;t just watch content; they connect with authenticity, cultural nuance, and relatable humor.
               </p>
               <p>
                 What started as creative sketches and storytelling has evolved into a full-fledged multi-channel digital footprint reaching{" "}
@@ -139,11 +195,13 @@ export default function AboutPage() {
             </div>
 
             <div className="about-cta-row">
-              <Link href="/hire" className="btn btn-primary">
-                Work With Me ✦
+              <Link href="/hire" className="btn btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <SparkleIcon size={14} />
+                <span>Work With Me</span>
               </Link>
-              <Link href="/dashboard" className="btn btn-outline">
-                View Live Stats
+              <Link href="/dashboard" className="btn btn-outline" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <ChartIcon size={14} />
+                <span>View Live Stats</span>
               </Link>
             </div>
           </div>
@@ -156,12 +214,13 @@ export default function AboutPage() {
                   src="/photos/IMG-20260205-WA0035.jpg"
                   alt="Apoorva Kaushal — Content Creator Hathras"
                   className="about-portrait-img"
+                  loading="eager"
                 />
                 <div className="about-portrait-badge">
                   <div className="about-portrait-name">Apoorva Kaushal</div>
                   <div className="about-portrait-loc">
                     <MapPinIcon size={12} />
-                    <span>Hathras, Uttar Pradesh · India</span>
+                    <span>Hathras, Uttar Pradesh &middot; India</span>
                   </div>
                 </div>
               </div>
@@ -169,16 +228,20 @@ export default function AboutPage() {
               {/* Verified Meta Tags */}
               <div className="about-tags-list">
                 <span className="about-tag-pill">
-                  <MapPinIcon size={13} /> Hathras, UP
+                  <MapPinIcon size={13} />
+                  <span>Hathras, UP</span>
                 </span>
                 <span className="about-tag-pill">
-                  <InstagramIcon size={13} /> @apoorva__kaushal
+                  <InstagramIcon size={13} />
+                  <span>@apoorva__kaushal</span>
                 </span>
                 <span className="about-tag-pill">
-                  <UsersIcon size={13} /> She / Her
+                  <UsersIcon size={13} />
+                  <span>She / Her</span>
                 </span>
                 <span className="about-tag-pill">
-                  <GlobeIcon size={13} /> Hindi &amp; English
+                  <GlobeIcon size={13} />
+                  <span>Hindi &amp; English</span>
                 </span>
               </div>
             </div>
@@ -186,23 +249,26 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── STATS STRIP ── */}
-      <div className="stats-strip">
-        {[
-          { num: "2M+", label: "Total Reach (All-time)", sub: "↑ 18% vs last quarter" },
-          { num: "340K", label: "Avg. Reel Views", sub: "↑ 24% vs last month" },
-          { num: "6.8%", label: "Engagement Rate", sub: "↑ 1.2pp vs last month" },
-          { num: "500+", label: "Content Pieces Created", sub: "↑ 40 this month" },
-        ].map((s) => (
-          <div className="stat-item" key={s.label}>
-            <div className="stat-num display">{s.num}</div>
-            <div className="stat-label">{s.label}</div>
-            <div style={{ fontSize: 11, color: "var(--maroon)", fontWeight: 700, marginTop: 4 }}>
-              {s.sub}
+      {/* ── VERIFIED STATS STRIP (8 Complete Metrics) ── */}
+      <section className="about-stats-section">
+        <div className="about-stats-header">
+          <span className="tag tag-maroon">Verified Analytics</span>
+          <h3 className="display about-stats-title">LIFETIME &amp; RECENT GROWTH</h3>
+        </div>
+        <div className="about-stats-grid">
+          {verifiedStats.map((s) => (
+            <div className="about-stat-card" key={s.label}>
+              <div className="about-stat-icon-wrap">{s.icon}</div>
+              <div className="about-stat-num display">{s.num}</div>
+              <div className="about-stat-label">{s.label}</div>
+              <div className="about-stat-sub">
+                <TrendingUpIcon size={11} />
+                <span>{s.sub}</span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </section>
 
       {/* ── 4 CONTENT PILLARS ── */}
       <section className="section">
@@ -310,28 +376,30 @@ export default function AboutPage() {
       {/* ── CTA BANNER ── */}
       <section className="about-cta-section">
         <div className="script" style={{ fontSize: 24, marginBottom: 8, color: "#f5c6ca" }}>
-          Let&apos;s build together
+          Let&apos;s build something iconic
         </div>
         <h2 className="display about-cta-heading">READY TO COLLABORATE?</h2>
         <p className="about-cta-sub">
-          Whether you need complete social media account management, viral Hindi UGC reels, or high-converting Meta ad campaigns — let&apos;s create something impactful.
+          Whether you need complete social media account management, viral Hindi UGC reels, or high-converting Meta ad campaigns &mdash; let&apos;s create something impactful together.
         </p>
         <div className="about-cta-btns">
-          <Link href="/hire" className="btn btn-maroon">
-            View Packages &amp; Pricing ✦
+          <Link href="/hire" className="btn btn-maroon" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <SparkleIcon size={14} />
+            <span>View Packages &amp; Pricing</span>
           </Link>
           <a
             href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%20saw%20your%20about%20page%20and%20would%20love%20to%20collaborate!"
             target="_blank"
             rel="noopener noreferrer"
             className="btn"
-            style={{ background: "#25D366", color: "white" }}
+            style={{ background: "#25D366", color: "white", display: "inline-flex", alignItems: "center", gap: 8 }}
           >
             <WhatsAppIcon size={16} />
             <span>Chat on WhatsApp</span>
           </a>
-          <Link href="/contact" className="btn" style={{ background: "rgba(255,255,255,.12)", color: "white", border: "1px solid rgba(255,255,255,.25)" }}>
-            Contact Form
+          <Link href="/contact" className="btn" style={{ background: "rgba(255,255,255,.12)", color: "white", border: "1px solid rgba(255,255,255,.25)", display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <MailIcon size={14} />
+            <span>Contact Form</span>
           </Link>
         </div>
       </section>

@@ -8,6 +8,7 @@ import {
   MapPinIcon,
   CompassIcon,
   ArrowRightIcon,
+  SparkleIcon,
 } from "@/components/Icons";
 
 export const metadata: Metadata = {
@@ -289,8 +290,9 @@ export default function ContactPage() {
               />
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
-              <button type="submit" className="btn btn-primary">
-                Send Message ✦
+              <button type="submit" className="btn btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <SparkleIcon size={14} />
+                <span>Send Message</span>
               </button>
               <a
                 href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%27d%20like%20to%20connect!"

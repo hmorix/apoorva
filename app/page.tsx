@@ -99,7 +99,7 @@ export default function HomePage() {
         {/* Center Column */}
         <div className="hero-center">
           <h1 className="hero-title display">
-            Apoorva Kaushal<span className="spark">✳</span>
+            Apoorva Kaushal<span className="spark"><SparkleIcon size={22} /></span>
           </h1>
           <div className="hero-photo-wrap">
             <div className="hero-photo">
@@ -162,7 +162,7 @@ export default function HomePage() {
         <div className="panel" id="about-panel">
           <div className="dots">⋯</div>
           <div className="panel-head">
-            <span className="spark-icon">✳</span>
+            <span className="spark-icon"><SparkleIcon size={16} /></span>
             <h2 className="display">WHO AM I</h2>
           </div>
           <div className="whoami-body">
@@ -264,7 +264,7 @@ export default function HomePage() {
         <div className="panel" id="work">
           <div className="dots">⋯</div>
           <div className="panel-head">
-            <span className="spark-icon">✳</span>
+            <span className="spark-icon"><SparkleIcon size={16} /></span>
             <h2 className="display">MY WORK INCLUDES</h2>
           </div>
           <div className="work-grid">
@@ -499,8 +499,8 @@ export default function HomePage() {
         {[
           { num: "2M+", label: "Total Reach (All-time)" },
           { num: "340K", label: "Avg. Reel Views" },
+          { num: "6.8%", label: "Engagement Rate" },
           { num: "5K+", label: "Combined Followers" },
-          { num: "500+", label: "Content Pieces" },
         ].map((s) => (
           <div className="stat-item" key={s.label}>
             <div className="stat-num display">{s.num}</div>
@@ -521,13 +521,14 @@ export default function HomePage() {
           Social media strategy, viral Reels, Meta ads, or authentic brand collaborations in Hathras, Uttar Pradesh, and across India.
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", alignItems: "center" }}>
-          <Link href="/hire" className="btn btn-maroon" style={{ fontSize: 12.5, padding: "12px 28px" }}>
-            Check Pricing ✦
+          <Link href="/hire" className="btn btn-maroon" style={{ fontSize: 12.5, padding: "12px 28px", display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <SparkleIcon size={14} />
+            <span>Check Pricing</span>
           </Link>
           <a
             href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%20saw%20your%20website%20and%20would%20love%20to%20collaborate!"
             className="btn"
-            style={{ background: "#25D366", color: "white" }}
+            style={{ background: "#25D366", color: "white", display: "inline-flex", alignItems: "center", gap: 8 }}
             target="_blank"
             rel="noopener noreferrer"
           >
