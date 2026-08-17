@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HelpCircleIcon } from "@/components/Icons";
+import { HelpCircleIcon, CheckIcon, ArrowRightIcon, MapPinIcon, HeartIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
   title: "Q&A — Frequently Asked Questions | Apoorva Kaushal & Harsh Sharma",
