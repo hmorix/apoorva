@@ -1,32 +1,155 @@
 "use client";
 
 import { useState } from "react";
-import {
-    Instagram,
-    Youtube,
-    Twitter,
-    Facebook,
-    TrendingUp,
-    Eye,
-    Users,
-    Briefcase,
-    UserPlus,
-    BarChart3,
-    Users2,
-    FileText,
-    ArrowUp,
-    ArrowDown,
-    Calendar,
-    MapPin,
-    Award,
-    Target,
-    Zap,
-    Megaphone,
-    Activity,
-    Layers,
-    PieChart,
-    BarChart,
-} from "lucide-react";
+
+// ─── ICONS (inline SVG, no external deps) ────────────────────────────
+const Icons = {
+  Instagram: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  ),
+  Youtube: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+    </svg>
+  ),
+  Twitter: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+      <path d="M4 20l6.768 -6.768" />
+      <path d="M19 4l-6.768 6.768" />
+    </svg>
+  ),
+  Facebook: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  ),
+  TrendingUp: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+      <polyline points="17 6 23 6 23 12" />
+    </svg>
+  ),
+  Eye: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ),
+  Users: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  ),
+  Briefcase: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    </svg>
+  ),
+  UserPlus: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="8.5" cy="7" r="4" />
+      <line x1="20" y1="8" x2="20" y2="14" />
+      <line x1="23" y1="11" x2="17" y2="11" />
+    </svg>
+  ),
+  BarChart3: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="20" x2="12" y2="10" />
+      <line x1="18" y1="20" x2="18" y2="4" />
+      <line x1="6" y1="20" x2="6" y2="16" />
+    </svg>
+  ),
+  Users2: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  ),
+  FileText: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <polyline points="10 9 9 9 8 9" />
+    </svg>
+  ),
+  ArrowUp: () => (
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5" />
+      <polyline points="5 12 12 5 19 12" />
+    </svg>
+  ),
+  ArrowDown: () => (
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <polyline points="19 12 12 19 5 12" />
+    </svg>
+  ),
+  Calendar: () => (
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  ),
+  MapPin: () => (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  ),
+  Zap: () => (
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+    </svg>
+  ),
+  Megaphone: () => (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 11l18-5v12l-18-5z" />
+      <path d="M5 12v4a2 2 0 0 0 2 2h2" />
+    </svg>
+  ),
+  Activity: () => (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+    </svg>
+  ),
+  Layers: () => (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </svg>
+  ),
+  PieChart: () => (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+      <path d="M22 12A10 10 0 0 0 12 2v10z" />
+    </svg>
+  ),
+  BarChart: () => (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="20" x2="12" y2="10" />
+      <line x1="18" y1="20" x2="18" y2="4" />
+      <line x1="6" y1="20" x2="6" y2="16" />
+    </svg>
+  ),
+};
 
 // ─── DATA ──────────────────────────────────────────────────────────────
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -36,10 +159,10 @@ const maxReach = Math.max(...reachData);
 const maxEngage = Math.max(...engageData);
 
 const platforms = [
-    { icon: Instagram, name: "Instagram", followers: "48.5K", pct: 85, fill: "#E4405F" },
-    { icon: Youtube, name: "YouTube", followers: "22.1K", pct: 55, fill: "#FF0000" },
-    { icon: Twitter, name: "X (Twitter)", followers: "8.4K", pct: 28, fill: "#1DA1F2" },
-    { icon: Facebook, name: "Facebook", followers: "14.6K", pct: 40, fill: "#1877F2" },
+    { icon: Icons.Instagram, name: "Instagram", followers: "48.5K", pct: 85, fill: "#E4405F" },
+    { icon: Icons.Youtube, name: "YouTube", followers: "22.1K", pct: 55, fill: "#FF0000" },
+    { icon: Icons.Twitter, name: "X (Twitter)", followers: "8.4K", pct: 28, fill: "#1DA1F2" },
+    { icon: Icons.Facebook, name: "Facebook", followers: "14.6K", pct: 40, fill: "#1877F2" },
 ];
 
 const campaigns = [
@@ -52,14 +175,14 @@ const campaigns = [
 ];
 
 const kpiData = [
-    { label: "Total Reach (All-time)", num: "2M+", change: "↑ 18% vs last quarter", up: true, icon: Users2 },
-    { label: "Avg. Reel Views", num: "340K", change: "↑ 24% vs last month", up: true, icon: Eye },
-    { label: "Engagement Rate", num: "6.8%", change: "↑ 1.2pp vs last month", up: true, icon: TrendingUp },
-    { label: "Brands Collaborated", num: "5+", change: "↑ 8 new this year", up: true, icon: Briefcase },
-    { label: "Total Subscriber", num: "550", change: "↑ 6 this quarter", up: true, icon: UserPlus },
-    { label: "Total Youtube Views", num: "400k+", change: "↑ 0.4× improvement", up: true, icon: BarChart3 },
-    { label: "Followers (Combined)", num: "5K+", change: "↑ 12K this month", up: true, icon: Users },
-    { label: "Content Pieces Created", num: "500+", change: "↑ 40 this month", up: true, icon: FileText },
+    { label: "Total Reach (All-time)", num: "2M+", change: "↑ 18% vs last quarter", up: true, icon: Icons.Users2 },
+    { label: "Avg. Reel Views", num: "340K", change: "↑ 24% vs last month", up: true, icon: Icons.Eye },
+    { label: "Engagement Rate", num: "6.8%", change: "↑ 1.2pp vs last month", up: true, icon: Icons.TrendingUp },
+    { label: "Brands Collaborated", num: "5+", change: "↑ 8 new this year", up: true, icon: Icons.Briefcase },
+    { label: "Total Subscriber", num: "550", change: "↑ 6 this quarter", up: true, icon: Icons.UserPlus },
+    { label: "Total Youtube Views", num: "400k+", change: "↑ 0.4× improvement", up: true, icon: Icons.BarChart3 },
+    { label: "Followers (Combined)", num: "5K+", change: "↑ 12K this month", up: true, icon: Icons.Users },
+    { label: "Content Pieces Created", num: "500+", change: "↑ 40 this month", up: true, icon: Icons.FileText },
 ];
 
 const locations = [
@@ -70,7 +193,7 @@ const locations = [
     { loc: "International", pct: 8 },
 ];
 
-// ─── COMPONENT ────────────────────────────────────────────────────────
+// ─── MAIN COMPONENT ──────────────────────────────────────────────────
 export default function DashboardPage() {
     const [activeChart, setActiveChart] = useState<"reach" | "engagement">("reach");
     const chartData = activeChart === "reach" ? reachData : engageData;
@@ -82,7 +205,7 @@ export default function DashboardPage() {
             {/* ─── PAGE HERO ─── */}
             <section className="page-hero">
                 <div className="hero-badge">
-                    <Activity size={14} strokeWidth={2.5} />
+                    <Icons.Activity />
                     <span>Analytics</span>
                 </div>
                 <h1 className="page-hero-title display">ACCOUNT DASHBOARD</h1>
@@ -101,12 +224,12 @@ export default function DashboardPage() {
                             <div className="dash-kpi-header">
                                 <div className="dash-kpi-label">{k.label}</div>
                                 <div className="dash-kpi-icon">
-                                    <Icon size={18} strokeWidth={2} />
+                                    <Icon />
                                 </div>
                             </div>
                             <div className="dash-kpi-num display">{k.num}</div>
                             <div className={`dash-kpi-change ${k.up ? "" : "down"}`}>
-                                {k.up ? <ArrowUp size={12} /> : <ArrowDown size={12} />}
+                                {k.up ? <Icons.ArrowUp /> : <Icons.ArrowDown />}
                                 {k.change.replace(/[↑↓]\s*/, "")}
                             </div>
                         </div>
@@ -130,7 +253,7 @@ export default function DashboardPage() {
                                     onClick={() => setActiveChart(t)}
                                     className={`chart-toggle-btn ${activeChart === t ? "active" : ""}`}
                                 >
-                                    {t === "reach" ? <BarChart size={14} /> : <PieChart size={14} />}
+                                    {t === "reach" ? <Icons.BarChart /> : <Icons.PieChart />}
                                     {t}
                                 </button>
                             ))}
@@ -138,7 +261,7 @@ export default function DashboardPage() {
                     </div>
                     <div className="bar-chart">
                         {chartData.map((val, i) => {
-                            const isHighlight = i === 10; // November peak
+                            const isHighlight = i === 10;
                             return (
                                 <div className="bar-col" key={months[i]}>
                                     <div
@@ -159,7 +282,7 @@ export default function DashboardPage() {
                     {/* Platform Breakdown */}
                     <div className="dash-platform">
                         <div className="dash-chart-title" style={{ marginBottom: 16 }}>
-                            <Layers size={16} strokeWidth={2} />
+                            <Icons.Layers />
                             Platform Breakdown
                         </div>
                         {platforms.map((p) => {
@@ -167,7 +290,7 @@ export default function DashboardPage() {
                             return (
                                 <div className="platform-row" key={p.name}>
                                     <span className="platform-icon">
-                                        <Icon size={18} strokeWidth={2} />
+                                        <Icon />
                                     </span>
                                     <span className="platform-name">{p.name}</span>
                                     <div className="platform-bar-bg">
@@ -182,7 +305,7 @@ export default function DashboardPage() {
                     {/* Location breakdown */}
                     <div className="dash-location">
                         <div className="dash-chart-title" style={{ marginBottom: 16 }}>
-                            <MapPin size={16} strokeWidth={2} />
+                            <Icons.MapPin />
                             Top Locations
                         </div>
                         {locations.map((l) => (
@@ -203,7 +326,7 @@ export default function DashboardPage() {
             <div className="dash-table-section">
                 <div className="table-header">
                     <div className="table-title">
-                        <Megaphone size={18} strokeWidth={2} />
+                        <Icons.Megaphone />
                         Campaign Performance
                     </div>
                     <span className="table-badge">6 campaigns</span>
@@ -231,7 +354,7 @@ export default function DashboardPage() {
                                     <td className="roas-value">{c.roas}</td>
                                     <td>
                                         <span className={`status-pill status-${c.status}`}>
-                                            {c.status === "active" && <Zap size={12} strokeWidth={2.5} />}
+                                            {c.status === "active" && <Icons.Zap />}
                                             {c.status.charAt(0).toUpperCase() + c.status.slice(1)}
                                         </span>
                                     </td>
@@ -242,15 +365,14 @@ export default function DashboardPage() {
                 </div>
 
                 <p className="table-footer-note">
-                    <Calendar size={12} strokeWidth={2} />
+                    <Icons.Calendar />
                     Dashboard shows historical campaign benchmarks. Numbers are representative of real past results.
                     Location: Hathras, Uttar Pradesh, India.
                 </p>
             </div>
 
-            {/* ─── GLOBAL STYLES ─── */}
+            {/* ─── GLOBAL STYLES (same as before) ─── */}
             <style jsx>{`
-                /* ── Reset / Base ── */
                 .dash-wrapper {
                     --navy: #0b1a33;
                     --maroon: #b22234;
@@ -273,8 +395,6 @@ export default function DashboardPage() {
                     font-weight: 700;
                     letter-spacing: -0.02em;
                 }
-
-                /* ── Hero ── */
                 .page-hero {
                     margin-bottom: 32px;
                     padding-bottom: 24px;
@@ -308,8 +428,6 @@ export default function DashboardPage() {
                     margin: 0;
                     line-height: 1.5;
                 }
-
-                /* ── KPI Grid ── */
                 .dash-grid {
                     display: grid;
                     grid-template-columns: repeat(4, 1fr);
@@ -367,8 +485,6 @@ export default function DashboardPage() {
                 .dash-kpi-change svg {
                     flex-shrink: 0;
                 }
-
-                /* ── Chart Row ── */
                 .dash-chart-row {
                     display: grid;
                     grid-template-columns: 1.6fr 1fr;
@@ -401,7 +517,6 @@ export default function DashboardPage() {
                     box-shadow: var(--shadow);
                     border: 1px solid var(--line);
                 }
-
                 .chart-header {
                     display: flex;
                     justify-content: space-between;
@@ -443,8 +558,6 @@ export default function DashboardPage() {
                 .chart-toggle-btn:not(.active):hover {
                     background: #f0f4f9;
                 }
-
-                /* ── Bar Chart ── */
                 .bar-chart {
                     display: flex;
                     align-items: flex-end;
@@ -478,8 +591,6 @@ export default function DashboardPage() {
                     margin-top: 6px;
                     letter-spacing: 0.02em;
                 }
-
-                /* ── Platform Rows ── */
                 .platform-row {
                     display: flex;
                     align-items: center;
@@ -525,8 +636,6 @@ export default function DashboardPage() {
                     text-align: right;
                     min-width: 44px;
                 }
-
-                /* ── Location Rows ── */
                 .location-row {
                     display: flex;
                     align-items: center;
@@ -548,8 +657,6 @@ export default function DashboardPage() {
                     min-width: 36px;
                     text-align: right;
                 }
-
-                /* ── Table Section ── */
                 .dash-table-section {
                     background: var(--card);
                     border-radius: var(--radius);
@@ -644,7 +751,6 @@ export default function DashboardPage() {
                     border-top: 1px solid var(--line);
                 }
 
-                /* ── Responsive ── */
                 @media (max-width: 1100px) {
                     .dash-chart-row {
                         grid-template-columns: 1fr;
