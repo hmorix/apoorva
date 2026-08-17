@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     "Apoorva Kaushal services",
     "social media manager Hathras",
   ],
-  alternates: { canonical: "https://apoorvakaushal.com/services" },
+  alternates: { canonical: "https://apoorvakaushal.vercel.app/services" },
 };
 
 const services = [

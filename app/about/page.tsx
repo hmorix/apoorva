@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "Apoorva Kaushal Uttar Pradesh creator",
     "Apoorva Kaushal social media manager",
   ],
-  alternates: { canonical: "https://apoorvakaushal.com/about" },
+  alternates: { canonical: "https://apoorvakaushal.vercel.app/about" },
 };
 
 const qualifications = [

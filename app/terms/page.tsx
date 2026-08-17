@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms & Conditions — Apoorva Kaushal",
   description: "Terms and conditions for using apoorvakaushal.com and engaging Apoorva Kaushal's services.",
-  alternates: { canonical: "https://apoorvakaushal.com/terms" },
+  alternates: { canonical: "https://apoorvakaushal.vercel.app/terms" },
 };
 
 export default function TermsPage() {

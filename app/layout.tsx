@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 /* ── ADVANCED SEO, GEO & AEO DEFAULTS ───────────────────────── */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://apoorvakaushal.com"),
+  metadataBase: new URL("https://apoorvakaushal.vercel.app"),
   title: {
     default: "Apoorva Kaushal — Social Media Manager & Content Creator | Hathras, India",
     template: "%s | Apoorva Kaushal",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "Apoorva Kaushal content creator", "Apoorva Kaushal Uttar Pradesh", "Hindi comedy creator",
     "Indian digital creator", "Krishna content creator India", "social media manager Hathras",
   ],
-  authors: [{ name: "Apoorva Kaushal", url: "https://apoorvakaushal.com" }],
+  authors: [{ name: "Apoorva Kaushal", url: "https://apoorvakaushal.vercel.app" }],
   creator: "Apoorva Kaushal",
   publisher: "Apoorva Kaushal",
   openGraph: {
@@ -86,7 +86,7 @@ const graphSchema = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://apoorvakaushal.com/#person",
+      "@id": "https://apoorvakaushal.vercel.app/#person",
       name: "Apoorva Kaushal",
       alternateName: [
         "Apoova",
@@ -97,8 +97,8 @@ const graphSchema = {
       ],
       description:
         "Indian Social Media Manager and Content Creator based in Hathras, Uttar Pradesh. Known for Hindi comedy, parodies, informative videos, and Krishna prem devotional content.",
-      url: "https://apoorvakaushal.com",
-      image: "https://apoorvakaushal.com/photos/profile.jpg",
+      url: "https://apoorvakaushal.vercel.app",
+      image: "https://apoorvakaushal.vercel.app/photos/profile.jpg",
       gender: "Female",
       nationality: { "@type": "Country", name: "India" },
       homeLocation: {
@@ -137,20 +137,20 @@ const graphSchema = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://apoorvakaushal.com/#website",
-      url: "https://apoorvakaushal.com",
+      "@id": "https://apoorvakaushal.vercel.app/#website",
+      url: "https://apoorvakaushal.vercel.app",
       name: "Apoorva Kaushal Official",
       description: "Official portfolio, analytics dashboard, case studies, and Q&A for Apoorva Kaushal.",
-      publisher: { "@id": "https://apoorvakaushal.com/#person" },
+      publisher: { "@id": "https://apoorvakaushal.vercel.app/#person" },
     },
     {
       "@type": "ProfessionalService",
-      "@id": "https://apoorvakaushal.com/#business",
+      "@id": "https://apoorvakaushal.vercel.app/#business",
       name: "Apoorva Kaushal Digital Media Services",
-      url: "https://apoorvakaushal.com",
+      url: "https://apoorvakaushal.vercel.app",
       telephone: "+91-9368153189",
       priceRange: "₹₹",
-      image: "https://apoorvakaushal.com/photos/profile.jpg",
+      image: "https://apoorvakaushal.vercel.app/photos/profile.jpg",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Hathras",

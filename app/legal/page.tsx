@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Legal Agreement — Apoorva Kaushal",
   description: "Legal agreement, disclaimer and engagement terms for Apoorva Kaushal's social media and content creation services.",
-  alternates: { canonical: "https://apoorvakaushal.com/legal" },
+  alternates: { canonical: "https://apoorvakaushal.vercel.app/legal" },
 };
 
 export default function LegalPage() {

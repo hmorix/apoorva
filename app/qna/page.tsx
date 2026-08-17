@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     "Apoorva Kaushal biography", "Apoorva Kaushal QnA", "Apoorva Kaushal FAQ",
     "social media manager Hathras", "content creator Uttar Pradesh",
   ],
-  alternates: { canonical: "https://apoorvakaushal.com/qna" },
+  alternates: { canonical: "https://apoorvakaushal.vercel.app/qna" },
   openGraph: {
     title: "Apoorva Kaushal Q&A — Knowledge & Entity Overview",
     description: "Official Q&A answering top search queries about Apoorva Kaushal, Harsh Sharma, Hathras roots, HMorix association, and digital career.",
-    url: "https://apoorvakaushal.com/qna",
+    url: "https://apoorvakaushal.vercel.app/qna",
     type: "website",
   },
 };

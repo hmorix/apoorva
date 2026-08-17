@@ -21,7 +21,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: ["/photos/", "/"],
       },
     ],
-    sitemap: "https://apoorvakaushal.com/sitemap.xml",
-    host: "https://apoorvakaushal.com",
+    sitemap: "https://apoorvakaushal.vercel.app/sitemap.xml",
+    host: "https://apoorvakaushal.vercel.app",
   };
 }

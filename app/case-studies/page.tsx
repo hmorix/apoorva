@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Instagram growth case study", "Meta ads case study India",
     "content creator results India", "Hindi creator campaign results",
   ],
-  alternates: { canonical: "https://apoorvakaushal.com/case-studies" },
+  alternates: { canonical: "https://apoorvakaushal.vercel.app/case-studies" },
 };
 
 const cases = [

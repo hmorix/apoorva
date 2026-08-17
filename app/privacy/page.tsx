@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy — Apoorva Kaushal",
   description: "Privacy policy for apoorvakaushal.com. Learn how Apoorva Kaushal collects, uses and protects your personal data.",
-  alternates: { canonical: "https://apoorvakaushal.com/privacy" },
+  alternates: { canonical: "https://apoorvakaushal.vercel.app/privacy" },
 };
 
 export default function PrivacyPage() {
