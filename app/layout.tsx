@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Script from "next/script";
 
 /* ── ADVANCED SEO, GEO & AEO DEFAULTS ───────────────────────── */
 export const metadata: Metadata = {
@@ -195,6 +196,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
         </div>
+
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-NZSST6MJC1"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NZSST6MJC1');
+          `}
+        </Script>
+
         {/* WhatsApp Float Button */}
         <a
           href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%20found%20your%20website%20and%20want%20to%20collaborate!"
