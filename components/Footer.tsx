@@ -47,7 +47,7 @@ export default function Footer() {
             APOORVA KAUSHAL
           </Link>
           <p className="footer-brand-desc">
-            Social Media Manager &amp; Digital Content Creator based in Hathras, Uttar Pradesh, India. Specializing in authentic Hindi comedy, parody skits, educational explainers, and devotional Krishna content.
+            Social Media Creator &amp; Digital Content Creator based in Hathras, Uttar Pradesh, India. Specializing in authentic Hindi comedy, parody skits, educational explainers, and devotional Krishna content.
           </p>
           <div className="footer-socials">
             <a
@@ -183,7 +183,7 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p className="footer-copy">
-          &copy; {year} Apoorva Kaushal. All rights reserved. Content Creator &amp; Social Media Manager &middot; Hathras, Uttar Pradesh, India.
+          &copy; {year} Apoorva Kaushal. All rights reserved. Content Creator &amp; Social Media Creator &middot; Hathras, Uttar Pradesh, India.
         </p>
         <div className="footer-legal">
           <Link href="/terms">Terms of Service</Link>

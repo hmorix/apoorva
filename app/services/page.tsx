@@ -1,45 +1,64 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  PhoneIcon,
   VideoIcon,
+  PhoneIcon,
   ChartIcon,
   HandshakeIcon,
   PenIcon,
   SpiritualIcon,
   CheckIcon,
   WhatsAppIcon,
-  ArrowRightIcon,
   SparkleIcon,
 } from "@/components/Icons";
 
 export const metadata: Metadata = {
-  title: "Services & Pricing — Social Media Management, Content Creation & Meta Ads",
+  title: "Services & Pricing — Video Creation, Script Writing, Meta Ads, SEO & More",
   description:
-    "Apoorva Kaushal offers social media management, content creation (Reels, UGC), Meta/Instagram ads, brand collaboration, SEO & copywriting services. Based in Hathras, India.",
+    "Apoorva Kaushal offers video creation, script writing, social media management, Meta/Instagram ads, SEO, website content, brand collaboration & spiritual content. Based in Hathras, India.",
   keywords: [
-    "social media management India",
+    "video creation service India",
+    "script writing for social media India",
+    "social media creator India",
     "content creation service India",
     "Meta ads India",
     "Instagram reels creator India",
+    "SEO service India",
+    "website content India",
     "brand collaboration India",
-    "hire social media manager India",
+    "hire social media creator India",
     "Apoorva Kaushal services",
-    "social media manager Hathras",
+    "HMorix services",
+    "social media creator Hathras",
   ],
   alternates: { canonical: "https://apoorvakaushal.vercel.app/services" },
 };
 
 const services = [
   {
+    icon: <VideoIcon size={24} />,
+    name: "Video Creation & Script Writing",
+    tagline: "Engaging videos from concept to final cut",
+    price: "Starting ₹6,000/video",
+    desc: "End-to-end video production — script writing, filming direction, editing, captions and platform optimisation. Every video is scripted for maximum engagement, retention and shares.",
+    features: [
+      "Custom script writing for Reels & YouTube Shorts",
+      "Hook-driven storytelling for maximum retention",
+      "Full video editing with animated captions",
+      "Trend-aligned viral audio & music integration",
+      "Platform-optimised 9:16 & 16:9 export",
+      "Thumbnail & cover design included",
+    ],
+  },
+  {
     icon: <PhoneIcon size={24} />,
     name: "Social Media Management",
     tagline: "Full-service account growth",
     price: "Starting ₹15,000/mo",
-    desc: "End-to-end management of your Instagram, YouTube or Facebook account. Content planning, posting, engagement, analytics and growth strategy — all handled.",
+    desc: "End-to-end management of your Instagram, YouTube or Facebook account. Content planning, scripting, posting, engagement, analytics and growth strategy — all handled by Apoorva.",
     features: [
       "Monthly content calendar & strategy",
-      "Regular scheduled posting",
+      "Regular scheduled posting across platforms",
       "Audience engagement & DM monitoring",
       "Monthly performance & growth report",
       "Hashtag & SEO keyword strategy",
@@ -47,33 +66,33 @@ const services = [
     ],
   },
   {
-    icon: <VideoIcon size={24} />,
-    name: "Content Creation & UGC",
-    tagline: "Video, reels & visual content",
-    price: "Starting ₹8,000/project",
-    desc: "High-quality Reels, short-form videos, UGC content and Instagram feed visuals. Scripted, styled and optimised for maximum watch time and organic engagement.",
+    icon: <ChartIcon size={24} />,
+    name: "Meta Ads & Campaigns",
+    tagline: "Facebook, Instagram & Google advertising",
+    price: "Starting ₹12,000/mo",
+    desc: "Strategy, creative, audience targeting, A/B testing and daily optimisation of your Facebook, Instagram and Google ad campaigns. Full transparency on spend and ROAS.",
     features: [
-      "Scripting & storytelling concepts",
-      "On-camera Hindi & English delivery",
-      "Full video editing with animated captions",
-      "Trend-aligned viral audio integration",
-      "Custom thumbnail & cover design",
-      "Platform-optimised 9:16 export",
+      "Targeted Facebook & Instagram campaign setup",
+      "High-converting ad copy & visuals",
+      "Google Ads & Meta Adsense management",
+      "Audience segmentation & retargeting",
+      "Daily budget & ROAS optimisation",
+      "Conversion tracking & pixel setup",
     ],
   },
   {
-    icon: <ChartIcon size={24} />,
-    name: "Meta Ads Campaigns",
-    tagline: "Facebook & Instagram advertising",
-    price: "Starting ₹12,000/mo",
-    desc: "Strategy, creative, audience targeting, A/B testing and daily optimisation of your Facebook and Instagram ad campaigns. Full transparency on spend and ROAS.",
+    icon: <PenIcon size={24} />,
+    name: "SEO & Website Content",
+    tagline: "Words that rank and convert",
+    price: "Starting ₹5,000/project",
+    desc: "Keyword research, website copy, landing pages, social media captions, blog content and ad copy — all crafted to rank organically on Google and turn visitors into buyers.",
     features: [
-      "Targeted campaign structure setup",
-      "High-converting ad copy & visuals",
-      "Audience segmentation & retargeting",
-      "Daily budget & ROAS optimisation",
-      "Clear weekly performance dashboards",
-      "Conversion tracking & pixel setup",
+      "Targeted keyword & entity research",
+      "Conversion-focused landing page copy",
+      "Website content writing (Hindi & English)",
+      "Engaging social media captions",
+      "Articles & blog posts",
+      "Search-optimized meta descriptions",
     ],
   },
   {
@@ -81,7 +100,7 @@ const services = [
     name: "Brand Collaboration",
     tagline: "Sponsored & partnership content",
     price: "Custom quote",
-    desc: "Authentic sponsored content, product integrations and brand partnerships. Reaching 2M+ audience across beauty, lifestyle, fashion, tech and spiritual niches.",
+    desc: "Authentic sponsored content, product integrations and brand partnerships reaching 2M+ audience across beauty, lifestyle, fashion, tech and spiritual niches.",
     features: [
       "Dedicated Reel or YouTube video",
       "Multi-story Instagram campaign",
@@ -89,21 +108,6 @@ const services = [
       "Commercial usage rights included",
       "Detailed post-campaign reach analytics",
       "Long-term ambassador packages",
-    ],
-  },
-  {
-    icon: <PenIcon size={24} />,
-    name: "SEO & Copywriting",
-    tagline: "Words that rank and convert",
-    price: "Starting ₹5,000/project",
-    desc: "Keyword research, website copy, social media captions, blog content and ad copy — all crafted to rank organically on Google and turn viewers into buyers.",
-    features: [
-      "Targeted keyword & entity research",
-      "Conversion-focused landing page copy",
-      "Engaging social media captions",
-      "Articles & blog posts (Hindi & English)",
-      "High-converting ad headlines & CTAs",
-      "Search-optimized meta descriptions",
     ],
   },
   {
@@ -128,13 +132,14 @@ export default function ServicesPage() {
     <>
       {/* ── PAGE HERO ── */}
       <section className="page-hero">
-        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
           <span className="tag">Services</span>
           <span className="tag tag-maroon">Clear Pricing</span>
+          <span className="tag tag-maroon">HMorix</span>
         </div>
         <h1 className="page-hero-title display">SERVICES &amp; PRICING</h1>
         <p className="page-hero-sub">
-          Social media management, content creation, Meta ads and brand collaborations — tailored for brands and businesses across India.
+          Video creation, script writing, social media management, Meta ads, SEO, website content and brand collaborations — tailored for brands and businesses across India by Apoorva Kaushal &amp; HMorix.
         </p>
       </section>
 
@@ -188,13 +193,13 @@ export default function ServicesPage() {
             },
             {
               step: "02",
-              title: "Strategy & Proposal",
-              desc: "I craft a customized content calendar and transparent execution plan within 48 hours.",
+              title: "Strategy & Script",
+              desc: "I craft a customized content strategy, video scripts and transparent execution plan within 48 hours.",
             },
             {
               step: "03",
-              title: "Content & Launch",
-              desc: "Content is written, produced, polished, and scheduled with your approval.",
+              title: "Create & Launch",
+              desc: "Videos are scripted, produced, edited, polished and scheduled with your approval before going live.",
             },
             {
               step: "04",

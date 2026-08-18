@@ -166,7 +166,7 @@ export default function AboutPage() {
         </div>
         <h1 className="page-hero-title display">APOORVA KAUSHAL</h1>
         <p className="page-hero-sub">
-          Social Media Manager &amp; Content Creator &middot; Hathras, Uttar Pradesh, India
+          Social Media Creator &amp; Content Creator &middot; Hathras, Uttar Pradesh, India
         </p>
       </section>
 
