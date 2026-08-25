@@ -122,7 +122,7 @@ export default function Footer() {
             <li><Link href="/case-studies">Case Studies</Link></li>
             <li><Link href="/dashboard">Account Dashboard</Link></li>
             <li><Link href="/#gallery">Interactive Gallery</Link></li>
-            <li><Link href="/qna">Questions &amp; Answers</Link></li>
+
           </ul>
         </div>
 
@@ -157,7 +157,7 @@ export default function Footer() {
             <li>
               <a href="mailto:apoorva@apoorvakaushal.com" className="footer-icon-link">
                 <MailIcon size={14} />
-                <span>apoorva@apoorvakaushal.com</span>
+                <span>apoorva@apoorva.hmorix.in</span>
               </a>
             </li>
             <li>
