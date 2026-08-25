@@ -6,7 +6,7 @@ import Script from "next/script";
 
 /* ── ADVANCED SEO, GEO & AEO DEFAULTS ───────────────────────── */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://apoorvakaushal.vercel.app"),
+  metadataBase: new URL("https://apoorva.hmorix.in"),
   title: {
     default: "Apoorva Kaushal — Social Media Manager & Content Creator | Hathras, India",
     template: "%s | Apoorva Kaushal",
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     "Apoorva Kaushal content creator", "Apoorva Kaushal Uttar Pradesh", "Hindi comedy creator",
     "Indian digital creator", "Krishna content creator India", "social media manager Hathras",
   ],
-  authors: [{ name: "Apoorva Kaushal", url: "https://apoorvakaushal.vercel.app" }],
+  authors: [{ name: "Apoorva Kaushal", url: "https://apoorva..hmorix.in" }],
   creator: "Apoorva Kaushal",
   publisher: "Apoorva Kaushal",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://apoorvakaushal.vercel.app",
+    url: "https://apoorva.hmorix.in",
     siteName: "Apoorva Kaushal",
     title: "Apoorva Kaushal — Social Media Manager & Content Creator | Hathras, India",
     description:
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: { canonical: "https://apoorvakaushal.vercel.app" },
+  alternates: { canonical: "https://apoorva.hmorix.in" },
   verification: {
     google: "J3Ye67XomlkhUSkpLf7AIDPo_qXhc2YMDB6c1BkR5yQ",
   },
@@ -130,10 +130,10 @@ const graphSchema = {
         },
       ],
       sameAs: [
-        "https://www.instagram.com/apoorva_kaushal",
-        "https://www.youtube.com/@apoorva_kaushal",
-        "https://twitter.com/apoorva_kaushal",
-        "https://www.facebook.com/apoorva_kaushal",
+        "https://www.instagram.com/apoorva__kaushal",
+        "https://www.youtube.com/@_apoorva7__",
+        "https://twitter.com/",
+        "https://www.facebook.com/",
       ],
     },
     {

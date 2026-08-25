@@ -33,7 +33,7 @@ const localBusinessSchema = {
   description: "Social media management, content creation and digital marketing services.",
   url: "https://apoorvakaushal.vercel.app",
   telephone: "+91-9368153189",
-  email: "apoorva@apoorvakaushal.com",
+  email: "apoorva@hmorix.in",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Hathras",
