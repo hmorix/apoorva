@@ -93,7 +93,7 @@ export default function HomePage() {
           <p className="hero-tagline">
             Authentic storytelling that connects brands with audiences through relatable experiences
           </p>
-          <div className="hero-domain-left">apoorvakaushal.com</div>
+          <div className="hero-domain-left">apoorva.hmorix.in</div>
         </div>
 
         {/* Center Column */}
@@ -118,7 +118,7 @@ export default function HomePage() {
 
         {/* Right Column */}
         <div className="hero-right">
-          <div className="hero-domain">apoorvakaushal.com</div>
+          <div className="hero-domain">apoorva.hmorix.in</div>
           <div className="socials">
             <a
               href="https://youtube.com/@_apoorva7__"
@@ -137,7 +137,7 @@ export default function HomePage() {
               <InstagramIcon size={16} />
             </a>
             <a
-              href="https://twitter.com/apoorva_kaushal"
+              href="https://twitter.com/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X (Twitter)"
@@ -145,7 +145,7 @@ export default function HomePage() {
               <TwitterXIcon size={15} />
             </a>
             <a
-              href="https://facebook.com/apoorva_kaushal"
+              href="https://facebook.com/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
