@@ -218,9 +218,9 @@ export default function HomePage() {
           </div>
           <div className="quali-body">
             <div className="quali-list">
-              <div>Class 12 Graduate — Digital Fundamentals</div>
-              <div>Email Marketing — HubSpot Academy</div>
-              <div>Digital Marketing Certificate — HMorix &amp; Accenture</div>
+              <div>Class 12 Graduate — </div>
+              <div>Email Marketing Certificate — HMorix </div>
+              <div>Digital Marketing Certificate — HMorix </div>
               <div>Creative Script Writing &amp; Video Production</div>
 
               <div className="quali-degree-card">
