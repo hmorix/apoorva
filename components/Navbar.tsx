@@ -19,6 +19,7 @@ const navLinks = [
   { href: "/case-studies", label: "Case Studies" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/#gallery", label: "Gallery" },
+  { href: "/qna", label: "Q&A" },
   { href: "/contact", label: "Contact" },
 ];
 
