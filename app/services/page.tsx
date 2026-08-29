@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type React from "react";
 import Link from "next/link";
 import { getServicesPage } from "@/sanity/lib/queries";
 import {
@@ -35,7 +36,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://apoorvakaushal.vercel.app/services" },
 };
 
-const defaultServices = [
+export interface ServiceItem {
+  icon: React.ReactNode;
+  name: string;
+  tagline: string;
+  price: string;
+  desc: string;
+  features: string[];
+}
+
+const defaultServices: ServiceItem[] = [
   {
     icon: <VideoIcon size={24} />,
     name: "Video Creation & Script Writing",
@@ -135,12 +145,15 @@ export default async function ServicesPage() {
     sanityServices?.pageHeroSub ||
     "Video creation, script writing, social media management, Meta ads, SEO, website content and brand collaborations — tailored for brands and businesses across India by Apoorva Kaushal & HMorix.";
 
-  const activeServices =
+  const activeServices: ServiceItem[] =
     sanityServices?.servicesList && sanityServices.servicesList.length > 0
       ? sanityServices.servicesList.map((s: any, idx: number) => ({
-          ...s,
+          name: s.name || defaultServices[idx]?.name || "",
+          tagline: s.tagline || defaultServices[idx]?.tagline || "",
+          price: s.price || defaultServices[idx]?.price || "",
+          desc: s.desc || defaultServices[idx]?.desc || "",
           icon: defaultServices[idx]?.icon || <VideoIcon size={24} />,
-          features: s.features || [],
+          features: s.features || defaultServices[idx]?.features || [],
         }))
       : defaultServices;
   return (
@@ -158,7 +171,7 @@ export default async function ServicesPage() {
 
       {/* ── SERVICES GRID ── */}
       <div className="services-grid" style={{ borderTop: "none" }}>
-        {activeServices.map((s) => (
+        {activeServices.map((s: ServiceItem) => (
           <div className="service-card" key={s.name}>
             <div className="service-icon-box">{s.icon}</div>
             <div className="service-name display">{s.name}</div>
@@ -168,7 +181,7 @@ export default async function ServicesPage() {
             <p className="service-desc">{s.desc}</p>
             <div className="service-price">{s.price}</div>
             <div className="service-features">
-              {s.features.map((f) => (
+              {s.features.map((f: string) => (
                 <div className="service-feature" key={f}>
                   <CheckIcon size={14} className="feature-check-icon" />
                   <span>{f}</span>

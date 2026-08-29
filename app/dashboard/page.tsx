@@ -60,8 +60,17 @@ const defaultPlatforms = [
   },
 ];
 
+interface Campaign {
+  name: string;
+  platform: string;
+  reach: string;
+  spend: string;
+  roas: string;
+  status: string;
+}
+
 // Campaign Overview Data aligned with 2M+ total reach & verified client results
-const defaultCampaigns = [
+const defaultCampaigns: Campaign[] = [
   {
     name: "Fashion Boutique Launch — Hathras",
     platform: "Instagram Reels & Stories",
@@ -248,7 +257,7 @@ export default function DashboardPage() {
     return p;
   });
 
-  const campaigns =
+  const campaigns: Campaign[] =
     dashboardData?.campaigns && dashboardData.campaigns.length > 0
       ? dashboardData.campaigns
       : defaultCampaigns;
@@ -447,7 +456,7 @@ export default function DashboardPage() {
               </tr>
             </thead>
             <tbody>
-              {campaigns.map((c) => (
+              {campaigns.map((c: Campaign) => (
                 <tr key={c.name}>
                   <td style={{ fontWeight: 700, color: "var(--navy)" }}>{c.name}</td>
                   <td>{c.platform}</td>

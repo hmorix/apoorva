@@ -15,7 +15,20 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://apoorvakaushal.vercel.app/case-studies" },
 };
 
-const defaultCases = [
+export interface CaseStudy {
+  num: string;
+  brand: string;
+  category: string;
+  tagline: string;
+  challenge: string;
+  solution: string;
+  result: string;
+  metrics: { num: string; label: string }[];
+  tags: string[];
+  visual: string;
+}
+
+const defaultCases: CaseStudy[] = [
   {
     num: "01",
     brand: "Fashion Brand — Hathras",
@@ -89,13 +102,19 @@ export default async function CaseStudiesPage() {
     sanityCases?.pageHeroSub ||
     "Real campaigns. Real numbers. Social media work that actually moves the needle for brands across India.";
 
-  const activeCases =
+  const activeCases: CaseStudy[] =
     sanityCases?.casesList && sanityCases.casesList.length > 0
       ? sanityCases.casesList.map((c: any, idx: number) => ({
-          ...c,
+          num: c.num || defaultCases[idx]?.num || `0${idx + 1}`,
+          brand: c.brand || defaultCases[idx]?.brand || "",
+          category: c.category || defaultCases[idx]?.category || "",
+          tagline: c.tagline || defaultCases[idx]?.tagline || "",
+          challenge: c.challenge || defaultCases[idx]?.challenge || "",
+          solution: c.solution || defaultCases[idx]?.solution || "",
+          result: c.result || defaultCases[idx]?.result || "",
           visual: defaultCases[idx]?.visual || "linear-gradient(135deg,#b98a9c,#7a4f5e)",
-          metrics: c.metrics || [],
-          tags: c.tags || [],
+          metrics: c.metrics || defaultCases[idx]?.metrics || [],
+          tags: c.tags || defaultCases[idx]?.tags || [],
         }))
       : defaultCases;
 
@@ -110,7 +129,7 @@ export default async function CaseStudiesPage() {
 
       {/* ── CASE CARDS ── */}
       <div className="case-grid">
-        {activeCases.map((c) => (
+        {activeCases.map((c: CaseStudy) => (
           <div className="case-card" key={c.num}>
             {/* Visual Header */}
             <div style={{
@@ -143,7 +162,7 @@ export default async function CaseStudiesPage() {
             </div>
 
             <div className="case-metrics">
-              {c.metrics.map((m) => (
+              {c.metrics.map((m: { num: string; label: string }) => (
                 <div className="case-metric" key={m.label}>
                   <div className="case-metric-num display">{m.num}</div>
                   <div className="case-metric-label">{m.label}</div>
@@ -152,7 +171,7 @@ export default async function CaseStudiesPage() {
             </div>
 
             <div className="case-tags">
-              {c.tags.map((t) => <span className="tag" key={t}>{t}</span>)}
+              {c.tags.map((t: string) => <span className="tag" key={t}>{t}</span>)}
             </div>
           </div>
         ))}
