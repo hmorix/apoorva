@@ -13,7 +13,7 @@ export interface GalleryItem {
   tag: string;
 }
 
-const galleryItems: GalleryItem[] = [
+export const defaultGalleryItems: GalleryItem[] = [
   {
     id: "v1",
     type: "video",
@@ -166,9 +166,11 @@ const galleryItems: GalleryItem[] = [
   },
 ];
 
-export default function Gallery() {
+export default function Gallery({ initialItems }: { initialItems?: GalleryItem[] }) {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+
+  const currentGalleryItems = initialItems && initialItems.length > 0 ? initialItems : defaultGalleryItems;
 
   // Close modal on Escape key
   useEffect(() => {
@@ -179,7 +181,7 @@ export default function Gallery() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const filteredItems = galleryItems.filter((item) => {
+  const filteredItems = currentGalleryItems.filter((item) => {
     if (activeTab === "all") return true;
     if (activeTab === "videos") return item.type === "video";
     if (activeTab === "photos") return item.type === "photo";
@@ -206,9 +208,9 @@ export default function Gallery() {
         {/* Filter Tabs */}
         <div className="gallery-filter-tabs" role="tablist">
           {[
-            { key: "all", label: `All (${galleryItems.length})` },
-            { key: "videos", label: `Videos & Reels (3)` },
-            { key: "photos", label: `Photos (${galleryItems.filter(i => i.type === "photo").length})` },
+            { key: "all", label: `All (${currentGalleryItems.length})` },
+            { key: "videos", label: `Videos & Reels (${currentGalleryItems.filter(i => i.type === "video").length})` },
+            { key: "photos", label: `Photos (${currentGalleryItems.filter(i => i.type === "photo").length})` },
             { key: "portraits", label: "Portraits" },
             { key: "ugc", label: "UGC & Aesthetic" },
             { key: "devotional", label: "Devotional" },

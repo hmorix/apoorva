@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Gallery from "@/components/Gallery";
+import { getGalleryItems, getSiteSettings } from "@/sanity/lib/queries";
 import {
   YouTubeIcon,
   InstagramIcon,
@@ -78,7 +79,29 @@ const faqSchema = {
   ],
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [sanityGalleryItems, sanitySettings] = await Promise.all([
+    getGalleryItems(),
+    getSiteSettings(),
+  ]);
+
+  const heroTitle = sanitySettings?.heroTitle || "Apoorva Kaushal";
+  const heroTagline =
+    sanitySettings?.heroTagline ||
+    "Authentic storytelling that connects brands with audiences through relatable experiences";
+  const heroSignature = sanitySettings?.heroSignature || "Appu";
+  const profilePhoto = sanitySettings?.profilePhotoUrl || "/photos/profile.jpg";
+  const whoAmIBio1 =
+    sanitySettings?.whoAmIBio1 ||
+    "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.";
+  const whoAmIBio2 =
+    sanitySettings?.whoAmIBio2 ||
+    "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.";
+  const whoAmIPhoto = sanitySettings?.whoAmIPhotoUrl || "/photos/IMG-20260205-WA0035.jpg";
+  const qualificationsPhoto =
+    sanitySettings?.qualificationsPhotoUrl || "/photos/IMG-20250107-WA0012.jpg";
+  const whatsappNum = sanitySettings?.whatsappNumber || "919368153189";
+
   return (
     <>
       <script
@@ -91,7 +114,7 @@ export default function HomePage() {
         {/* Left Column */}
         <div className="hero-left-bottom">
           <p className="hero-tagline">
-            Authentic storytelling that connects brands with audiences through relatable experiences
+            {heroTagline}
           </p>
           <div className="hero-domain-left">apoorva.hmorix.in</div>
         </div>
@@ -99,13 +122,13 @@ export default function HomePage() {
         {/* Center Column */}
         <div className="hero-center">
           <h1 className="hero-title display">
-            Apoorva Kaushal<span className="spark"><SparkleIcon size={22} /></span>
+            {heroTitle}<span className="spark"><SparkleIcon size={22} /></span>
           </h1>
           <div className="hero-photo-wrap">
             <div className="hero-photo">
               <img
-                src="/photos/profile.jpg"
-                alt="Apoorva Kaushal — Social Media Manager"
+                src={profilePhoto}
+                alt={`${heroTitle} — Social Media Manager`}
                 width={240}
                 height={300}
                 fetchPriority="high"
@@ -113,7 +136,7 @@ export default function HomePage() {
               />
             </div>
           </div>
-          <div className="hero-signature">Appu</div>
+          <div className="hero-signature">{heroSignature}</div>
         </div>
 
         {/* Right Column */}
@@ -168,10 +191,10 @@ export default function HomePage() {
           <div className="whoami-body">
             <div className="whoami-text">
               <p>
-                I&apos;m Apoorva, a Hathras &amp; Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.
+                {whoAmIBio1}
               </p>
               <p>
-                I&apos;ve elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.
+                {whoAmIBio2}
               </p>
               <div className="stats">
                 <div className="stat">
@@ -201,7 +224,7 @@ export default function HomePage() {
             </div>
             <div className="whoami-photo-wrap">
               <img
-                src="/photos/IMG-20260205-WA0035.jpg"
+                src={whoAmIPhoto}
                 alt="Apoorva Kaushal — Digital Creator"
                 loading="lazy"
                 decoding="async"
@@ -248,7 +271,7 @@ export default function HomePage() {
             </div>
             <div className="quali-photo-wrap">
               <img
-                src="/photos/IMG-20250107-WA0012.jpg"
+                src={qualificationsPhoto}
                 alt="Apoorva Kaushal — Professional Credentials"
                 loading="lazy"
                 decoding="async"
@@ -492,7 +515,7 @@ export default function HomePage() {
       </div>
 
       {/* ── 4. INTERACTIVE PHOTOS & VIDEOS GALLERY ── */}
-      <Gallery />
+      <Gallery initialItems={sanityGalleryItems || undefined} />
 
       {/* ── 5. STATS STRIP ── */}
       <div className="stats-strip">
@@ -526,7 +549,7 @@ export default function HomePage() {
             <span>Check Pricing</span>
           </Link>
           <a
-            href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%20saw%20your%20website%20and%20would%20love%20to%20collaborate!"
+            href={`https://wa.me/${whatsappNum}?text=Hi%20Apoorva%2C%20I%20saw%20your%20website%20and%20would%20love%20to%20collaborate!`}
             className="btn"
             style={{ background: "#25D366", color: "white", display: "inline-flex", alignItems: "center", gap: 8 }}
             target="_blank"
