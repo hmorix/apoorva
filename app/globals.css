@@ -58,6 +58,26 @@ img, video {
 ul { list-style: none; }
 button { cursor: pointer; font-family: inherit; }
 
+/* ── ADMIN PANEL ISOLATION ──────────────────────────────────── */
+body:has(.admin-root) .navbar,
+body:has(.admin-root) .footer,
+body:has(.admin-root) .wa-float,
+body:has(.admin-root) .footer-highlights {
+  display: none !important;
+}
+body:has(.admin-root) .wrap {
+  display: block !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: 100vh !important;
+  padding: 0 !important;
+}
+body:has(.admin-root) {
+  background: #f8f9fb !important;
+}
+
 /* ── KEYFRAME ANIMATIONS ────────────────────────────────────── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
