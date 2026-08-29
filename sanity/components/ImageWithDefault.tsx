@@ -6,11 +6,13 @@
 "use client";
 import React from "react";
 import { ImageInput } from "sanity";
-import type { ImageInputProps, ObjectInputProps } from "sanity";
 
-interface ImageWithDefaultProps extends Partial<ImageInputProps>, Partial<ObjectInputProps> {
+export interface ImageWithDefaultProps {
   defaultSrc?: string;
   defaultLabel?: string;
+  value?: any;
+  renderDefault?: (props: any) => React.ReactElement;
+  [key: string]: any;
 }
 
 export function ImageWithDefault(props: ImageWithDefaultProps) {
@@ -185,7 +187,7 @@ export function ImageWithDefault(props: ImageWithDefaultProps) {
 
       {/* The actual Sanity image input */}
       <div style={{ padding: "12px 16px 16px" }}>
-        {renderDefault ? renderDefault(props as any) : <ImageInput {...(props as any)} />}
+        {renderDefault ? renderDefault(props) : <ImageInput {...(props as any)} />}
       </div>
     </div>
   );
