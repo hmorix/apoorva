@@ -957,7 +957,7 @@ export default function AdminDashboard() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#374151" }}>
                   <div style={{ background: "#22c55e", borderRadius: 6, padding: "4px 8px", fontSize: 11, fontWeight: 700, color: "#fff", letterSpacing: ".04em" }}>NEW</div>
-                  <span style={{ fontSize: 12.5 }}>= you've uploaded a replacement</span>
+                  <span style={{ fontSize: 12.5 }}>= you&apos;ve uploaded a replacement</span>
                 </div>
                 <div style={{ marginLeft: "auto", fontSize: 12, color: "#9ca3af" }}>
                   {Object.values(uploadStates).filter(s => s === "success").length} of {PHOTO_SLOTS.length} photos replaced
@@ -1092,7 +1092,7 @@ export default function AdminDashboard() {
               <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "24px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
                   <UserIcon />
-                  <h2 style={{ fontSize: 14, fontWeight: 800, color: "#111827" }}>Profile & Social Links</h2>
+                  <h2 style={{ fontSize: 14, fontWeight: 800, color: "#111827" }}>Profile &amp; Social Links</h2>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                   {[
@@ -1139,7 +1139,7 @@ export default function AdminDashboard() {
               <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "24px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                   <SettingsIcon />
-                  <h2 style={{ fontSize: 14, fontWeight: 800, color: "#111827" }}>SEO & Meta</h2>
+                  <h2 style={{ fontSize: 14, fontWeight: 800, color: "#111827" }}>SEO &amp; Meta</h2>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   {[
@@ -1177,9 +1177,9 @@ export default function AdminDashboard() {
 
               {/* Deployment */}
               <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "24px" }}>
-                <div style={{ fontSize: 14, fontWeight: 800, color: "#111827", marginBottom: 12 }}>Deploy & Git</div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: "#111827", marginBottom: 12 }}>Deploy &amp; Git</div>
                 <div style={{ background: "#111827", borderRadius: 8, padding: "14px 16px", fontFamily: "monospace", fontSize: 12.5, color: "#86efac", lineHeight: 2 }}>
-                  <div><span style={{ color: "#9ca3af" }}>#</span> Push to GitHub & auto-deploy on Vercel</div>
+                  <div><span style={{ color: "#9ca3af" }}>#</span> Push to GitHub &amp; auto-deploy on Vercel</div>
                   <div>git add .</div>
                   <div>git commit -m &quot;Update photos&quot;</div>
                   <div>git push origin main</div>

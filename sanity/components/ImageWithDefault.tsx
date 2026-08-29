@@ -6,15 +6,15 @@
 "use client";
 import React from "react";
 import { ImageInput } from "sanity";
-import type { ObjectInputProps } from "sanity";
+import type { ImageInputProps, ObjectInputProps } from "sanity";
 
-interface ImageWithDefaultProps extends ObjectInputProps {
+interface ImageWithDefaultProps extends Partial<ImageInputProps>, Partial<ObjectInputProps> {
   defaultSrc?: string;
   defaultLabel?: string;
 }
 
 export function ImageWithDefault(props: ImageWithDefaultProps) {
-  const { defaultSrc, defaultLabel, value } = props;
+  const { defaultSrc, defaultLabel, value, renderDefault } = props;
 
   // Extract URL from the current uploaded image value (Sanity asset ref)
   const hasCustom = !!(value as any)?.asset;
@@ -64,6 +64,7 @@ export function ImageWithDefault(props: ImageWithDefaultProps) {
               />
               Default (Live)
             </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={defaultSrc}
               alt={defaultLabel || "Default photo"}
@@ -171,12 +172,12 @@ export function ImageWithDefault(props: ImageWithDefaultProps) {
       >
         {hasCustom ? (
           <>
-            <span style={{ fontSize: 14 }}>⚠️</span>
+            <span style={{ fontWeight: 800, color: "#f59e0b", fontSize: 13 }}>!</span>
             Custom photo active. <strong>Delete it</strong> below to instantly revert to the original default photo.
           </>
         ) : (
           <>
-            <span style={{ fontSize: 14 }}>✅</span>
+            <span style={{ fontWeight: 800, color: "#10b981", fontSize: 13 }}>✓</span>
             Using default original photo. Upload a replacement below to change it.
           </>
         )}
@@ -184,7 +185,7 @@ export function ImageWithDefault(props: ImageWithDefaultProps) {
 
       {/* The actual Sanity image input */}
       <div style={{ padding: "12px 16px 16px" }}>
-        <ImageInput {...props} />
+        {renderDefault ? renderDefault(props as any) : <ImageInput {...(props as any)} />}
       </div>
     </div>
   );

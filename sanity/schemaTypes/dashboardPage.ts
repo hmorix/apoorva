@@ -2,7 +2,7 @@ import { defineField, defineType } from "sanity";
 
 export const dashboardPage = defineType({
   name: "dashboardPage",
-  title: "📊 Dashboard Analytics",
+  title: "Dashboard Analytics",
   type: "document",
   fields: [
     defineField({
