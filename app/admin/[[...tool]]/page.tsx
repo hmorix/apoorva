@@ -1,13 +1,21 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 
-// ── SVG ICON SET ────────────────────────────────────────────────────────────
+// ── SVG ICONS ───────────────────────────────────────────────────────────────
 function HomeIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
       <polyline points="9 22 9 12 15 12 15 22" />
+    </svg>
+  );
+}
+function EditIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
     </svg>
   );
 }
@@ -38,7 +46,7 @@ function SettingsIcon() {
 }
 function UploadIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="16 16 12 12 8 16" />
       <line x1="12" y1="12" x2="12" y2="21" />
       <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
@@ -47,9 +55,18 @@ function UploadIcon() {
 }
 function CheckCircleIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
       <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
+  );
+}
+function SaveIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+      <polyline points="17 21 17 13 7 13 7 21" />
+      <polyline points="7 3 7 8 15 8" />
     </svg>
   );
 }
@@ -99,7 +116,7 @@ function InfoIcon() {
 }
 function SparkleIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 2l2.4 7.2L21.6 12l-7.2 2.4L12 21.6l-2.4-7.2L2.4 12l7.2-2.4L12 2z" />
     </svg>
   );
@@ -120,7 +137,7 @@ const PHOTO_SLOTS: PhotoSlot[] = [
     label: "Hero Profile Photo",
     section: "Homepage Hero",
     defaultPath: "/photos/profile.jpg",
-    description: "Main portrait shown in the hero oval frame on homepage",
+    description: "Main portrait in the hero oval frame on homepage",
   },
   {
     id: "whoami",
@@ -134,7 +151,7 @@ const PHOTO_SLOTS: PhotoSlot[] = [
     label: "Qualifications Photo",
     section: "Homepage — Qualifications",
     defaultPath: "/photos/IMG-20250107-WA0012.jpg",
-    description: "Corporate photo shown in the Qualifications panel",
+    description: "Corporate blazer photo in Qualifications panel",
   },
   {
     id: "work1",
@@ -278,7 +295,6 @@ const PHOTO_SLOTS: PhotoSlot[] = [
   },
 ];
 
-// Group slots by section
 const sectionOrder = [
   "Homepage Hero",
   "Homepage — Who Am I",
@@ -573,29 +589,185 @@ function StatCard({ label, value, sub, color }: { label: string; value: string; 
 }
 
 // ── MAIN ADMIN PAGE ───────────────────────────────────────────────────────────
-type Tab = "overview" | "photos" | "settings" | "gallery";
+type Tab = "overview" | "content" | "photos" | "gallery" | "settings";
 type UploadStateMap = Record<string, "idle" | "uploading" | "success" | "error">;
 type PhotoSrcMap = Record<string, string>;
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [contentSection, setContentSection] = useState<"hero" | "homepage" | "about" | "services" | "contact">("hero");
   const [uploadStates, setUploadStates] = useState<UploadStateMap>({});
   const [photoSrcs, setPhotoSrcs] = useState<PhotoSrcMap>({});
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [savingContent, setSavingContent] = useState(false);
+
+  // Content form state
+  const [formData, setFormData] = useState({
+    heroTitle: "Apoorva Kaushal",
+    heroTagline: "Authentic storytelling that connects brands with audiences through relatable experiences",
+    heroSignature: "Appu",
+    domain: "apoorva.hmorix.in",
+    whoAmIHeading: "WHO AM I",
+    whoAmIBio1: "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.",
+    whoAmIBio2: "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.",
+    statBrands: "5+",
+    statReach: "2M+",
+    statFollowers: "5K+",
+    statExp: "3YRS+",
+    aboutHeroTitle: "APOORVA KAUSHAL",
+    aboutHeroSub: "Social Media Creator & Content Creator · Hathras, Uttar Pradesh, India",
+    storyHeading: "FROM HATHRAS\nTO THE DIGITAL WORLD",
+    storyBio1: "I'm Apoorva Kaushal — born and raised in Hathras, Uttar Pradesh, a historic cultural hub in the Braj/Agra region. My journey into social media strategy began with a clear conviction: audiences don't just watch content; they connect with authenticity, cultural nuance, and relatable humor.",
+    storyBio2: "What started as creative sketches and storytelling has evolved into a full-fledged multi-channel digital footprint reaching 2M+ all-time reach, 400k+ YouTube views, and over 5K+ combined followers across Instagram, YouTube, and Facebook.",
+    storyBio3: "As a social media manager and content creator, I blend creative UGC video production with data-driven Meta ad campaigns, having collaborated with 5+ brands across fashion, beauty, lifestyle, and local retail.",
+    starterPrice: "₹15,000",
+    starterDesc: "Ideal for emerging brands and personal accounts starting their content journey with curated visuals and community growth.",
+    growthPrice: "₹35,000",
+    growthDesc: "Comprehensive social strategy with weekly UGC Reels, engaging copy, and optimized Meta ad management.",
+    premiumPrice: "₹65,000",
+    premiumDesc: "Full-funnel digital branding, high-frequency UGC production, scriptwriting, dedicated Meta ad scaling, and weekly analytics.",
+    whatsappNumber: "919368153189",
+    email: "apoorva@apoorvakaushal.com",
+    instagramHandle: "@apoorva__kaushal",
+    youtubeHandle: "@_apoorva7__",
+    location: "Hathras, Uttar Pradesh, India",
+    postalCode: "204101",
+  });
+
+  // Load existing content on mount
+  useEffect(() => {
+    async function loadContent() {
+      try {
+        const res = await fetch("/api/admin/content");
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.content) {
+            const c = json.content;
+            setFormData({
+              heroTitle: c.hero?.heroTitle || "Apoorva Kaushal",
+              heroTagline: c.hero?.heroTagline || "Authentic storytelling that connects brands with audiences through relatable experiences",
+              heroSignature: c.hero?.heroSignature || "Appu",
+              domain: c.hero?.domain || "apoorva.hmorix.in",
+              whoAmIHeading: c.homepage?.whoAmIHeading || "WHO AM I",
+              whoAmIBio1: c.homepage?.whoAmIBio1 || "",
+              whoAmIBio2: c.homepage?.whoAmIBio2 || "",
+              statBrands: c.homepage?.statBrands || "5+",
+              statReach: c.homepage?.statReach || "2M+",
+              statFollowers: c.homepage?.statFollowers || "5K+",
+              statExp: c.homepage?.statExp || "3YRS+",
+              aboutHeroTitle: c.about?.pageHeroTitle || "APOORVA KAUSHAL",
+              aboutHeroSub: c.about?.pageHeroSub || "Social Media Creator & Content Creator · Hathras, Uttar Pradesh, India",
+              storyHeading: c.about?.storyHeading || "FROM HATHRAS\nTO THE DIGITAL WORLD",
+              storyBio1: c.about?.storyBio1 || "",
+              storyBio2: c.about?.storyBio2 || "",
+              storyBio3: c.about?.storyBio3 || "",
+              starterPrice: c.services?.starterPrice || "₹15,000",
+              starterDesc: c.services?.starterDesc || "",
+              growthPrice: c.services?.growthPrice || "₹35,000",
+              growthDesc: c.services?.growthDesc || "",
+              premiumPrice: c.services?.premiumPrice || "₹65,000",
+              premiumDesc: c.services?.premiumDesc || "",
+              whatsappNumber: c.contact?.whatsappNumber || "919368153189",
+              email: c.contact?.email || "apoorva@apoorvakaushal.com",
+              instagramHandle: c.contact?.instagramHandle || "@apoorva__kaushal",
+              youtubeHandle: c.contact?.youtubeHandle || "@_apoorva7__",
+              location: c.contact?.location || "Hathras, Uttar Pradesh, India",
+              postalCode: c.contact?.postalCode || "204101",
+            });
+          }
+        }
+      } catch (err) {
+        console.warn("Could not load stored content:", err);
+      }
+    }
+    loadContent();
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 3200);
   };
 
+  const handleInputChange = (field: string, val: string) => {
+    setFormData((prev) => ({ ...prev, [field]: val }));
+  };
+
+  const handleSaveContent = async () => {
+    setSavingContent(true);
+    try {
+      const payload = {
+        hero: {
+          heroTitle: formData.heroTitle,
+          heroTagline: formData.heroTagline,
+          heroSignature: formData.heroSignature,
+          domain: formData.domain,
+        },
+        homepage: {
+          whoAmIHeading: formData.whoAmIHeading,
+          whoAmIBio1: formData.whoAmIBio1,
+          whoAmIBio2: formData.whoAmIBio2,
+          statBrands: formData.statBrands,
+          statReach: formData.statReach,
+          statFollowers: formData.statFollowers,
+          statExp: formData.statExp,
+        },
+        about: {
+          pageHeroTitle: formData.aboutHeroTitle,
+          pageHeroSub: formData.aboutHeroSub,
+          storyHeading: formData.storyHeading,
+          storyBio1: formData.storyBio1,
+          storyBio2: formData.storyBio2,
+          storyBio3: formData.storyBio3,
+        },
+        services: {
+          starterPrice: formData.starterPrice,
+          starterPeriod: "month",
+          starterDesc: formData.starterDesc,
+          growthPrice: formData.growthPrice,
+          growthPeriod: "month",
+          growthDesc: formData.growthDesc,
+          premiumPrice: formData.premiumPrice,
+          premiumPeriod: "month",
+          premiumDesc: formData.premiumDesc,
+        },
+        contact: {
+          whatsappNumber: formData.whatsappNumber,
+          email: formData.email,
+          instagramHandle: formData.instagramHandle,
+          instagramUrl: `https://instagram.com/${formData.instagramHandle.replace("@", "")}`,
+          youtubeHandle: formData.youtubeHandle,
+          youtubeUrl: `https://youtube.com/${formData.youtubeHandle}`,
+          location: formData.location,
+          postalCode: formData.postalCode,
+        },
+      };
+
+      const res = await fetch("/api/admin/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        showToast("✓ Website content saved successfully!");
+      } else {
+        throw new Error("Save failed");
+      }
+    } catch (err) {
+      showToast("✗ Failed to save content. Please try again.");
+    } finally {
+      setSavingContent(false);
+    }
+  };
+
   const handleUpload = useCallback(async (id: string, file: File) => {
     setUploadStates((prev) => ({ ...prev, [id]: "uploading" }));
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("slotId", id);
-      const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+      const form = new FormData();
+      form.append("file", file);
+      form.append("slotId", id);
+      const res = await fetch("/api/admin/upload", { method: "POST", body: form });
       if (res.ok) {
         const data = await res.json();
         setPhotoSrcs((prev) => ({ ...prev, [id]: data.url }));
@@ -687,9 +859,10 @@ export default function AdminDashboard() {
         {/* Nav */}
         <nav style={{ padding: "12px 10px", flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
           <NavItem icon={<HomeIcon />} label="Overview" active={activeTab === "overview"} onClick={() => setActiveTab("overview")} />
+          <NavItem icon={<EditIcon />} label="Content Editor" active={activeTab === "content"} onClick={() => setActiveTab("content")} badge="LIVE" />
           <NavItem icon={<ImageIcon />} label="Photo Manager" active={activeTab === "photos"} onClick={() => setActiveTab("photos")} badge={String(PHOTO_SLOTS.length)} />
           <NavItem icon={<GridIcon />} label="Gallery Items" active={activeTab === "gallery"} onClick={() => setActiveTab("gallery")} />
-          <NavItem icon={<SettingsIcon />} label="Settings" active={activeTab === "settings"} onClick={() => setActiveTab("settings")} />
+          <NavItem icon={<SettingsIcon />} label="Settings & SEO" active={activeTab === "settings"} onClick={() => setActiveTab("settings")} />
         </nav>
 
         {/* Bottom: toggle collapse + Sanity link */}
@@ -760,18 +933,42 @@ export default function AdminDashboard() {
           <div>
             <div style={{ fontSize: 17, fontWeight: 800, color: "#111827" }}>
               {activeTab === "overview" && "Dashboard Overview"}
+              {activeTab === "content" && "Page Content Editor"}
               {activeTab === "photos" && "Photo Manager"}
               {activeTab === "gallery" && "Gallery Items"}
-              {activeTab === "settings" && "Settings"}
+              {activeTab === "settings" && "Settings & SEO"}
             </div>
             <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 1 }}>
               {activeTab === "overview" && "Site stats and quick actions"}
+              {activeTab === "content" && "Edit text, bios, headings & pricing across all pages"}
               {activeTab === "photos" && `${PHOTO_SLOTS.length} photos — click or drag to replace any photo`}
               {activeTab === "gallery" && "Manage gallery photos and reels"}
-              {activeTab === "settings" && "Site configuration"}
+              {activeTab === "settings" && "Site configuration and SEO status"}
             </div>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
+            {activeTab === "content" && (
+              <button
+                onClick={handleSaveContent}
+                disabled={savingContent}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "8px 18px",
+                  borderRadius: 8,
+                  border: "none",
+                  background: "#22c55e",
+                  color: "#fff",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  cursor: savingContent ? "not-allowed" : "pointer",
+                  boxShadow: "0 2px 8px rgba(34,197,94,0.3)",
+                }}
+              >
+                <SaveIcon /> {savingContent ? "Saving…" : "Save All Changes"}
+              </button>
+            )}
             <a
               href="/"
               target="_blank"
@@ -790,7 +987,7 @@ export default function AdminDashboard() {
                 fontWeight: 600,
               }}
             >
-              <ExternalLinkIcon /> View Site
+              <ExternalLinkIcon /> View Live Site
             </a>
             <button
               style={{
@@ -833,9 +1030,10 @@ export default function AdminDashboard() {
                 <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>Quick Actions</div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 10 }}>
                   {[
+                    { label: "Edit Page Content", icon: <EditIcon />, tab: "content" as Tab },
                     { label: "Manage Photos", icon: <ImageIcon />, tab: "photos" as Tab },
                     { label: "Edit Gallery", icon: <GridIcon />, tab: "gallery" as Tab },
-                    { label: "Site Settings", icon: <SettingsIcon />, tab: "settings" as Tab },
+                    { label: "Site Settings & SEO", icon: <SettingsIcon />, tab: "settings" as Tab },
                   ].map((a) => (
                     <button
                       key={a.label}
@@ -881,18 +1079,18 @@ export default function AdminDashboard() {
               }}>
                 <div style={{ flexShrink: 0, color: "#152049", marginTop: 1 }}><InfoIcon /></div>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: "#152049", marginBottom: 3 }}>How Photo Management Works</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#152049", marginBottom: 3 }}>How Content &amp; Photo Management Works</div>
                   <div style={{ fontSize: 12.5, color: "#374151", lineHeight: 1.6 }}>
-                    Go to <strong>Photo Manager</strong> to see all website photos with their default images visible. Click any photo or drag a new image to replace it. 
-                    Your new photo is uploaded to <code style={{ background: "rgba(0,0,0,0.06)", padding: "0 4px", borderRadius: 3 }}>/public/photos/</code> and the site uses it automatically.
-                    Hit &ldquo;Revert to default&rdquo; to go back to the original photo.
+                    • Use <strong>Content Editor</strong> to change headlines, bios, story paragraphs, pricing, and contact info live without needing Sanity credentials.
+                    <br />
+                    • Use <strong>Photo Manager</strong> to see all default photos and replace any image with instant drag-and-drop.
                   </div>
                 </div>
               </div>
 
               {/* Pages summary */}
               <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "22px 24px" }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 14 }}>All Pages</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 14 }}>All Website Pages</div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr))", gap: 8 }}>
                   {[
                     ["/", "Homepage"],
@@ -933,6 +1131,395 @@ export default function AdminDashboard() {
                     </a>
                   ))}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── TAB: CONTENT EDITOR ── */}
+          {activeTab === "content" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {/* Section Sub-Navigation Tabs */}
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", borderBottom: "1px solid #e5e7eb", paddingBottom: 14 }}>
+                {[
+                  { id: "hero", label: "Homepage Hero" },
+                  { id: "homepage", label: "Homepage Bio & Stats" },
+                  { id: "about", label: "About Page & Story" },
+                  { id: "services", label: "Services & Pricing" },
+                  { id: "contact", label: "Contact & Social Handles" },
+                ].map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => setContentSection(s.id as any)}
+                    style={{
+                      padding: "8px 16px",
+                      borderRadius: 8,
+                      border: contentSection === s.id ? "1.5px solid #7a1421" : "1.5px solid #e5e7eb",
+                      background: contentSection === s.id ? "#7a1421" : "#fff",
+                      color: contentSection === s.id ? "#fff" : "#374151",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* SECTION: HERO */}
+              {contentSection === "hero" && (
+                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "24px" }}>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#111827", marginBottom: 16 }}>Homepage Hero Content</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Hero Main Title / Name</label>
+                      <input
+                        type="text"
+                        value={formData.heroTitle}
+                        onChange={(e) => handleInputChange("heroTitle", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Hero Tagline</label>
+                      <textarea
+                        rows={2}
+                        value={formData.heroTagline}
+                        onChange={(e) => handleInputChange("heroTagline", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14, fontFamily: "inherit" }}
+                      />
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                      <div>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Hero Cursive Signature</label>
+                        <input
+                          type="text"
+                          value={formData.heroSignature}
+                          onChange={(e) => handleInputChange("heroSignature", e.target.value)}
+                          style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Domain Badge</label>
+                        <input
+                          type="text"
+                          value={formData.domain}
+                          onChange={(e) => handleInputChange("domain", e.target.value)}
+                          style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SECTION: HOMEPAGE */}
+              {contentSection === "homepage" && (
+                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "24px" }}>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#111827", marginBottom: 16 }}>Homepage Who Am I &amp; Stats</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Section Heading</label>
+                      <input
+                        type="text"
+                        value={formData.whoAmIHeading}
+                        onChange={(e) => handleInputChange("whoAmIHeading", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Bio Paragraph 1</label>
+                      <textarea
+                        rows={3}
+                        value={formData.whoAmIBio1}
+                        onChange={(e) => handleInputChange("whoAmIBio1", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14, fontFamily: "inherit" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Bio Paragraph 2</label>
+                      <textarea
+                        rows={3}
+                        value={formData.whoAmIBio2}
+                        onChange={(e) => handleInputChange("whoAmIBio2", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14, fontFamily: "inherit" }}
+                      />
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+                      <div>
+                        <label style={{ display: "block", fontSize: 11.5, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Brands Stat</label>
+                        <input
+                          type="text"
+                          value={formData.statBrands}
+                          onChange={(e) => handleInputChange("statBrands", e.target.value)}
+                          style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 13.5 }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: "block", fontSize: 11.5, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Reach Stat</label>
+                        <input
+                          type="text"
+                          value={formData.statReach}
+                          onChange={(e) => handleInputChange("statReach", e.target.value)}
+                          style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 13.5 }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: "block", fontSize: 11.5, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Followers Stat</label>
+                        <input
+                          type="text"
+                          value={formData.statFollowers}
+                          onChange={(e) => handleInputChange("statFollowers", e.target.value)}
+                          style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 13.5 }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: "block", fontSize: 11.5, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Experience Stat</label>
+                        <input
+                          type="text"
+                          value={formData.statExp}
+                          onChange={(e) => handleInputChange("statExp", e.target.value)}
+                          style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 13.5 }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SECTION: ABOUT */}
+              {contentSection === "about" && (
+                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "24px" }}>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#111827", marginBottom: 16 }}>About Page Bio &amp; Story</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                      <div>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>About Page Hero Title</label>
+                        <input
+                          type="text"
+                          value={formData.aboutHeroTitle}
+                          onChange={(e) => handleInputChange("aboutHeroTitle", e.target.value)}
+                          style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>About Hero Subtitle</label>
+                        <input
+                          type="text"
+                          value={formData.aboutHeroSub}
+                          onChange={(e) => handleInputChange("aboutHeroSub", e.target.value)}
+                          style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Story Heading</label>
+                      <input
+                        type="text"
+                        value={formData.storyHeading}
+                        onChange={(e) => handleInputChange("storyHeading", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Story Paragraph 1</label>
+                      <textarea
+                        rows={3}
+                        value={formData.storyBio1}
+                        onChange={(e) => handleInputChange("storyBio1", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14, fontFamily: "inherit" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Story Paragraph 2</label>
+                      <textarea
+                        rows={3}
+                        value={formData.storyBio2}
+                        onChange={(e) => handleInputChange("storyBio2", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14, fontFamily: "inherit" }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Story Paragraph 3</label>
+                      <textarea
+                        rows={3}
+                        value={formData.storyBio3}
+                        onChange={(e) => handleInputChange("storyBio3", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14, fontFamily: "inherit" }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SECTION: SERVICES */}
+              {contentSection === "services" && (
+                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "24px" }}>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#111827", marginBottom: 16 }}>Services Packages &amp; Pricing</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                    {/* Starter */}
+                    <div style={{ padding: 16, border: "1px solid #e5e7eb", borderRadius: 10, background: "#fafafa" }}>
+                      <div style={{ fontSize: 13.5, fontWeight: 800, color: "#152049", marginBottom: 10 }}>Starter Package</div>
+                      <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 12, marginBottom: 8 }}>
+                        <input
+                          type="text"
+                          placeholder="Price"
+                          value={formData.starterPrice}
+                          onChange={(e) => handleInputChange("starterPrice", e.target.value)}
+                          style={{ padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 7, fontSize: 13.5 }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Short Description"
+                          value={formData.starterDesc}
+                          onChange={(e) => handleInputChange("starterDesc", e.target.value)}
+                          style={{ padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 7, fontSize: 13.5 }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Growth */}
+                    <div style={{ padding: 16, border: "1px solid #e5e7eb", borderRadius: 10, background: "#fafafa" }}>
+                      <div style={{ fontSize: 13.5, fontWeight: 800, color: "#7a1421", marginBottom: 10 }}>Growth Package (Popular)</div>
+                      <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 12, marginBottom: 8 }}>
+                        <input
+                          type="text"
+                          placeholder="Price"
+                          value={formData.growthPrice}
+                          onChange={(e) => handleInputChange("growthPrice", e.target.value)}
+                          style={{ padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 7, fontSize: 13.5 }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Short Description"
+                          value={formData.growthDesc}
+                          onChange={(e) => handleInputChange("growthDesc", e.target.value)}
+                          style={{ padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 7, fontSize: 13.5 }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Premium */}
+                    <div style={{ padding: 16, border: "1px solid #e5e7eb", borderRadius: 10, background: "#fafafa" }}>
+                      <div style={{ fontSize: 13.5, fontWeight: 800, color: "#111827", marginBottom: 10 }}>Premium Package</div>
+                      <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 12, marginBottom: 8 }}>
+                        <input
+                          type="text"
+                          placeholder="Price"
+                          value={formData.premiumPrice}
+                          onChange={(e) => handleInputChange("premiumPrice", e.target.value)}
+                          style={{ padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 7, fontSize: 13.5 }}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Short Description"
+                          value={formData.premiumDesc}
+                          onChange={(e) => handleInputChange("premiumDesc", e.target.value)}
+                          style={{ padding: "8px 12px", border: "1.5px solid #e5e7eb", borderRadius: 7, fontSize: 13.5 }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SECTION: CONTACT */}
+              {contentSection === "contact" && (
+                <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "24px" }}>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#111827", marginBottom: 16 }}>Contact Info &amp; Social Handles</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>WhatsApp Number (Country code included)</label>
+                      <input
+                        type="text"
+                        value={formData.whatsappNumber}
+                        onChange={(e) => handleInputChange("whatsappNumber", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Email Address</label>
+                      <input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange("email", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Instagram Handle</label>
+                      <input
+                        type="text"
+                        value={formData.instagramHandle}
+                        onChange={(e) => handleInputChange("instagramHandle", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>YouTube Handle</label>
+                      <input
+                        type="text"
+                        value={formData.youtubeHandle}
+                        onChange={(e) => handleInputChange("youtubeHandle", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Location / City</label>
+                      <input
+                        type="text"
+                        value={formData.location}
+                        onChange={(e) => handleInputChange("location", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" }}>Postal PIN Code</label>
+                      <input
+                        type="text"
+                        value={formData.postalCode}
+                        onChange={(e) => handleInputChange("postalCode", e.target.value)}
+                        style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e5e7eb", borderRadius: 8, fontSize: 14 }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Floating Bottom Save Bar */}
+              <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                background: "#fff",
+                border: "1.5px solid #e5e7eb",
+                borderRadius: 12,
+                padding: "14px 20px",
+              }}>
+                <div style={{ fontSize: 13, color: "#6b7280" }}>
+                  Changes will be written to the local store and take effect immediately across all pages.
+                </div>
+                <button
+                  onClick={handleSaveContent}
+                  disabled={savingContent}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: "10px 24px",
+                    borderRadius: 8,
+                    border: "none",
+                    background: "#22c55e",
+                    color: "#fff",
+                    fontSize: 13.5,
+                    fontWeight: 700,
+                    cursor: savingContent ? "not-allowed" : "pointer",
+                    boxShadow: "0 2px 8px rgba(34,197,94,0.3)",
+                  }}
+                >
+                  <SaveIcon /> {savingContent ? "Saving…" : "Save All Changes"}
+                </button>
               </div>
             </div>
           )}
@@ -1096,12 +1683,12 @@ export default function AdminDashboard() {
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                   {[
-                    { label: "Full Name", value: "Apoorva Kaushal", hint: "Update in layout.tsx" },
-                    { label: "WhatsApp Number", value: "919368153189", hint: "Update in layout.tsx + Navbar" },
-                    { label: "Email", value: "apoorva@apoorvakaushal.com", hint: "Update in contact/page.tsx" },
-                    { label: "Instagram Handle", value: "@apoorva__kaushal", hint: "Update in Navbar + page.tsx" },
-                    { label: "YouTube Handle", value: "@_apoorva7__", hint: "Update in Navbar + page.tsx" },
-                    { label: "Domain", value: "apoorva.hmorix.in", hint: "Update in layout.tsx metadata" },
+                    { label: "Full Name", value: formData.heroTitle, hint: "Editable in Content Editor" },
+                    { label: "WhatsApp Number", value: formData.whatsappNumber, hint: "Editable in Content Editor" },
+                    { label: "Email", value: formData.email, hint: "Editable in Content Editor" },
+                    { label: "Instagram Handle", value: formData.instagramHandle, hint: "Editable in Content Editor" },
+                    { label: "YouTube Handle", value: formData.youtubeHandle, hint: "Editable in Content Editor" },
+                    { label: "Domain", value: formData.domain, hint: "Editable in Content Editor" },
                   ].map((f) => (
                     <div key={f.label}>
                       <div style={{ fontSize: 11.5, fontWeight: 600, color: "#6b7280", marginBottom: 5, letterSpacing: ".04em", textTransform: "uppercase" }}>{f.label}</div>
@@ -1117,21 +1704,6 @@ export default function AdminDashboard() {
                       <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 4 }}>{f.hint}</div>
                     </div>
                   ))}
-                </div>
-                <div style={{
-                  marginTop: 16,
-                  padding: "12px 14px",
-                  background: "rgba(234,179,8,0.07)",
-                  border: "1px solid rgba(234,179,8,0.25)",
-                  borderRadius: 8,
-                  fontSize: 12.5,
-                  color: "#92400e",
-                  display: "flex",
-                  gap: 8,
-                  alignItems: "flex-start",
-                }}>
-                  <InfoIcon />
-                  <span>To edit text content (bio, taglines, pricing), use <strong>Sanity Studio</strong> or edit the source files directly. Photo replacement is fully handled here in Photo Manager.</span>
                 </div>
               </div>
 
@@ -1181,7 +1753,7 @@ export default function AdminDashboard() {
                 <div style={{ background: "#111827", borderRadius: 8, padding: "14px 16px", fontFamily: "monospace", fontSize: 12.5, color: "#86efac", lineHeight: 2 }}>
                   <div><span style={{ color: "#9ca3af" }}>#</span> Push to GitHub &amp; auto-deploy on Vercel</div>
                   <div>git add .</div>
-                  <div>git commit -m &quot;Update photos&quot;</div>
+                  <div>git commit -m &quot;Update website content and photos&quot;</div>
                   <div>git push origin main</div>
                 </div>
                 <div style={{ marginTop: 10, fontSize: 12.5, color: "#6b7280" }}>

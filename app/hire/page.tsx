@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getSiteSettings } from "@/sanity/lib/queries";
+import { getLocalContent } from "@/lib/contentStore";
 import {
   HandshakeIcon,
   MicIcon,
@@ -126,9 +127,37 @@ const testimonials = [
 ];
 
 export default async function HirePage() {
-  const settings = await getSiteSettings();
-  const whatsappNum = settings?.whatsappNumber || "919368153189";
-  const instagramHandle = settings?.instagramHandle || "apoorva__kaushal";
+  const [settings, local] = await Promise.all([
+    getSiteSettings(),
+    Promise.resolve(getLocalContent()),
+  ]);
+  const whatsappNum = settings?.whatsappNumber || local?.contact?.whatsappNumber || "919368153189";
+  const instagramHandle = settings?.instagramHandle || local?.contact?.instagramHandle || "apoorva__kaushal";
+
+  const dynamicPackages = packages.map((pkg, idx) => {
+    if (idx === 0 && local?.services?.starterPrice) {
+      return {
+        ...pkg,
+        price: local.services.starterPrice,
+        desc: local.services.starterDesc || pkg.desc,
+      };
+    }
+    if (idx === 1 && local?.services?.growthPrice) {
+      return {
+        ...pkg,
+        price: local.services.growthPrice,
+        desc: local.services.growthDesc || pkg.desc,
+      };
+    }
+    if (idx === 2 && local?.services?.premiumPrice) {
+      return {
+        ...pkg,
+        price: local.services.premiumPrice,
+        desc: local.services.premiumDesc || pkg.desc,
+      };
+    }
+    return pkg;
+  });
 
   return (
     <>
@@ -146,7 +175,7 @@ export default async function HirePage() {
 
       {/* ── PACKAGES ── */}
       <div className="hire-packages">
-        {packages.map((p) => (
+        {dynamicPackages.map((p) => (
           <div className={`hire-pkg${p.featured ? " featured" : ""}`} key={p.name}>
             {p.featured && <div className="recommended-badge">Most Popular</div>}
             <span

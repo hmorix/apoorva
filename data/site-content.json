@@ -1,0 +1,48 @@
+{
+  "hero": {
+    "heroTitle": "Apoorva Kaushal",
+    "heroTagline": "Authentic storytelling that connects brands with audiences through relatable experiences",
+    "heroSignature": "Appu",
+    "domain": "apoorva.hmorix.in"
+  },
+  "homepage": {
+    "whoAmIHeading": "WHO AM I",
+    "whoAmIBio1": "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.",
+    "whoAmIBio2": "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.",
+    "statBrands": "5+",
+    "statReach": "2M+",
+    "statFollowers": "5K+",
+    "statExp": "3YRS+"
+  },
+  "about": {
+    "pageHeroTitle": "APOORVA KAUSHAL",
+    "pageHeroSub": "Social Media Creator & Content Creator · Hathras, Uttar Pradesh, India",
+    "storyHeading": "FROM HATHRAS TO THE DIGITAL WORLD",
+    "storyBio1": "I'm Apoorva Kaushal — born and raised in Hathras, Uttar Pradesh, a historic cultural hub in the Braj/Agra region. My journey into social media strategy began with a clear conviction: audiences don't just watch content; they connect with authenticity, cultural nuance, and relatable humor.",
+    "storyBio2": "What started as creative sketches and storytelling has evolved into a full-fledged multi-channel digital footprint reaching 2M+ all-time reach, 400k+ YouTube views, and over 5K+ combined followers across Instagram, YouTube, and Facebook.",
+    "storyBio3": "As a social media manager and content creator, I blend creative UGC video production with data-driven Meta ad campaigns, having collaborated with 5+ brands across fashion, beauty, lifestyle, and local retail."
+  },
+  "services": {
+    "starterPrice": "₹15,000",
+    "starterPeriod": "month",
+    "starterDesc": "Ideal for emerging brands and personal accounts starting their content journey with curated visuals and community growth.",
+    "growthPrice": "₹35,000",
+    "growthPeriod": "month",
+    "growthDesc": "Comprehensive social strategy with weekly UGC Reels, engaging copy, and optimized Meta ad management.",
+    "premiumPrice": "₹65,000",
+    "premiumPeriod": "month",
+    "premiumDesc": "Full-funnel digital branding, high-frequency UGC production, scriptwriting, dedicated Meta ad scaling, and weekly analytics."
+  },
+  "contact": {
+    "whatsappNumber": "919368153189",
+    "email": "apoorva@apoorvakaushal.com",
+    "instagramHandle": "@apoorva__kaushal",
+    "instagramUrl": "https://instagram.com/apoorva__kaushal",
+    "youtubeHandle": "@_apoorva7__",
+    "youtubeUrl": "https://youtube.com/@_apoorva7__",
+    "twitterUrl": "https://twitter.com/",
+    "facebookUrl": "https://facebook.com/",
+    "location": "Hathras, Uttar Pradesh, India",
+    "postalCode": "204101"
+  }
+}
