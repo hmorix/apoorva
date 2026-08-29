@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getLocalContent, saveLocalContent } from "@/lib/contentStore";
+import { writeFile, mkdir } from "fs/promises";
+import path from "path";
+import { getLocalContent } from "@/lib/contentStore";
 
 export async function GET() {
   try {
@@ -18,12 +20,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid content body" }, { status: 400 });
     }
 
-    const ok = saveLocalContent(body);
-    if (ok) {
-      return NextResponse.json({ success: true, message: "Content updated successfully" });
-    } else {
-      return NextResponse.json({ error: "Failed to save content" }, { status: 500 });
-    }
+    const current = getLocalContent() || {};
+    const merged = { ...current, ...body };
+
+    const dataDir = path.join(process.cwd(), "data");
+    await mkdir(dataDir, { recursive: true });
+
+    const filePath = path.join(dataDir, "site-content.json");
+    await writeFile(filePath, JSON.stringify(merged, null, 2), "utf-8");
+
+    return NextResponse.json({ success: true, message: "Content updated successfully" });
   } catch (err) {
     console.error("[Admin Content POST Error]", err);
     return NextResponse.json({ error: "Failed to process request" }, { status: 500 });

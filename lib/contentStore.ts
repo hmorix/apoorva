@@ -1,7 +1,4 @@
-import fs from "fs";
-import path from "path";
-
-const CONTENT_FILE_PATH = path.join(process.cwd(), "data", "site-content.json");
+import siteContentJson from "@/data/site-content.json";
 
 export interface SiteContent {
   hero: {
@@ -52,30 +49,6 @@ export interface SiteContent {
   };
 }
 
-export function getLocalContent(): SiteContent | null {
-  try {
-    if (fs.existsSync(CONTENT_FILE_PATH)) {
-      const fileData = fs.readFileSync(CONTENT_FILE_PATH, "utf-8");
-      return JSON.parse(fileData);
-    }
-  } catch (error) {
-    console.warn("Failed to read local site-content.json:", error);
-  }
-  return null;
-}
-
-export function saveLocalContent(content: Partial<SiteContent>): boolean {
-  try {
-    const dir = path.dirname(CONTENT_FILE_PATH);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    const current = getLocalContent() || {};
-    const merged = { ...current, ...content };
-    fs.writeFileSync(CONTENT_FILE_PATH, JSON.stringify(merged, null, 2), "utf-8");
-    return true;
-  } catch (error) {
-    console.error("Failed to save local site-content.json:", error);
-    return false;
-  }
+export function getLocalContent(): SiteContent {
+  return siteContentJson as unknown as SiteContent;
 }
