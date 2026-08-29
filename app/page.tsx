@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Gallery from "@/components/Gallery";
-import { getGalleryItems, getSiteSettings } from "@/sanity/lib/queries";
+import { getHomePage, getGalleryItems, getSiteSettings, resolveImage } from "@/sanity/lib/queries";
 import {
   YouTubeIcon,
   InstagramIcon,
@@ -80,27 +80,63 @@ const faqSchema = {
 };
 
 export default async function HomePage() {
-  const [sanityGalleryItems, sanitySettings] = await Promise.all([
+  const [sanityHome, sanityGalleryItems, sanitySettings] = await Promise.all([
+    getHomePage(),
     getGalleryItems(),
     getSiteSettings(),
   ]);
 
-  const heroTitle = sanitySettings?.heroTitle || "Apoorva Kaushal";
+  const heroTitle = sanityHome?.heroTitle || sanitySettings?.heroTitle || "Apoorva Kaushal";
   const heroTagline =
+    sanityHome?.heroTagline ||
     sanitySettings?.heroTagline ||
     "Authentic storytelling that connects brands with audiences through relatable experiences";
-  const heroSignature = sanitySettings?.heroSignature || "Appu";
-  const profilePhoto = sanitySettings?.profilePhotoUrl || "/photos/profile.jpg";
+  const heroSignature = sanityHome?.heroSignature || sanitySettings?.heroSignature || "Appu";
+  const profilePhoto =
+    sanityHome?.heroPhotoUrl || sanitySettings?.profilePhotoUrl || "/photos/profile.jpg";
   const whoAmIBio1 =
+    sanityHome?.whoAmIBio1 ||
     sanitySettings?.whoAmIBio1 ||
     "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.";
   const whoAmIBio2 =
+    sanityHome?.whoAmIBio2 ||
     sanitySettings?.whoAmIBio2 ||
     "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.";
-  const whoAmIPhoto = sanitySettings?.whoAmIPhotoUrl || "/photos/IMG-20260205-WA0035.jpg";
+  const whoAmIPhoto =
+    sanityHome?.whoAmIPhotoUrl || sanitySettings?.whoAmIPhotoUrl || "/photos/IMG-20260205-WA0035.jpg";
   const qualificationsPhoto =
-    sanitySettings?.qualificationsPhotoUrl || "/photos/IMG-20250107-WA0012.jpg";
+    sanityHome?.qualificationsPhotoUrl ||
+    sanitySettings?.qualificationsPhotoUrl ||
+    "/photos/IMG-20250107-WA0012.jpg";
   const whatsappNum = sanitySettings?.whatsappNumber || "919368153189";
+
+  // Work Items photos (fallback to original default photos)
+  const workPhoto1 = resolveImage(sanityHome?.workItems?.[0]?.image, "/photos/IMG-20241220-WA0002.jpg");
+  const workPhoto2 = resolveImage(sanityHome?.workItems?.[1]?.image, "/photos/IMG-20260202-WA0003.jpg");
+  const workPhoto3 = resolveImage(sanityHome?.workItems?.[2]?.image, "/photos/Screenshot_2025-11-15-14-35-32-55.jpg");
+  const workPhoto4 = resolveImage(sanityHome?.workItems?.[3]?.image, "/photos/IMG-20260106-WA0002.jpg");
+  const workPhoto6 = resolveImage(sanityHome?.workItems?.[5]?.image, "/photos/IMG-20260205-WA0036.jpg");
+
+  // Case Study Instagram Grid (8 photos)
+  const caseInsta1 = resolveImage(sanityHome?.caseInstaGrid?.[0]?.image, "/photos/IMG-20260205-WA0035.jpg");
+  const caseInsta2 = resolveImage(sanityHome?.caseInstaGrid?.[1]?.image, "/photos/IMG-20240205-WA0003.jpg");
+  const caseInsta3 = resolveImage(sanityHome?.caseInstaGrid?.[2]?.image, "/photos/IMG-20260106-WA0010.jpg");
+  const caseInsta4 = resolveImage(sanityHome?.caseInstaGrid?.[3]?.image, "/photos/IMG-20260202-WA0003.jpg");
+  const caseInsta5 = resolveImage(sanityHome?.caseInstaGrid?.[4]?.image, "/photos/IMG-20260108-WA0003.jpg");
+  const caseInsta6 = resolveImage(sanityHome?.caseInstaGrid?.[5]?.image, "/photos/IMG_20260131_225741.jpg");
+  const caseInsta7 = resolveImage(sanityHome?.caseInstaGrid?.[6]?.image, "/photos/IMG-20260608-WA0016.jpg");
+  const caseInsta8 = resolveImage(sanityHome?.caseInstaGrid?.[7]?.image, "/photos/IMG-20260212-WA0000.jpg");
+
+  // Case Study Phone Mockups (3)
+  const phoneMockup1 = resolveImage(sanityHome?.phoneMockups?.[0]?.poster, "/photos/profile.jpg");
+  const phoneMockup2 = resolveImage(sanityHome?.phoneMockups?.[1]?.poster, "/photos/IMG-20260205-WA0035.jpg");
+  const phoneMockup3 = resolveImage(sanityHome?.phoneMockups?.[2]?.poster, "/photos/Screenshot_2026-01-16-12-45-41-89.jpg");
+
+  // Additional Photography (4)
+  const addPhoto1 = resolveImage(sanityHome?.additionalPhotos?.[0]?.image, "/photos/IMG-20260202-WA0003.jpg");
+  const addPhoto2 = resolveImage(sanityHome?.additionalPhotos?.[1]?.image, "/photos/IMG-20260212-WA0000.jpg");
+  const addPhoto3 = resolveImage(sanityHome?.additionalPhotos?.[2]?.image, "/photos/IMG-20260106-WA0009.jpg");
+  const addPhoto4 = resolveImage(sanityHome?.additionalPhotos?.[3]?.image, "/photos/IMG-20260608-WA0016.jpg");
 
   return (
     <>
@@ -295,7 +331,7 @@ export default async function HomePage() {
             <div className="work-item">
               <div className="work-thumb">
                 <img
-                  src="/photos/IMG-20241220-WA0002.jpg"
+                  src={workPhoto1}
                   alt="UGC Video Creation"
                   loading="lazy"
                   decoding="async"
@@ -312,7 +348,7 @@ export default async function HomePage() {
             <div className="work-item">
               <div className="work-thumb">
                 <img
-                  src="/photos/IMG-20260202-WA0003.jpg"
+                  src={workPhoto2}
                   alt="Branding and Aesthetic"
                   loading="lazy"
                   decoding="async"
@@ -331,7 +367,7 @@ export default async function HomePage() {
             <div className="work-item">
               <div className="work-thumb">
                 <img
-                  src="/photos/Screenshot_2025-11-15-14-35-32-55.jpg"
+                  src={workPhoto3}
                   alt="SEO in 2026"
                   loading="lazy"
                   decoding="async"
@@ -350,7 +386,7 @@ export default async function HomePage() {
             <div className="work-item">
               <div className="work-thumb">
                 <img
-                  src="/photos/IMG-20260106-WA0002.jpg"
+                  src={workPhoto4}
                   alt="Social Media Marketing"
                   loading="lazy"
                   decoding="async"
@@ -393,7 +429,7 @@ export default async function HomePage() {
             <div className="work-item">
               <div className="work-thumb">
                 <img
-                  src="/photos/IMG-20260205-WA0036.jpg"
+                  src={workPhoto6}
                   alt="Content Strategy"
                   loading="lazy"
                   decoding="async"
@@ -435,14 +471,14 @@ export default async function HomePage() {
             <p>I developed a 30-day content calendar built around lifestyle and user-facing storytelling, with a cohesive visual identity.</p>
             <p>Resulting in a feed that feels curated, not chaotic.</p>
             <div className="case-insta-grid">
-              <div className="case-insta-item"><img src="/photos/IMG-20260205-WA0035.jpg" alt="Instagram Post 1" loading="lazy" decoding="async" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20240205-WA0003.jpg" alt="Instagram Post 2" loading="lazy" decoding="async" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260106-WA0010.jpg" alt="Instagram Post 3" loading="lazy" decoding="async" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260202-WA0003.jpg" alt="Instagram Post 4" loading="lazy" decoding="async" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260108-WA0003.jpg" alt="Instagram Post 5" loading="lazy" decoding="async" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG_20260131_225741.jpg" alt="Instagram Post 6" loading="lazy" decoding="async" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260608-WA0016.jpg" alt="Instagram Post 7" loading="lazy" decoding="async" /></div>
-              <div className="case-insta-item"><img src="/photos/IMG-20260212-WA0000.jpg" alt="Instagram Post 8" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src={caseInsta1} alt="Instagram Post 1" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src={caseInsta2} alt="Instagram Post 2" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src={caseInsta3} alt="Instagram Post 3" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src={caseInsta4} alt="Instagram Post 4" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src={caseInsta5} alt="Instagram Post 5" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src={caseInsta6} alt="Instagram Post 6" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src={caseInsta7} alt="Instagram Post 7" loading="lazy" decoding="async" /></div>
+              <div className="case-insta-item"><img src={caseInsta8} alt="Instagram Post 8" loading="lazy" decoding="async" /></div>
             </div>
           </div>
 
@@ -454,15 +490,15 @@ export default async function HomePage() {
             <p>I styled them around the brand aesthetic and designed them for discoverability.</p>
             <div className="phone-row">
               <div className="phone-mockup">
-                <img src="/photos/profile.jpg" alt="Reel 1 Poster" loading="lazy" decoding="async" />
+                <img src={phoneMockup1} alt="Reel 1 Poster" loading="lazy" decoding="async" />
                 <div className="phone-mockup-badge">Reels 01 · 340K</div>
               </div>
               <div className="phone-mockup">
-                <img src="/photos/IMG-20260205-WA0035.jpg" alt="Reel 2 Poster" loading="lazy" decoding="async" />
+                <img src={phoneMockup2} alt="Reel 2 Poster" loading="lazy" decoding="async" />
                 <div className="phone-mockup-badge">Reels 02 · 420K</div>
               </div>
               <div className="phone-mockup">
-                <img src="/photos/Screenshot_2026-01-16-12-45-41-89.jpg" alt="Reel 3 Poster" loading="lazy" decoding="async" />
+                <img src={phoneMockup3} alt="Reel 3 Poster" loading="lazy" decoding="async" />
                 <div className="phone-mockup-badge">Reels 03 · 290K</div>
               </div>
             </div>
@@ -484,28 +520,28 @@ export default async function HomePage() {
           <div className="photo-grid-4">
             <div className="photo-item">
               <div className="photo-item-thumb">
-                <img src="/photos/IMG-20260202-WA0003.jpg" alt="Sunglasses & Retro Lifestyle" loading="lazy" decoding="async" />
+                <img src={addPhoto1} alt="Sunglasses & Retro Lifestyle" loading="lazy" decoding="async" />
               </div>
               <h5>SUNGLASSES CAMPAIGN</h5>
               <p>Retro 90s aesthetic styling for youth apparel and accessories.</p>
             </div>
             <div className="photo-item">
               <div className="photo-item-thumb">
-                <img src="/photos/IMG-20260212-WA0000.jpg" alt="Morning Beverage UGC" loading="lazy" decoding="async" />
+                <img src={addPhoto2} alt="Morning Beverage UGC" loading="lazy" decoding="async" />
               </div>
               <h5>LIFESTYLE UGC</h5>
               <p>Morning routine and wellness product placement concept.</p>
             </div>
             <div className="photo-item">
               <div className="photo-item-thumb">
-                <img src="/photos/IMG-20260106-WA0009.jpg" alt="Ethnic Lookbook Shoot" loading="lazy" decoding="async" />
+                <img src={addPhoto3} alt="Ethnic Lookbook Shoot" loading="lazy" decoding="async" />
               </div>
               <h5>FESTIVE ETHNIC LOOK</h5>
               <p>Vibrant Indian ethnic wear for festival marketing campaigns.</p>
             </div>
             <div className="photo-item">
               <div className="photo-item-thumb">
-                <img src="/photos/IMG-20260608-WA0016.jpg" alt="Radha Raman Devotional" loading="lazy" decoding="async" />
+                <img src={addPhoto4} alt="Radha Raman Devotional" loading="lazy" decoding="async" />
               </div>
               <h5>RADHA RAMAN SERIES</h5>
               <p>Devotional storytelling post reaching 560K+ spiritual audience.</p>

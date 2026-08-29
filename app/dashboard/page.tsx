@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { getDashboardPage } from "@/sanity/lib/queries";
 import {
   InstagramIcon,
   YouTubeIcon,
@@ -24,12 +25,7 @@ const maxReach = Math.max(...reachData);
 const maxEngage = Math.max(...engageData);
 
 // Platform breakdown strictly aligned with user data:
-// Combined Followers: 5K+ (5,150 total)
-// Instagram: 3.8K (74%)
-// YouTube: 550 (11%)
-// Facebook: 450 (9%)
-// X (Twitter): 350 (7%)
-const platforms = [
+const defaultPlatforms = [
   {
     icon: <InstagramIcon size={18} />,
     name: "Instagram",
@@ -65,7 +61,7 @@ const platforms = [
 ];
 
 // Campaign Overview Data aligned with 2M+ total reach & verified client results
-const campaigns = [
+const defaultCampaigns = [
   {
     name: "Fashion Boutique Launch — Hathras",
     platform: "Instagram Reels & Stories",
@@ -149,72 +145,117 @@ export default function DashboardPage() {
   const [activeChart, setActiveChart] = useState<"reach" | "engagement">("reach");
   const chartData = activeChart === "reach" ? reachData : engageData;
 
-  const kpis = [
-    {
-      icon: <EyeIcon size={20} className="dash-icon-accent" />,
-      label: "Total Reach (All-time)",
-      num: "2M+",
-      change: "18% vs last quarter",
-      up: true,
-      sub: "Across all platforms",
-    },
-    {
-      icon: <PlayIcon size={18} className="dash-icon-accent" />,
-      label: "Avg. Reel Views",
-      num: "340K",
-      change: "24% vs last month",
-      up: true,
-      sub: "Per organic video",
-    },
-    {
-      icon: <HeartIcon size={18} className="dash-icon-accent" />,
-      label: "Engagement Rate",
-      num: "6.8%",
-      change: "1.2pp vs last month",
-      up: true,
-      sub: "Industry benchmark 2.1%",
-    },
-    {
-      icon: <BriefcaseIcon size={18} className="dash-icon-accent" />,
-      label: "Brands Collaborated",
-      num: "5+",
-      change: "3 new this year",
-      up: true,
-      sub: "D2C, Fashion & Local",
-    },
-    {
-      icon: <YouTubeIcon size={18} className="dash-icon-accent" />,
-      label: "Total Subscribers",
-      num: "550",
-      change: "60+ this month",
-      up: true,
-      sub: "YouTube official channel",
-    },
-    {
-      icon: <TrendingUpIcon size={18} className="dash-icon-accent" />,
-      label: "Total Youtube Views",
-      num: "400k+",
-      change: "2× improvement",
-      up: true,
-      sub: "Long-form & Shorts",
-    },
-    {
-      icon: <UsersIcon size={18} className="dash-icon-accent" />,
-      label: "Followers (Combined)",
-      num: "5K+",
-      change: "3K this year",
-      up: true,
-      sub: "Instagram, YT & FB",
-    },
-    {
-      icon: <LayersIcon size={18} className="dash-icon-accent" />,
-      label: "Content Pieces Created",
-      num: "500+",
-      change: "40 this month",
-      up: true,
-      sub: "Reels, Posts & UGC",
-    },
-  ];
+const defaultKpis = [
+  {
+    icon: <EyeIcon size={20} className="dash-icon-accent" />,
+    label: "Total Reach (All-time)",
+    num: "2M+",
+    change: "18% vs last quarter",
+    up: true,
+    sub: "Across all platforms",
+  },
+  {
+    icon: <PlayIcon size={18} className="dash-icon-accent" />,
+    label: "Avg. Reel Views",
+    num: "340K",
+    change: "24% vs last month",
+    up: true,
+    sub: "Per organic video",
+  },
+  {
+    icon: <HeartIcon size={18} className="dash-icon-accent" />,
+    label: "Engagement Rate",
+    num: "6.8%",
+    change: "1.2pp vs last month",
+    up: true,
+    sub: "Industry benchmark 2.1%",
+  },
+  {
+    icon: <BriefcaseIcon size={18} className="dash-icon-accent" />,
+    label: "Brands Collaborated",
+    num: "5+",
+    change: "3 new this year",
+    up: true,
+    sub: "D2C, Fashion & Local",
+  },
+  {
+    icon: <YouTubeIcon size={18} className="dash-icon-accent" />,
+    label: "Total Subscribers",
+    num: "550",
+    change: "60+ this month",
+    up: true,
+    sub: "YouTube official channel",
+  },
+  {
+    icon: <TrendingUpIcon size={18} className="dash-icon-accent" />,
+    label: "Total Youtube Views",
+    num: "400k+",
+    change: "2× improvement",
+    up: true,
+    sub: "Long-form & Shorts",
+  },
+  {
+    icon: <UsersIcon size={18} className="dash-icon-accent" />,
+    label: "Followers (Combined)",
+    num: "5K+",
+    change: "3K this year",
+    up: true,
+    sub: "Instagram, YT & FB",
+  },
+  {
+    icon: <LayersIcon size={18} className="dash-icon-accent" />,
+    label: "Content Pieces Created",
+    num: "500+",
+    change: "40 this month",
+    up: true,
+    sub: "Reels, Posts & UGC",
+  },
+];
+
+export default function DashboardPage() {
+  const [activeChart, setActiveChart] = useState<"reach" | "engagement">("reach");
+  const [dashboardData, setDashboardData] = useState<any>(null);
+  const chartData = activeChart === "reach" ? reachData : engageData;
+
+  useEffect(() => {
+    getDashboardPage().then((data) => {
+      if (data) setDashboardData(data);
+    });
+  }, []);
+
+  const kpis = defaultKpis.map((k, idx) => {
+    const sanityKpi = dashboardData?.kpis?.[idx];
+    if (sanityKpi) {
+      return {
+        ...k,
+        label: sanityKpi.label || k.label,
+        num: sanityKpi.num || k.num,
+        change: sanityKpi.change || k.change,
+        up: sanityKpi.up !== undefined ? sanityKpi.up : k.up,
+        sub: sanityKpi.sub || k.sub,
+      };
+    }
+    return k;
+  });
+
+  const platforms = defaultPlatforms.map((p, idx) => {
+    const sanityP = dashboardData?.platforms?.[idx];
+    if (sanityP) {
+      return {
+        ...p,
+        name: sanityP.name || p.name,
+        handle: sanityP.handle || p.handle,
+        followers: sanityP.followers || p.followers,
+        pct: sanityP.pct !== undefined ? sanityP.pct : p.pct,
+      };
+    }
+    return p;
+  });
+
+  const campaigns =
+    dashboardData?.campaigns && dashboardData.campaigns.length > 0
+      ? dashboardData.campaigns
+      : defaultCampaigns;
 
   return (
     <>

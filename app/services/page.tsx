@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getServicesPage } from "@/sanity/lib/queries";
 import {
   VideoIcon,
   PhoneIcon,
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://apoorvakaushal.vercel.app/services" },
 };
 
-const services = [
+const defaultServices = [
   {
     icon: <VideoIcon size={24} />,
     name: "Video Creation & Script Writing",
@@ -127,7 +128,21 @@ const services = [
   },
 ];
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const sanityServices = await getServicesPage();
+  const pageHeroTitle = sanityServices?.pageHeroTitle || "SERVICES & PRICING";
+  const pageHeroSub =
+    sanityServices?.pageHeroSub ||
+    "Video creation, script writing, social media management, Meta ads, SEO, website content and brand collaborations — tailored for brands and businesses across India by Apoorva Kaushal & HMorix.";
+
+  const activeServices =
+    sanityServices?.servicesList && sanityServices.servicesList.length > 0
+      ? sanityServices.servicesList.map((s: any, idx: number) => ({
+          ...s,
+          icon: defaultServices[idx]?.icon || <VideoIcon size={24} />,
+          features: s.features || [],
+        }))
+      : defaultServices;
   return (
     <>
       {/* ── PAGE HERO ── */}
@@ -137,15 +152,13 @@ export default function ServicesPage() {
           <span className="tag tag-maroon">Clear Pricing</span>
           <span className="tag tag-maroon">HMorix</span>
         </div>
-        <h1 className="page-hero-title display">SERVICES &amp; PRICING</h1>
-        <p className="page-hero-sub">
-          Video creation, script writing, social media management, Meta ads, SEO, website content and brand collaborations — tailored for brands and businesses across India by Apoorva Kaushal &amp; HMorix.
-        </p>
+        <h1 className="page-hero-title display">{pageHeroTitle}</h1>
+        <p className="page-hero-sub">{pageHeroSub}</p>
       </section>
 
       {/* ── SERVICES GRID ── */}
       <div className="services-grid" style={{ borderTop: "none" }}>
-        {services.map((s) => (
+        {activeServices.map((s) => (
           <div className="service-card" key={s.name}>
             <div className="service-icon-box">{s.icon}</div>
             <div className="service-name display">{s.name}</div>

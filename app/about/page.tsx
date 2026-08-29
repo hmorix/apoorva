@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getAboutPage, getSiteSettings, resolveImage } from "@/sanity/lib/queries";
 import {
   LaughIcon,
   MaskIcon,
@@ -155,7 +156,22 @@ const verifiedStats = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [sanityAbout, sanitySettings] = await Promise.all([
+    getAboutPage(),
+    getSiteSettings(),
+  ]);
+
+  const pageHeroTitle = sanityAbout?.pageHeroTitle || "APOORVA KAUSHAL";
+  const pageHeroSub =
+    sanityAbout?.pageHeroSub ||
+    "Social Media Creator & Content Creator · Hathras, Uttar Pradesh, India";
+  const storyHeading = sanityAbout?.storyHeading || "FROM HATHRAS\nTO THE DIGITAL WORLD";
+  const storyPhoto =
+    sanityAbout?.storyPhotoUrl ||
+    sanitySettings?.whoAmIPhotoUrl ||
+    "/photos/IMG-20260205-WA0035.jpg";
+
   return (
     <>
       {/* ── PAGE HERO ── */}
@@ -164,10 +180,8 @@ export default function AboutPage() {
           <span className="tag">About</span>
           <span className="tag tag-maroon">Creator &amp; Strategist</span>
         </div>
-        <h1 className="page-hero-title display">APOORVA KAUSHAL</h1>
-        <p className="page-hero-sub">
-          Social Media Creator &amp; Content Creator &middot; Hathras, Uttar Pradesh, India
-        </p>
+        <h1 className="page-hero-title display">{pageHeroTitle}</h1>
+        <p className="page-hero-sub">{pageHeroSub}</p>
       </section>
 
       {/* ── BIO SECTION ── */}
@@ -177,20 +191,32 @@ export default function AboutPage() {
           <div className="about-story-col">
             <span className="script" style={{ fontSize: 24 }}>My Story</span>
             <h2 className="display about-story-heading">
-              FROM HATHRAS<br />TO THE DIGITAL WORLD
+              {storyHeading}
             </h2>
 
             <div className="about-story-text">
               <p>
-                I&apos;m <strong className="highlight">Apoorva Kaushal</strong> &mdash; born and raised in{" "}
-                <strong className="highlight">Hathras, Uttar Pradesh</strong>, a historic cultural hub in the Braj/Agra region. My journey into social media strategy began with a clear conviction: audiences don&apos;t just watch content; they connect with authenticity, cultural nuance, and relatable humor.
+                {sanityAbout?.storyBio1 || (
+                  <>
+                    I&apos;m <strong className="highlight">Apoorva Kaushal</strong> &mdash; born and raised in{" "}
+                    <strong className="highlight">Hathras, Uttar Pradesh</strong>, a historic cultural hub in the Braj/Agra region. My journey into social media strategy began with a clear conviction: audiences don&apos;t just watch content; they connect with authenticity, cultural nuance, and relatable humor.
+                  </>
+                )}
               </p>
               <p>
-                What started as creative sketches and storytelling has evolved into a full-fledged multi-channel digital footprint reaching{" "}
-                <strong className="highlight">2M+ all-time reach</strong>, <strong className="highlight">400k+ YouTube views</strong>, and over <strong className="highlight">5K+ combined followers</strong> across Instagram, YouTube, and Facebook.
+                {sanityAbout?.storyBio2 || (
+                  <>
+                    What started as creative sketches and storytelling has evolved into a full-fledged multi-channel digital footprint reaching{" "}
+                    <strong className="highlight">2M+ all-time reach</strong>, <strong className="highlight">400k+ YouTube views</strong>, and over <strong className="highlight">5K+ combined followers</strong> across Instagram, YouTube, and Facebook.
+                  </>
+                )}
               </p>
               <p>
-                As a social media manager and content creator, I blend creative UGC video production with data-driven Meta ad campaigns, having collaborated with <strong className="highlight">5+ brands</strong> across fashion, beauty, lifestyle, and local retail.
+                {sanityAbout?.storyBio3 || (
+                  <>
+                    As a social media manager and content creator, I blend creative UGC video production with data-driven Meta ad campaigns, having collaborated with <strong className="highlight">5+ brands</strong> across fashion, beauty, lifestyle, and local retail.
+                  </>
+                )}
               </p>
             </div>
 
@@ -211,13 +237,13 @@ export default function AboutPage() {
             <div className="about-portrait-card">
               <div className="about-portrait-img-wrap">
                 <img
-                  src="/photos/IMG-20260205-WA0035.jpg"
+                  src={storyPhoto}
                   alt="Apoorva Kaushal — Content Creator Hathras"
                   className="about-portrait-img"
                   loading="eager"
                 />
                 <div className="about-portrait-badge">
-                  <div className="about-portrait-name">Apoorva Kaushal</div>
+                  <div className="about-portrait-name">{pageHeroTitle}</div>
                   <div className="about-portrait-loc">
                     <MapPinIcon size={12} />
                     <span>Hathras, Uttar Pradesh &middot; India</span>

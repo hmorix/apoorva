@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getSiteSettings } from "@/sanity/lib/queries";
 import {
   HandshakeIcon,
   MicIcon,
@@ -124,7 +125,11 @@ const testimonials = [
   },
 ];
 
-export default function HirePage() {
+export default async function HirePage() {
+  const settings = await getSiteSettings();
+  const whatsappNum = settings?.whatsappNumber || "919368153189";
+  const instagramHandle = settings?.instagramHandle || "apoorva__kaushal";
+
   return (
     <>
       {/* ── PAGE HERO ── */}

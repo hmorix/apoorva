@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getCaseStudiesPage } from "@/sanity/lib/queries";
 import { SparkleIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://apoorvakaushal.vercel.app/case-studies" },
 };
 
-const cases = [
+const defaultCases = [
   {
     num: "01",
     brand: "Fashion Brand — Hathras",
@@ -81,21 +82,35 @@ const cases = [
   },
 ];
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const sanityCases = await getCaseStudiesPage();
+  const pageHeroTitle = sanityCases?.pageHeroTitle || "CASE STUDIES";
+  const pageHeroSub =
+    sanityCases?.pageHeroSub ||
+    "Real campaigns. Real numbers. Social media work that actually moves the needle for brands across India.";
+
+  const activeCases =
+    sanityCases?.casesList && sanityCases.casesList.length > 0
+      ? sanityCases.casesList.map((c: any, idx: number) => ({
+          ...c,
+          visual: defaultCases[idx]?.visual || "linear-gradient(135deg,#b98a9c,#7a4f5e)",
+          metrics: c.metrics || [],
+          tags: c.tags || [],
+        }))
+      : defaultCases;
+
   return (
     <>
       {/* ── PAGE HERO ── */}
       <section className="page-hero">
         <span className="tag">Results</span>
-        <h1 className="page-hero-title display">CASE STUDIES</h1>
-        <p className="page-hero-sub">
-          Real campaigns. Real numbers. Social media work that actually moves the needle for brands across India.
-        </p>
+        <h1 className="page-hero-title display">{pageHeroTitle}</h1>
+        <p className="page-hero-sub">{pageHeroSub}</p>
       </section>
 
       {/* ── CASE CARDS ── */}
       <div className="case-grid">
-        {cases.map((c) => (
+        {activeCases.map((c) => (
           <div className="case-card" key={c.num}>
             {/* Visual Header */}
             <div style={{
