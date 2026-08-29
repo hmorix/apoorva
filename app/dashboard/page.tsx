@@ -141,10 +141,6 @@ const BarChart = ({
   );
 };
 
-export default function DashboardPage() {
-  const [activeChart, setActiveChart] = useState<"reach" | "engagement">("reach");
-  const chartData = activeChart === "reach" ? reachData : engageData;
-
 const defaultKpis = [
   {
     icon: <EyeIcon size={20} className="dash-icon-accent" />,
