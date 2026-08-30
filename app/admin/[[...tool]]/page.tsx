@@ -875,6 +875,26 @@ export default function AdminDashboard() {
         {/* Bottom Actions */}
         <div style={{ padding: "12px 10px", borderTop: "1px solid #f3f4f6" }}>
           <a
+            href="/hmorix/admin"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "8px 10px",
+              borderRadius: 7,
+              color: "#fff",
+              textDecoration: "none",
+              fontSize: 12,
+              fontWeight: 700,
+              background: "linear-gradient(135deg,#3b82f6,#8b5cf6)",
+              minHeight: 38,
+              marginBottom: 6,
+            }}
+          >
+            <span>✨</span>
+            {sidebarOpen && <span>HMoriX Visual Studio</span>}
+          </a>
+          <a
             href="/admin/studio"
             target="_blank"
             rel="noopener noreferrer"

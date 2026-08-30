@@ -117,18 +117,20 @@ export async function getHomePage() {
     heroTitle: sanityData?.heroTitle || local?.hero?.heroTitle || "Apoorva Kaushal",
     heroTagline: sanityData?.heroTagline || local?.hero?.heroTagline || "Authentic storytelling that connects brands with audiences through relatable experiences",
     heroSignature: sanityData?.heroSignature || local?.hero?.heroSignature || "Appu",
-    heroPhotoUrl: sanityData?.heroPhoto ? urlForImage(sanityData.heroPhoto)?.url() : null,
+    heroPhotoUrl: local?.photos?.profile || (sanityData?.heroPhoto ? urlForImage(sanityData.heroPhoto)?.url() : null),
     whoAmIHeading: sanityData?.whoAmIHeading || local?.homepage?.whoAmIHeading || "WHO AM I",
     whoAmIBio1: sanityData?.whoAmIBio1 || local?.homepage?.whoAmIBio1 || "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.",
     whoAmIBio2: sanityData?.whoAmIBio2 || local?.homepage?.whoAmIBio2 || "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.",
-    whoAmIPhotoUrl: sanityData?.whoAmIPhoto ? urlForImage(sanityData.whoAmIPhoto)?.url() : null,
-    qualificationsPhotoUrl: sanityData?.qualificationsPhoto
+    whoAmIPhotoUrl: local?.photos?.whoami || (sanityData?.whoAmIPhoto ? urlForImage(sanityData.whoAmIPhoto)?.url() : null),
+    qualificationsPhotoUrl: local?.photos?.qualifications || (sanityData?.qualificationsPhoto
       ? urlForImage(sanityData.qualificationsPhoto)?.url()
-      : null,
+      : null),
     workItems: sanityData?.workItems || null,
     caseInstaGrid: sanityData?.caseInstaGrid || null,
     phoneMockups: sanityData?.phoneMockups || null,
     additionalPhotos: sanityData?.additionalPhotos || null,
+    photos: local?.photos || {},
+    videos: local?.videos || {},
   };
 }
 
@@ -151,11 +153,12 @@ export async function getAboutPage() {
     storyBio1: sanityData?.storyBio1 || local?.about?.storyBio1 || null,
     storyBio2: sanityData?.storyBio2 || local?.about?.storyBio2 || null,
     storyBio3: sanityData?.storyBio3 || local?.about?.storyBio3 || null,
-    storyPhotoUrl: sanityData?.storyPhoto ? urlForImage(sanityData.storyPhoto)?.url() : null,
+    storyPhotoUrl: local?.photos?.storyPhoto || local?.photos?.whoami || (sanityData?.storyPhoto ? urlForImage(sanityData.storyPhoto)?.url() : null),
     contentPillars: sanityData?.contentPillars || null,
     creatorValues: sanityData?.creatorValues || null,
     qualifications: sanityData?.qualifications || null,
     brandCategories: sanityData?.brandCategories || null,
+    photos: local?.photos || {},
   };
 }
 

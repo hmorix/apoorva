@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sync-live": "node scripts/sync-content.mjs"
   },
   "dependencies": {
     "@sanity/image-url": "^1.1.0",
+    "mongodb": "^6.13.0",
     "next": "^15.2.1",
     "next-sanity": "^9.8.58",
     "react": "^19.0.0",

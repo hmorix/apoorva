@@ -47,6 +47,8 @@ export interface SiteContent {
     location: string;
     postalCode: string;
   };
+  photos?: Record<string, string>;
+  videos?: Record<string, string>;
 }
 
 export function getLocalContent(): SiteContent {
@@ -54,6 +56,20 @@ export function getLocalContent(): SiteContent {
 }
 
 export async function getContent(): Promise<SiteContent> {
+  // 1. Try MongoDB Atlas Published Content
+  if (process.env.MONGODB_URI) {
+    try {
+      const { getStoredContent } = await import("./mongodb");
+      const mongoData = await getStoredContent("published");
+      if (mongoData) {
+        return { ...(siteContentJson as unknown as SiteContent), ...mongoData };
+      }
+    } catch (err) {
+      console.warn("[ContentStore] MongoDB fetch error, falling back:", err);
+    }
+  }
+
+  // 2. Try Vercel KV / Upstash Redis
   const kvUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const kvToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
@@ -75,6 +91,8 @@ export async function getContent(): Promise<SiteContent> {
     }
   }
 
+  // 3. Fallback to Local JSON file
   return getLocalContent();
 }
+
 
