@@ -9,3 +9,22 @@ export const client = projectId
       useCdn,
     })
   : null;
+
+export function getWriteClient() {
+  const token =
+    process.env.SANITY_API_WRITE_TOKEN ||
+    process.env.SANITY_AUTH_TOKEN ||
+    process.env.SANITY_API_TOKEN ||
+    process.env.SANITY_WRITE_TOKEN;
+
+  if (!projectId || !token) return null;
+
+  return createClient({
+    projectId,
+    dataset,
+    apiVersion,
+    useCdn: false,
+    token,
+  });
+}
+
