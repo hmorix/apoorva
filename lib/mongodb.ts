@@ -178,7 +178,7 @@ export async function getRevisionHistory(limit = 20): Promise<ContentRevision[]>
 }
 
 // ── RESTORE AN OLD REVISION ─────────────────────────────────────────────────
-export async function restoreRevision(revisionId: string): Promise<{ success: boolean; message: string }> {
+export async function restoreRevision(revisionId: string): Promise<{ success: boolean; message: string; data?: Partial<SiteContent> }> {
   const conn = await connectToDatabase();
   if (!conn) {
     return { success: false, message: "MongoDB Atlas is not connected." };
@@ -192,8 +192,9 @@ export async function restoreRevision(revisionId: string): Promise<{ success: bo
       return { success: false, message: "Revision not found." };
     }
 
+    await saveDraftContent(targetRev.data);
     await publishContent(`Restored from Version ${targetRev.version} (${revisionId})`);
-    return { success: true, message: `Successfully restored Version ${targetRev.version}!` };
+    return { success: true, message: `Successfully restored Version ${targetRev.version}!`, data: targetRev.data };
   } catch (err) {
     return { success: false, message: "Restore failed: " + (err instanceof Error ? err.message : String(err)) };
   }
