@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { getSiteSettings } from "@/sanity/lib/queries";
+import { getContent } from "@/lib/contentStore";
 import {
   WhatsAppIcon,
   MailIcon,
   InstagramIcon,
   YouTubeIcon,
+  TwitterXIcon,
+  FacebookIcon,
   MapPinIcon,
   CompassIcon,
-  ArrowRightIcon,
   SparkleIcon,
 } from "@/components/Icons";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Contact Apoorva Kaushal — Hathras, Uttar Pradesh, India",
@@ -27,126 +29,97 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://apoorvakaushal.vercel.app/contact" },
 };
 
-const localBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "Apoorva Kaushal — Social Media Management",
-  description: "Social media management, content creation and digital marketing services.",
-  url: "https://apoorvakaushal.vercel.app",
-  telephone: "+91-9368153189",
-  email: "apoorva@hmorix.in",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Hathras",
-    addressRegion: "Uttar Pradesh",
-    addressCountry: "IN",
-    postalCode: "204101",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: "27.5954",
-    longitude: "78.0524",
-  },
-  areaServed: [
-    { "@type": "State", name: "Uttar Pradesh" },
-    { "@type": "Country", name: "India" },
-  ],
-  sameAs: [
-    "https://instagram.com/apoorva__kaushal",
-    "https://youtube.com/@_apoorva7__",
-  ],
-};
-
-const contactChannels = [
-  {
-    icon: <WhatsAppIcon size={20} />,
-    label: "WhatsApp",
-    val: "+91 9368153189",
-    href: "https://wa.me/919368153189?text=Hi%20Apoorva!",
-    sub: "Fastest response — typically within 2 hours",
-  },
-  {
-    icon: <MailIcon size={20} />,
-    label: "Email",
-    val: "apoorva@apoorvakaushal.com",
-    href: "mailto:apoorva@apoorvakaushal.com",
-    sub: "Detailed inquiries — response within 24 hours",
-  },
-  {
-    icon: <InstagramIcon size={20} />,
-    label: "Instagram DM",
-    val: "@apoorva__kaushal",
-    href: "https://instagram.com/apoorva__kaushal",
-    sub: "Direct message for quick collaboration inquiries",
-  },
-  {
-    icon: <YouTubeIcon size={20} />,
-    label: "YouTube",
-    val: "@_apoorva7__",
-    href: "https://youtube.com/@_apoorva7__",
-    sub: "Official video channel & community updates",
-  },
-  {
-    icon: <MapPinIcon size={20} />,
-    label: "Location",
-    val: "Hathras, Uttar Pradesh, India (204101)",
-    href: null,
-    sub: "Serving clients across India & internationally",
-  },
-];
-
-const coverageAreas = [
-  "Hathras",
-  "Agra",
-  "Mathura",
-  "Aligarh",
-  "Uttar Pradesh",
-  "Delhi NCR",
-  "Mumbai",
-  "Bengaluru",
-  "Pan India",
-  "International",
-];
-
 export default async function ContactPage() {
-  const settings = await getSiteSettings();
+  const content = await getContent();
+  const contact = content.contact;
+
+  const email = contact.email || "apoorva@apoorvakaushal.com";
+  const whatsappNumber = contact.whatsappNumber || "919368153189";
+  const instagramHandle = contact.instagramHandle || "@apoorva__kaushal";
+  const instagramUrl = contact.instagramUrl || `https://instagram.com/${instagramHandle.replace("@", "")}`;
+  const youtubeHandle = contact.youtubeHandle || "@_apoorva7__";
+  const youtubeUrl = contact.youtubeUrl || `https://youtube.com/${youtubeHandle}`;
+  const twitterUrl = contact.twitterUrl || "https://twitter.com/apoorva_kaushal";
+  const facebookUrl = contact.facebookUrl || "https://facebook.com/apoorva_kaushal";
+  const location = contact.location || "Hathras, Uttar Pradesh, India";
+  const postalCode = contact.postalCode || "204101";
+
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: `${content.hero?.heroTitle || "Apoorva Kaushal"} — Social Media Management`,
+    description: "Social media management, content creation and digital marketing services.",
+    url: "https://apoorvakaushal.vercel.app",
+    telephone: `+${whatsappNumber}`,
+    email: email,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: location.split(",")[0]?.trim() || "Hathras",
+      addressRegion: "Uttar Pradesh",
+      addressCountry: "IN",
+      postalCode: postalCode,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "27.5954",
+      longitude: "78.0524",
+    },
+    areaServed: [
+      { "@type": "State", name: "Uttar Pradesh" },
+      { "@type": "Country", name: "India" },
+    ],
+    sameAs: [instagramUrl, youtubeUrl],
+  };
 
   const channels = [
     {
       icon: <WhatsAppIcon size={20} />,
       label: "WhatsApp",
-      val: settings?.whatsappNumber ? `+${settings.whatsappNumber}` : "+91 9368153189",
-      href: `https://wa.me/${settings?.whatsappNumber || "919368153189"}?text=Hi%20Apoorva!`,
+      val: `+${whatsappNumber}`,
+      href: `https://wa.me/${whatsappNumber}?text=Hi%20Apoorva!`,
       sub: "Fastest response — typically within 2 hours",
     },
     {
       icon: <MailIcon size={20} />,
       label: "Email",
-      val: "apoorva@apoorvakaushal.com",
-      href: "mailto:apoorva@apoorvakaushal.com",
+      val: email,
+      href: `mailto:${email}`,
       sub: "Detailed inquiries — response within 24 hours",
     },
     {
       icon: <InstagramIcon size={20} />,
       label: "Instagram DM",
-      val: settings?.instagramHandle || "@apoorva__kaushal",
-      href: `https://instagram.com/${(settings?.instagramHandle || "@apoorva__kaushal").replace("@", "")}`,
+      val: instagramHandle,
+      href: instagramUrl,
       sub: "Direct message for quick collaboration inquiries",
     },
     {
       icon: <YouTubeIcon size={20} />,
       label: "YouTube",
-      val: settings?.youtubeHandle || "@_apoorva7__",
-      href: `https://youtube.com/${settings?.youtubeHandle || "@_apoorva7__"}`,
+      val: youtubeHandle,
+      href: youtubeUrl,
       sub: "Official video channel & community updates",
     },
     {
       icon: <MapPinIcon size={20} />,
       label: "Location",
-      val: "Hathras, Uttar Pradesh, India (204101)",
+      val: `${location} (${postalCode})`,
       href: null,
       sub: "Serving clients across India & internationally",
     },
+  ];
+
+  const coverageAreas = contact.coverageAreas || [
+    "Hathras",
+    "Agra",
+    "Mathura",
+    "Aligarh",
+    "Uttar Pradesh",
+    "Delhi NCR",
+    "Mumbai",
+    "Bengaluru",
+    "Pan India",
+    "International",
   ];
 
   return (
@@ -160,11 +133,11 @@ export default async function ContactPage() {
       <section className="page-hero">
         <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
           <span className="tag">Contact</span>
-          <span className="tag tag-maroon">Hathras, UP</span>
+          <span className="tag tag-maroon">{location.split(",")[0]?.trim() || "Hathras, UP"}</span>
         </div>
         <h1 className="page-hero-title display">GET IN TOUCH</h1>
         <p className="page-hero-sub">
-          Based in Hathras, Uttar Pradesh, India — serving brands and creators across India and internationally. Reach out via WhatsApp, email, or this form.
+          Based in {location} — serving brands and creators across India and internationally. Reach out via WhatsApp, email, or this form.
         </p>
       </section>
 
@@ -208,6 +181,25 @@ export default async function ContactPage() {
             </div>
           ))}
 
+          {/* Social Links Row */}
+          <div style={{ display: "flex", gap: 10, marginTop: 20, flexWrap: "wrap" }}>
+            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="social-btn" title="Instagram">
+              <InstagramIcon size={16} />
+            </a>
+            <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="social-btn" title="YouTube">
+              <YouTubeIcon size={16} />
+            </a>
+            <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="social-btn" title="X (Twitter)">
+              <TwitterXIcon size={15} />
+            </a>
+            <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="social-btn" title="Facebook">
+              <FacebookIcon size={16} />
+            </a>
+            <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="social-btn" title="WhatsApp">
+              <WhatsAppIcon size={16} />
+            </a>
+          </div>
+
           {/* Location Details Card */}
           <div
             style={{
@@ -223,11 +215,11 @@ export default async function ContactPage() {
             <div style={{ color: "var(--navy)", marginBottom: 10, display: "flex", justifyContent: "center" }}>
               <CompassIcon size={36} />
             </div>
-            <div className="display" style={{ fontSize: 18, marginBottom: 4, color: "var(--navy)" }}>
-              HATHRAS, UTTAR PRADESH
+            <div className="display" style={{ fontSize: 18, marginBottom: 4, color: "var(--navy)", textTransform: "uppercase" }}>
+              {location}
             </div>
             <p style={{ fontSize: 13, color: "var(--muted)" }}>
-              Postal Code: 204101 · Agra Division · India
+              Postal Code: {postalCode} · India
             </p>
             <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 8 }}>
               50 km from Mathura · 85 km from Agra · 170 km from Delhi NCR
@@ -245,8 +237,8 @@ export default async function ContactPage() {
           </p>
 
           <form
-            action="https://formspree.io/f/YOUR_FORM_ID"
-            method="POST"
+            action={`mailto:${email}`}
+            method="GET"
             style={{ display: "flex", flexDirection: "column", gap: 18 }}
           >
             <div className="form-row-2">
@@ -336,7 +328,7 @@ export default async function ContactPage() {
                 <span>Send Message</span>
               </button>
               <a
-                href="https://wa.me/919368153189?text=Hi%20Apoorva%2C%20I%27d%20like%20to%20connect!"
+                href={`https://wa.me/${whatsappNumber}?text=Hi%20Apoorva%2C%20I%27d%20like%20to%20connect!`}
                 className="btn"
                 style={{ background: "#25D366", color: "white" }}
                 target="_blank"
@@ -384,7 +376,7 @@ export default async function ContactPage() {
           ))}
         </div>
         <p style={{ fontSize: 14, color: "var(--muted)", marginTop: 24, lineHeight: 1.7 }}>
-          I am based in <strong style={{ color: "var(--navy)" }}>Hathras, Uttar Pradesh</strong> and partner with clients across India — from major metros (Delhi NCR, Mumbai, Bengaluru) to vibrant Tier-2 and Tier-3 cities. With deep cultural understanding of Hindi-speaking audiences, my campaigns deliver high engagement across UP, MP, Rajasthan, Haryana, and beyond.
+          I am based in <strong style={{ color: "var(--navy)" }}>{location}</strong> and partner with clients across India — from major metros (Delhi NCR, Mumbai, Bengaluru) to vibrant Tier-2 and Tier-3 cities. With deep cultural understanding of Hindi-speaking audiences, my campaigns deliver high engagement across UP, MP, Rajasthan, Haryana, and beyond.
         </p>
       </section>
     </>

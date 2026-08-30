@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Gallery from "@/components/Gallery";
-import { getHomePage, getGalleryItems, getSiteSettings, resolveImage } from "@/sanity/lib/queries";
+import { getContent } from "@/lib/contentStore";
 import {
   YouTubeIcon,
   InstagramIcon,
@@ -15,6 +15,8 @@ import {
   WhatsAppIcon,
   SparkleIcon,
 } from "@/components/Icons";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Apoorva Kaushal — Social Media Manager & Content Creator | Hathras, India",
@@ -80,63 +82,70 @@ const faqSchema = {
 };
 
 export default async function HomePage() {
-  const [sanityHome, sanityGalleryItems, sanitySettings] = await Promise.all([
-    getHomePage(),
-    getGalleryItems(),
-    getSiteSettings(),
-  ]);
+  const content = await getContent();
 
-  const heroTitle = sanityHome?.heroTitle || sanitySettings?.heroTitle || "Apoorva Kaushal";
+  const hero = content.hero || {};
+  const homepage = content.homepage || {};
+  const contact = content.contact || {};
+  const photos = content.photos || {};
+
+  const heroTitle = hero.heroTitle || "Apoorva Kaushal";
   const heroTagline =
-    sanityHome?.heroTagline ||
-    sanitySettings?.heroTagline ||
+    hero.heroTagline ||
     "Authentic storytelling that connects brands with audiences through relatable experiences";
-  const heroSignature = sanityHome?.heroSignature || sanitySettings?.heroSignature || "Appu";
-  const profilePhoto =
-    sanityHome?.heroPhotoUrl || sanitySettings?.profilePhotoUrl || "/photos/profile.jpg";
+  const heroSignature = hero.heroSignature || "Appu";
+  const domain = hero.domain || "apoorva.hmorix.in";
+
+  const profilePhoto = photos.profile || "/photos/profile.jpg";
+  const whoAmIPhoto = photos.whoami || "/photos/IMG-20260205-WA0035.jpg";
+  const qualificationsPhoto = photos.qualifications || "/photos/IMG-20250107-WA0012.jpg";
+
+  const whoAmIHeading = homepage.whoAmIHeading || "WHO AM I";
   const whoAmIBio1 =
-    sanityHome?.whoAmIBio1 ||
-    sanitySettings?.whoAmIBio1 ||
+    homepage.whoAmIBio1 ||
     "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.";
   const whoAmIBio2 =
-    sanityHome?.whoAmIBio2 ||
-    sanitySettings?.whoAmIBio2 ||
+    homepage.whoAmIBio2 ||
     "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.";
-  const whoAmIPhoto =
-    sanityHome?.whoAmIPhotoUrl || sanitySettings?.whoAmIPhotoUrl || "/photos/IMG-20260205-WA0035.jpg";
-  const qualificationsPhoto =
-    sanityHome?.qualificationsPhotoUrl ||
-    sanitySettings?.qualificationsPhotoUrl ||
-    "/photos/IMG-20250107-WA0012.jpg";
-  const whatsappNum = sanitySettings?.whatsappNumber || "919368153189";
 
-  // Work Items photos (fallback to original default photos)
-  const workPhoto1 = resolveImage(sanityHome?.workItems?.[0]?.image, "/photos/IMG-20241220-WA0002.jpg");
-  const workPhoto2 = resolveImage(sanityHome?.workItems?.[1]?.image, "/photos/IMG-20260202-WA0003.jpg");
-  const workPhoto3 = resolveImage(sanityHome?.workItems?.[2]?.image, "/photos/Screenshot_2025-11-15-14-35-32-55.jpg");
-  const workPhoto4 = resolveImage(sanityHome?.workItems?.[3]?.image, "/photos/IMG-20260106-WA0002.jpg");
-  const workPhoto6 = resolveImage(sanityHome?.workItems?.[5]?.image, "/photos/IMG-20260205-WA0036.jpg");
+  const statBrands = homepage.statBrands || "5+";
+  const statReach = homepage.statReach || "2M+";
+  const statFollowers = homepage.statFollowers || "5K+" ;
+  const statExp = homepage.statExp || "3YRS+";
 
-  // Case Study Instagram Grid (8 photos)
-  const caseInsta1 = resolveImage(sanityHome?.caseInstaGrid?.[0]?.image, "/photos/IMG-20260205-WA0035.jpg");
-  const caseInsta2 = resolveImage(sanityHome?.caseInstaGrid?.[1]?.image, "/photos/IMG-20240205-WA0003.jpg");
-  const caseInsta3 = resolveImage(sanityHome?.caseInstaGrid?.[2]?.image, "/photos/IMG-20260106-WA0010.jpg");
-  const caseInsta4 = resolveImage(sanityHome?.caseInstaGrid?.[3]?.image, "/photos/IMG-20260202-WA0003.jpg");
-  const caseInsta5 = resolveImage(sanityHome?.caseInstaGrid?.[4]?.image, "/photos/IMG-20260108-WA0003.jpg");
-  const caseInsta6 = resolveImage(sanityHome?.caseInstaGrid?.[5]?.image, "/photos/IMG_20260131_225741.jpg");
-  const caseInsta7 = resolveImage(sanityHome?.caseInstaGrid?.[6]?.image, "/photos/IMG-20260608-WA0016.jpg");
-  const caseInsta8 = resolveImage(sanityHome?.caseInstaGrid?.[7]?.image, "/photos/IMG-20260212-WA0000.jpg");
+  const whatsappNum = contact.whatsappNumber || "919368153189";
+  const youtubeUrl = contact.youtubeUrl || "https://youtube.com/@_apoorva7__";
+  const instagramUrl = contact.instagramUrl || "https://instagram.com/apoorva__kaushal";
+  const twitterUrl = contact.twitterUrl || "https://twitter.com/apoorva_kaushal";
+  const facebookUrl = contact.facebookUrl || "https://facebook.com/apoorva_kaushal";
 
-  // Case Study Phone Mockups (3)
-  const phoneMockup1 = resolveImage(sanityHome?.phoneMockups?.[0]?.poster, "/photos/profile.jpg");
-  const phoneMockup2 = resolveImage(sanityHome?.phoneMockups?.[1]?.poster, "/photos/IMG-20260205-WA0035.jpg");
-  const phoneMockup3 = resolveImage(sanityHome?.phoneMockups?.[2]?.poster, "/photos/Screenshot_2026-01-16-12-45-41-89.jpg");
+  // Work Photos
+  const workPhoto1 = photos.work1 || "/photos/IMG-20241220-WA0002.jpg";
+  const workPhoto2 = photos.work2 || "/photos/IMG-20260202-WA0003.jpg";
+  const workPhoto3 = photos.work3 || "/photos/Screenshot_2025-11-15-14-35-32-55.jpg";
+  const workPhoto4 = photos.work4 || "/photos/IMG-20260106-WA0002.jpg";
+  const workPhoto6 = photos.work6 || "/photos/IMG-20260205-WA0036.jpg";
 
-  // Additional Photography (4)
-  const addPhoto1 = resolveImage(sanityHome?.additionalPhotos?.[0]?.image, "/photos/IMG-20260202-WA0003.jpg");
-  const addPhoto2 = resolveImage(sanityHome?.additionalPhotos?.[1]?.image, "/photos/IMG-20260212-WA0000.jpg");
-  const addPhoto3 = resolveImage(sanityHome?.additionalPhotos?.[2]?.image, "/photos/IMG-20260106-WA0009.jpg");
-  const addPhoto4 = resolveImage(sanityHome?.additionalPhotos?.[3]?.image, "/photos/IMG-20260608-WA0016.jpg");
+  // Case Study Instagram Grid
+  const caseInsta1 = photos.insta1 || "/photos/IMG-20260205-WA0035.jpg";
+  const caseInsta2 = photos.insta2 || "/photos/IMG-20240205-WA0003.jpg";
+  const caseInsta3 = photos.insta3 || "/photos/IMG-20260106-WA0010.jpg";
+  const caseInsta4 = photos.insta4 || "/photos/IMG-20260202-WA0003.jpg";
+  const caseInsta5 = photos.insta5 || "/photos/IMG-20260108-WA0003.jpg";
+  const caseInsta6 = photos.insta6 || "/photos/IMG_20260131_225741.jpg";
+  const caseInsta7 = photos.insta7 || "/photos/IMG-20260608-WA0016.jpg";
+  const caseInsta8 = photos.insta8 || "/photos/IMG-20260212-WA0000.jpg";
+
+  // Phone Mockups
+  const phoneMockup1 = photos.phone1 || "/photos/profile.jpg";
+  const phoneMockup2 = photos.phone2 || "/photos/IMG-20260205-WA0035.jpg";
+  const phoneMockup3 = photos.phone3 || "/photos/Screenshot_2026-01-16-12-45-41-89.jpg";
+
+  // Additional Photography
+  const addPhoto1 = photos.add1 || "/photos/IMG-20260202-WA0003.jpg";
+  const addPhoto2 = photos.add2 || "/photos/IMG-20260212-WA0000.jpg";
+  const addPhoto3 = photos.add3 || "/photos/IMG-20260106-WA0009.jpg";
+  const addPhoto4 = photos.add4 || "/photos/IMG-20260608-WA0016.jpg";
 
   return (
     <>
@@ -149,10 +158,8 @@ export default async function HomePage() {
       <section className="hero">
         {/* Left Column */}
         <div className="hero-left-bottom">
-          <p className="hero-tagline">
-            {heroTagline}
-          </p>
-          <div className="hero-domain-left">apoorva.hmorix.in</div>
+          <p className="hero-tagline">{heroTagline}</p>
+          <div className="hero-domain-left">{domain}</div>
         </div>
 
         {/* Center Column */}
@@ -177,10 +184,10 @@ export default async function HomePage() {
 
         {/* Right Column */}
         <div className="hero-right">
-          <div className="hero-domain">apoorva.hmorix.in</div>
+          <div className="hero-domain">{domain}</div>
           <div className="socials">
             <a
-              href="https://youtube.com/@_apoorva7__"
+              href={youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
@@ -188,7 +195,7 @@ export default async function HomePage() {
               <YouTubeIcon size={16} />
             </a>
             <a
-              href="https://instagram.com/apoorva__kaushal"
+              href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -196,7 +203,7 @@ export default async function HomePage() {
               <InstagramIcon size={16} />
             </a>
             <a
-              href="https://twitter.com/"
+              href={twitterUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X (Twitter)"
@@ -204,7 +211,7 @@ export default async function HomePage() {
               <TwitterXIcon size={15} />
             </a>
             <a
-              href="https://facebook.com/"
+              href={facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -222,31 +229,27 @@ export default async function HomePage() {
           <div className="dots">⋯</div>
           <div className="panel-head">
             <span className="spark-icon"><SparkleIcon size={16} /></span>
-            <h2 className="display">WHO AM I</h2>
+            <h2 className="display">{whoAmIHeading}</h2>
           </div>
           <div className="whoami-body">
             <div className="whoami-text">
-              <p>
-                {whoAmIBio1}
-              </p>
-              <p>
-                {whoAmIBio2}
-              </p>
+              <p>{whoAmIBio1}</p>
+              <p>{whoAmIBio2}</p>
               <div className="stats">
                 <div className="stat">
-                  <b>5+</b>
+                  <b>{statBrands}</b>
                   <span>BRANDS</span>
                 </div>
                 <div className="stat">
-                  <b>2M+</b>
+                  <b>{statReach}</b>
                   <span>REACH</span>
                 </div>
                 <div className="stat">
-                  <b>5K+</b>
+                  <b>{statFollowers}</b>
                   <span>FOLLOWERS</span>
                 </div>
                 <div className="stat">
-                  <b>3YRS+</b>
+                  <b>{statExp}</b>
                   <span>EXPERIENCE</span>
                 </div>
               </div>
@@ -324,7 +327,7 @@ export default async function HomePage() {
           <div className="dots">⋯</div>
           <div className="panel-head">
             <span className="spark-icon"><SparkleIcon size={16} /></span>
-            <h2 className="display">MY WORK INCLUDES</h2>
+            <h2 className="display">{homepage.workSectionTitle || "MY WORK INCLUDES"}</h2>
           </div>
           <div className="work-grid">
             {/* 1. UGC Video */}
@@ -551,15 +554,15 @@ export default async function HomePage() {
       </div>
 
       {/* ── 4. INTERACTIVE PHOTOS & VIDEOS GALLERY ── */}
-      <Gallery initialItems={sanityGalleryItems || undefined} />
+      <Gallery initialItems={content.gallery || undefined} />
 
       {/* ── 5. STATS STRIP ── */}
       <div className="stats-strip">
         {[
-          { num: "2M+", label: "Total Reach (All-time)" },
+          { num: statReach, label: "Total Reach (All-time)" },
           { num: "340K", label: "Avg. Reel Views" },
           { num: "6.8%", label: "Engagement Rate" },
-          { num: "5K+", label: "Combined Followers" },
+          { num: statFollowers, label: "Combined Followers" },
         ].map((s) => (
           <div className="stat-item" key={s.label}>
             <div className="stat-num display">{s.num}</div>
@@ -574,10 +577,10 @@ export default async function HomePage() {
           Ready to create something iconic?
         </div>
         <h2 className="display" style={{ fontSize: "clamp(28px, 4vw, 50px)", marginBottom: 14 }}>
-          LET&apos;S ELEVATE YOUR BRAND
+          {homepage.ctaTitle || "LET'S ELEVATE YOUR BRAND"}
         </h2>
         <p style={{ fontSize: 14.5, color: "rgba(255,255,255,0.7)", maxWidth: 480, margin: "0 auto 28px", lineHeight: 1.6 }}>
-          Social media strategy, viral Reels, Meta ads, or authentic brand collaborations in Hathras, Uttar Pradesh, and across India.
+          {homepage.ctaSub || "Social media strategy, viral Reels, Meta ads, or authentic brand collaborations in Hathras, Uttar Pradesh, and across India."}
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", alignItems: "center" }}>
           <Link href="/hire" className="btn btn-maroon" style={{ fontSize: 12.5, padding: "12px 28px", display: "inline-flex", alignItems: "center", gap: 8 }}>

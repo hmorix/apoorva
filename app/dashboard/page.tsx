@@ -17,13 +17,9 @@ import {
 } from "@/components/Icons";
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-// Reach data in thousands (K) scaled to 2M+ all-time benchmark & 340K avg views
-const reachData = [95, 125, 160, 145, 210, 255, 240, 295, 330, 310, 340, 365];
-const engageData = [5.1, 5.4, 5.8, 5.5, 6.1, 6.5, 6.3, 6.6, 6.7, 6.4, 6.8, 6.8];
-const maxReach = Math.max(...reachData);
-const maxEngage = Math.max(...engageData);
+const defaultReachData = [95, 125, 160, 145, 210, 255, 240, 295, 330, 310, 340, 365];
+const defaultEngageData = [5.1, 5.4, 5.8, 5.5, 6.1, 6.5, 6.3, 6.6, 6.7, 6.4, 6.8, 6.8];
 
-// Platform breakdown strictly aligned with user data:
 const defaultPlatforms = [
   {
     icon: <InstagramIcon size={18} />,
@@ -68,7 +64,6 @@ interface Campaign {
   status: string;
 }
 
-// Campaign Overview Data aligned with 2M+ total reach & verified client results
 const defaultCampaigns: Campaign[] = [
   {
     name: "Fashion Boutique Launch — Hathras",
@@ -120,7 +115,14 @@ const defaultCampaigns: Campaign[] = [
   },
 ];
 
-// BarChart component
+const defaultLocations = [
+  { loc: "Uttar Pradesh, India", pct: 44 },
+  { loc: "Delhi NCR", pct: 22 },
+  { loc: "Mumbai & Maharashtra", pct: 14 },
+  { loc: "Rest of India", pct: 14 },
+  { loc: "International", pct: 6 },
+];
+
 const BarChart = ({
   data,
   activeChart,
@@ -128,7 +130,7 @@ const BarChart = ({
   data: number[];
   activeChart: "reach" | "engagement";
 }) => {
-  const chartMax = activeChart === "reach" ? maxReach : maxEngage;
+  const maxVal = Math.max(...data, activeChart === "reach" ? 365 : 10);
   return (
     <div className="bar-chart">
       {data.map((val, i) => (
@@ -136,7 +138,7 @@ const BarChart = ({
           <div
             className="bar"
             style={{
-              height: `${(val / chartMax) * 100}%`,
+              height: `${Math.max(8, (val / maxVal) * 100)}%`,
               background: i >= 10 ? "var(--maroon)" : "var(--navy)",
               transition: "height 0.4s ease, background 0.3s ease",
             }}
@@ -219,51 +221,57 @@ const defaultKpis = [
 export default function DashboardPage() {
   const [activeChart, setActiveChart] = useState<"reach" | "engagement">("reach");
   const [dashboardData, setDashboardData] = useState<any>(null);
-  const chartData = activeChart === "reach" ? reachData : engageData;
 
   useEffect(() => {
-    // Fetch via API route — keeps mongodb imports server-side only
     fetch("/api/hmorix/content?mode=published")
       .then((r) => r.json())
       .then((json) => {
         if (json.content || json.published) setDashboardData(json.content || json.published);
       })
-      .catch(() => {/* silent fallback to static defaults */});
+      .catch(() => {});
   }, []);
 
+  const d = dashboardData?.dashboard || dashboardData || {};
+
+  const reachData = d.monthlyReach && d.monthlyReach.length === 12 ? d.monthlyReach : defaultReachData;
+  const engageData = d.monthlyEngagement && d.monthlyEngagement.length === 12 ? d.monthlyEngagement : defaultEngageData;
+  const chartData = activeChart === "reach" ? reachData : engageData;
+
   const kpis = defaultKpis.map((k, idx) => {
-    const sanityKpi = dashboardData?.kpis?.[idx];
-    if (sanityKpi) {
+    const customKpi = d.kpis?.[idx];
+    if (customKpi) {
       return {
         ...k,
-        label: sanityKpi.label || k.label,
-        num: sanityKpi.num || k.num,
-        change: sanityKpi.change || k.change,
-        up: sanityKpi.up !== undefined ? sanityKpi.up : k.up,
-        sub: sanityKpi.sub || k.sub,
+        label: customKpi.label || k.label,
+        num: customKpi.num || k.num,
+        change: customKpi.change || k.change,
+        up: customKpi.up !== undefined ? customKpi.up : k.up,
+        sub: customKpi.sub || k.sub,
       };
     }
     return k;
   });
 
   const platforms = defaultPlatforms.map((p, idx) => {
-    const sanityP = dashboardData?.platforms?.[idx];
-    if (sanityP) {
+    const customP = d.platforms?.[idx];
+    if (customP) {
       return {
         ...p,
-        name: sanityP.name || p.name,
-        handle: sanityP.handle || p.handle,
-        followers: sanityP.followers || p.followers,
-        pct: sanityP.pct !== undefined ? sanityP.pct : p.pct,
+        name: customP.name || p.name,
+        handle: customP.handle || p.handle,
+        followers: customP.followers || p.followers,
+        pct: customP.pct !== undefined ? customP.pct : p.pct,
+        fill: customP.fill || p.fill,
       };
     }
     return p;
   });
 
   const campaigns: Campaign[] =
-    dashboardData?.campaigns && dashboardData.campaigns.length > 0
-      ? dashboardData.campaigns
-      : defaultCampaigns;
+    d.campaigns && d.campaigns.length > 0 ? d.campaigns : defaultCampaigns;
+
+  const locations =
+    d.topLocations && d.topLocations.length > 0 ? d.topLocations : defaultLocations;
 
   return (
     <>
@@ -292,9 +300,7 @@ export default function DashboardPage() {
               <TrendingUpIcon size={13} />
               <span>{k.change}</span>
             </div>
-            <div className="dash-kpi-sub">
-              {k.sub}
-            </div>
+            <div className="dash-kpi-sub">{k.sub}</div>
           </div>
         ))}
       </div>
@@ -388,13 +394,7 @@ export default function DashboardPage() {
             <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 14 }}>
               Deep reach across Hindi heartland &amp; urban Tier-1/Tier-2 metros.
             </p>
-            {[
-              { loc: "Uttar Pradesh, India", pct: 44 },
-              { loc: "Delhi NCR", pct: 22 },
-              { loc: "Mumbai & Maharashtra", pct: 14 },
-              { loc: "Rest of India", pct: 14 },
-              { loc: "International", pct: 6 },
-            ].map((l) => (
+            {locations.map((l: { loc: string; pct: number }) => (
               <div
                 key={l.loc}
                 style={{
