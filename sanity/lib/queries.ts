@@ -1,6 +1,6 @@
 import { client } from "./client";
 import { urlForImage } from "./image";
-import { getLocalContent } from "@/lib/contentStore";
+import { getContent } from "@/lib/contentStore";
 
 // Helper to resolve custom Sanity image or fallback to default original image path
 export function resolveImage(customImage: any, defaultPath: string): string {
@@ -102,7 +102,7 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
 // ── FETCH FUNCTIONS ──
 
 export async function getHomePage() {
-  const local = getLocalContent();
+  const local = await getContent();
   let sanityData: any = null;
 
   if (client) {
@@ -133,7 +133,7 @@ export async function getHomePage() {
 }
 
 export async function getAboutPage() {
-  const local = getLocalContent();
+  const local = await getContent();
   let sanityData: any = null;
 
   if (client) {
@@ -160,7 +160,7 @@ export async function getAboutPage() {
 }
 
 export async function getServicesPage() {
-  const local = getLocalContent();
+  const local = await getContent();
   let sanityData: any = null;
 
   if (client) {
@@ -226,7 +226,7 @@ export async function getGalleryItems() {
 }
 
 export async function getSiteSettings() {
-  const local = getLocalContent();
+  const local = await getContent();
   let sanityData: any = null;
 
   if (client) {

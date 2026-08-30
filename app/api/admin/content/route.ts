@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
-import { getLocalContent } from "@/lib/contentStore";
+import { getContent, getLocalContent } from "@/lib/contentStore";
 import { getWriteClient } from "@/sanity/lib/client";
 
 export async function GET() {
   try {
-    const content = getLocalContent();
+    const content = await getContent();
     return NextResponse.json({ success: true, content });
   } catch (err) {
     console.error("[Admin Content GET Error]", err);
@@ -21,7 +21,31 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid content body" }, { status: 400 });
     }
 
-    // 1. If Sanity write token is configured, sync to Sanity documents
+    const current = await getContent();
+    const merged = { ...current, ...body };
+
+    // 1. If Upstash Redis / Vercel KV is configured, save directly to Cloud KV
+    const kvUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+    const kvToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+    let kvSaved = false;
+
+    if (kvUrl && kvToken) {
+      try {
+        const kvRes = await fetch(`${kvUrl}/set/site_content`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${kvToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(merged),
+        });
+        if (kvRes.ok) kvSaved = true;
+      } catch (kvErr) {
+        console.warn("[Admin Content KV Sync]:", kvErr);
+      }
+    }
+
+    // 2. If Sanity write token is configured, sync to Sanity documents
     const writeClient = getWriteClient();
     if (writeClient) {
       try {
@@ -37,7 +61,6 @@ export async function POST(req: NextRequest) {
             instagramHandle: body.contact?.instagramHandle,
             youtubeHandle: body.contact?.youtubeHandle,
           }).commit({ autoGenerateArrayKeys: true }).catch(async () => {
-            // If document doesn't exist, create it
             await writeClient.createOrReplace({
               _id: "siteSettings",
               _type: "siteSettings",
@@ -58,24 +81,25 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 2. Try writing to local disk (in local dev / writable servers)
-    const current = getLocalContent() || {};
-    const merged = { ...current, ...body };
-
+    // 3. Try writing to local disk (in local dev / writable servers)
     try {
       const dataDir = path.join(process.cwd(), "data");
       await mkdir(dataDir, { recursive: true });
 
       const filePath = path.join(dataDir, "site-content.json");
       await writeFile(filePath, JSON.stringify(merged, null, 2), "utf-8");
-      return NextResponse.json({ success: true, message: "Content updated successfully" });
+      return NextResponse.json({ success: true, message: "Content saved to disk and synced successfully!" });
     } catch (fsErr: any) {
       if (fsErr.code === "EROFS" || fsErr.errno === -30 || fsErr.message?.includes("read-only")) {
-        console.warn("[Admin Content] Read-only filesystem (Serverless). Handled gracefully.");
         return NextResponse.json({
           success: true,
-          message: writeClient ? "Content synced to Sanity CMS successfully!" : "Content updated. Connect Sanity CMS for persistent multi-region cloud sync.",
+          message: kvSaved
+            ? "Content saved to Cloud KV database successfully!"
+            : writeClient
+            ? "Content synced to Sanity CMS successfully!"
+            : "Content updated in session. Connect Sanity CMS or Vercel KV for persistent cross-deployment storage.",
           readOnlyDisk: true,
+          persisted: kvSaved || Boolean(writeClient),
         });
       }
       throw fsErr;
@@ -85,3 +109,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to process request: " + (err instanceof Error ? err.message : String(err)) }, { status: 500 });
   }
 }
+
