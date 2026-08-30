@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getDashboardPage } from "@/sanity/lib/queries";
 import {
   InstagramIcon,
   YouTubeIcon,
@@ -223,9 +222,13 @@ export default function DashboardPage() {
   const chartData = activeChart === "reach" ? reachData : engageData;
 
   useEffect(() => {
-    getDashboardPage().then((data) => {
-      if (data) setDashboardData(data);
-    });
+    // Fetch via API route — keeps mongodb imports server-side only
+    fetch("/api/hmorix/content?mode=published")
+      .then((r) => r.json())
+      .then((json) => {
+        if (json.content || json.published) setDashboardData(json.content || json.published);
+      })
+      .catch(() => {/* silent fallback to static defaults */});
   }, []);
 
   const kpis = defaultKpis.map((k, idx) => {

@@ -56,9 +56,10 @@ export function getLocalContent(): SiteContent {
 }
 
 export async function getContent(): Promise<SiteContent> {
-  // 1. Try MongoDB Atlas Published Content
-  if (process.env.MONGODB_URI) {
+  // 1. Try MongoDB Atlas Published Content (server-side only, never runs in browser)
+  if (typeof window === "undefined" && process.env.MONGODB_URI) {
     try {
+      // Dynamic import keeps this server-only — webpack will not bundle mongodb
       const { getStoredContent } = await import("./mongodb");
       const mongoData = await getStoredContent("published");
       if (mongoData) {
