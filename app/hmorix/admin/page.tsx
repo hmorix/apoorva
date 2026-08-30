@@ -110,7 +110,9 @@ interface Revision {
   version: number;
   data: SiteContent;
   note?: string;
+  changes?: string[];
   publishedAt: string;
+  active?: boolean;
 }
 interface ServerStatus {
   mongoConnected: boolean;
@@ -425,21 +427,44 @@ export default function HmorixAdminPage() {
   };
 
   const handleRestoreRevision = async (rev: Revision) => {
-    if (!confirm(`Restore Version ${rev.version}?`)) return;
+    if (!confirm(`Switch live website to Version ${rev.version} (${rev.note || ""})?`)) return;
     try {
       const res = await fetch("/api/hmorix/content", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "restore", revisionId: rev.revisionId }),
+        body: JSON.stringify({ action: "restore", revisionId: rev.revisionId, versionNum: rev.version }),
       });
       const j = await res.json();
       if (j.success) {
-        setContent(rev.data);
-        setViewMode("editor");
-        showToast(`Restored v${rev.version}!`);
+        if (rev.data) setContent(rev.data);
+        showToast(`Switched active website to Version v${rev.version}!`);
         fetchContent();
+      } else {
+        showToast(`Failed: ${j.error || j.message}`, "error");
       }
-    } catch {}
+    } catch (err: any) {
+      showToast(`Error: ${err.message}`, "error");
+    }
+  };
+
+  const handleRevertToOriginalBase = async () => {
+    if (!confirm("Are you sure you want to revert all live content back to the Original Version (v1)?")) return;
+    try {
+      const res = await fetch("/api/hmorix/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "reset_to_default" }),
+      });
+      const j = await res.json();
+      if (j.success) {
+        showToast("Reverted to Original Version (v1) successfully!");
+        fetchContent();
+      } else {
+        showToast(`Failed: ${j.error || j.message}`, "error");
+      }
+    } catch (err: any) {
+      showToast(`Error: ${err.message}`, "error");
+    }
   };
 
   if (isAuthenticated === null || !content) {
@@ -735,35 +760,139 @@ export default function HmorixAdminPage() {
         {/* ── HISTORY MODE ── */}
         {viewMode === "history" && (
           <div className="adm-section-card">
-            <div className="adm-section-title"><ClockIcon size={16} /> Version History &amp; Snapshots</div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10, marginBottom: 16 }}>
+              <div>
+                <div className="adm-section-title" style={{ marginBottom: 4 }}>
+                  <ClockIcon size={16} /> Content Version History &amp; Snapshots
+                </div>
+                <div style={{ fontSize: 12, color: "#64748b" }}>
+                  Every publish and <code>npm run sync-live</code> creates a permanent snapshot. Switch to any older or latest version instantly.
+                </div>
+              </div>
+              <button
+                onClick={handleRevertToOriginalBase}
+                style={{
+                  background: "#fef2f2",
+                  border: "1.5px solid #fecaca",
+                  color: "#dc2626",
+                  borderRadius: 8,
+                  padding: "7px 13px",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <RotateCCWIcon size={13} /> Revert to Original (v1 Base)
+              </button>
+            </div>
+
             {revisions.length === 0 ? (
-              <div style={{ textAlign: "center", padding: 24, color: "#64748b", fontSize: 13 }}>
-                No published versions recorded yet. Click &quot;Publish&quot; to create a version snapshot.
+              <div style={{ textAlign: "center", padding: 32, color: "#64748b", fontSize: 13, background: "#f8fafc", borderRadius: 8, border: "1px dashed #cbd5e1" }}>
+                No published versions recorded yet. Click &quot;Publish&quot; or run <code>npm run sync-live</code> to create a version snapshot.
               </div>
             ) : (
               revisions.map((rev) => (
-                <div key={rev.revisionId} style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: 12, marginBottom: 10, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                      <span style={{ background: "#3b82f6", color: "#fff", padding: "1px 7px", borderRadius: 6, fontSize: 10.5, fontWeight: 800 }}>v{rev.version}</span>
-                      <strong style={{ fontSize: 13 }}>{rev.note || `Version ${rev.version}`}</strong>
+                <div
+                  key={rev.revisionId}
+                  style={{
+                    background: rev.active ? "#f0fdf4" : "#ffffff",
+                    border: `1.5px solid ${rev.active ? "#86efac" : "#e2e8f0"}`,
+                    borderRadius: 10,
+                    padding: "14px 16px",
+                    marginBottom: 12,
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.03)",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 10, marginBottom: 8 }}>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
+                        <span style={{ background: rev.active ? "#16a34a" : "#3b82f6", color: "#fff", padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 800 }}>
+                          v{rev.version}
+                        </span>
+                        {rev.active && (
+                          <span style={{ background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", padding: "2px 8px", borderRadius: 6, fontSize: 10.5, fontWeight: 800 }}>
+                            ★ CURRENT ACTIVE
+                          </span>
+                        )}
+                        <strong style={{ fontSize: 13.5, color: "#0f172a" }}>{rev.note || `Version ${rev.version}`}</strong>
+                      </div>
+                      <div style={{ fontSize: 11.5, color: "#64748b" }}>
+                        {new Date(rev.publishedAt).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}
+                      </div>
                     </div>
-                    <div style={{ fontSize: 11, color: "#64748b" }}>{new Date(rev.publishedAt).toLocaleString()}</div>
+
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                      <button
+                        onClick={() => {
+                          if (rev.data) setContent(rev.data);
+                          setViewMode("editor");
+                          showToast(`Loaded Version v${rev.version} into editor!`);
+                        }}
+                        style={{
+                          background: "#f1f5f9",
+                          border: "1px solid #cbd5e1",
+                          color: "#334155",
+                          borderRadius: 7,
+                          padding: "6px 12px",
+                          fontSize: 11.5,
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 5,
+                        }}
+                      >
+                        <ClipboardIcon size={12} /> Load to Editor
+                      </button>
+                      <button
+                        onClick={() => handleRestoreRevision(rev)}
+                        disabled={rev.active}
+                        style={{
+                          background: rev.active ? "#e2e8f0" : "linear-gradient(135deg,#0284c7,#0369a1)",
+                          color: rev.active ? "#94a3b8" : "#fff",
+                          border: "none",
+                          borderRadius: 7,
+                          padding: "6px 14px",
+                          fontSize: 11.5,
+                          fontWeight: 700,
+                          cursor: rev.active ? "default" : "pointer",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 5,
+                        }}
+                      >
+                        <RotateCCWIcon size={12} /> {rev.active ? "Active" : `Switch Live to v${rev.version}`}
+                      </button>
+                    </div>
                   </div>
-                  <div style={{ display: "flex", gap: 6 }}>
-                    <button
-                      onClick={() => { setContent(rev.data); setViewMode("editor"); showToast(`Loaded v${rev.version} into editor!`); }}
-                      style={{ background: "#e2e8f0", border: "none", borderRadius: 6, padding: "5px 10px", fontSize: 11, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}
-                    >
-                      <ClipboardIcon size={12} /> Load to Editor
-                    </button>
-                    <button
-                      onClick={() => handleRestoreRevision(rev)}
-                      style={{ background: "#ef4444", color: "#fff", border: "none", borderRadius: 6, padding: "5px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}
-                    >
-                      <RotateCCWIcon size={12} /> Restore Live
-                    </button>
-                  </div>
+
+                  {rev.changes && rev.changes.length > 0 && (
+                    <div style={{ background: rev.active ? "#dcfce740" : "#f8fafc", padding: "8px 12px", borderRadius: 6, border: "1px solid #e2e8f0", marginTop: 8 }}>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: "#475569", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                        Changes Recorded:
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                        {rev.changes.map((ch, ci) => (
+                          <span
+                            key={ci}
+                            style={{
+                              background: "#fff",
+                              border: "1px solid #cbd5e1",
+                              borderRadius: 4,
+                              padding: "2px 7px",
+                              fontSize: 11,
+                              color: "#334155",
+                            }}
+                          >
+                            • {ch}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))
             )}

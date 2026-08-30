@@ -8,6 +8,12 @@ import {
   restoreRevision,
 } from "@/lib/mongodb";
 import { getLocalContent, SiteContent } from "@/lib/contentStore";
+import {
+  listLocalVersions,
+  createLocalVersion,
+  switchLocalVersion,
+  getVersionContent,
+} from "@/lib/versionStore";
 
 async function persistLocalJson(data: any) {
   try {
@@ -31,11 +37,40 @@ export async function GET(req: NextRequest) {
         (process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || process.env.GOOGLE_PRIVATE_KEY)
     );
 
-    const [publishedData, draftData, revisions] = await Promise.all([
+    const [publishedData, draftData, mongoRevisions] = await Promise.all([
       getStoredContent("published"),
       getStoredContent("draft"),
-      history ? getRevisionHistory(20) : Promise.resolve([]),
+      history ? getRevisionHistory(30) : Promise.resolve([]),
     ]);
+
+    // Merge local file version snapshots with MongoDB revisions
+    const localVersions = history ? listLocalVersions() : [];
+    const formattedLocal = localVersions.map((v) => ({
+      revisionId: v.versionId,
+      version: v.version,
+      publishedAt: v.timestamp,
+      note: v.note,
+      changes: v.changes,
+      data: getVersionContent(v.versionId) || undefined,
+      active: Boolean(v.active),
+    }));
+
+    // Deduplicate by version number
+    const unifiedRevisions = [...formattedLocal];
+    for (const m of mongoRevisions) {
+      if (!unifiedRevisions.some((u) => u.version === m.version)) {
+        unifiedRevisions.push({
+          revisionId: m.revisionId,
+          version: m.version,
+          publishedAt: m.publishedAt,
+          note: m.note,
+          changes: [],
+          data: m.data as SiteContent,
+          active: false,
+        });
+      }
+    }
+    unifiedRevisions.sort((a, b) => (b.version || 0) - (a.version || 0));
 
     return NextResponse.json({
       success: true,
@@ -43,7 +78,8 @@ export async function GET(req: NextRequest) {
       content: mode === "published" ? publishedData : draftData,
       published: publishedData,
       draft: draftData,
-      revisions,
+      revisions: unifiedRevisions,
+      localVersions,
       status: {
         mongoConnected: isMongoConnected,
         googleDriveConnected: hasGoogleDrive,
@@ -62,14 +98,25 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { action = "save_draft", data, note, revisionId } = body;
+    const { action = "save_draft", data, note, revisionId, versionNum } = body;
 
-    // ── 1. ACTION: RESTORE REVISION ───────────────────────────────────────────
-    if (action === "restore") {
-      if (!revisionId) {
-        return NextResponse.json({ error: "Missing revisionId" }, { status: 400 });
+    // ── 1. ACTION: RESTORE / SWITCH VERSION ───────────────────────────────────
+    if (action === "restore" || action === "switch_version") {
+      const target = revisionId || versionNum;
+      if (!target) {
+        return NextResponse.json({ error: "Missing revisionId or versionNum" }, { status: 400 });
       }
-      const result = await restoreRevision(revisionId);
+
+      // Try local version store first
+      const localResult = switchLocalVersion(target);
+      if (localResult.success && localResult.data) {
+        await saveDraftContent(localResult.data);
+        await publishContent(`Restored ${localResult.version?.note || target}`);
+        return NextResponse.json(localResult);
+      }
+
+      // Fallback to MongoDB restore
+      const result = await restoreRevision(String(target));
       if (result.data) {
         await persistLocalJson(result.data);
       }
@@ -88,21 +135,40 @@ export async function POST(req: NextRequest) {
 
     // ── 3. ACTION: PUBLISH DRAFT TO LIVE SITE ────────────────────────────────
     if (action === "publish") {
-      if (data && typeof data === "object") {
-        await saveDraftContent(data);
-        await persistLocalJson(data);
-      }
-      const result = await publishContent(note || "Published from /hmorix/admin");
-      return NextResponse.json(result);
+      const targetData = data && typeof data === "object" ? data : getLocalContent();
+      await saveDraftContent(targetData);
+      
+      // Create local version snapshot
+      const versionNote = note || "Published from /hmorix/admin";
+      const newVersion = createLocalVersion(targetData, versionNote);
+
+      // Publish in MongoDB
+      const mongoResult = await publishContent(versionNote);
+
+      return NextResponse.json({
+        success: true,
+        message: `Version v${newVersion.version} published live and version snapshot saved!`,
+        version: newVersion,
+        mongoResult,
+      });
     }
 
-    // ── 4. ACTION: RESET TO DEFAULT ──────────────────────────────────────────
-    if (action === "reset_to_default") {
-      const defaultContent = getLocalContent();
+    // ── 4. ACTION: RESET TO ORIGINAL BASE (v1) ───────────────────────────────
+    if (action === "reset_to_default" || action === "reset_to_v1") {
+      const versions = listLocalVersions();
+      const v1 = versions.find((v) => v.version === 1);
+      const v1Content = v1 ? getVersionContent(v1.versionId) : getLocalContent();
+      const defaultContent = v1Content || getLocalContent();
+
       await saveDraftContent(defaultContent);
-      await persistLocalJson(defaultContent);
-      await publishContent("Reset to default system content");
-      return NextResponse.json({ success: true, message: "Reset to default content successfully!" });
+      const newVer = createLocalVersion(defaultContent, "Reset to Original Version (v1)");
+      await publishContent("Reset to Original Version (v1)");
+
+      return NextResponse.json({
+        success: true,
+        message: "Reset to Original Version (v1) successfully!",
+        version: newVer,
+      });
     }
 
     return NextResponse.json({ error: `Unknown action: ${action}` }, { status: 400 });

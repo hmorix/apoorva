@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync-live": "node scripts/sync-content.mjs"
+    "sync-live": "node scripts/sync-content.mjs",
+    "version:list": "node scripts/version-manager.mjs list",
+    "version:switch": "node scripts/version-manager.mjs switch",
+    "version:create": "node scripts/version-manager.mjs create"
   },
   "dependencies": {
     "@sanity/image-url": "^1.1.0",

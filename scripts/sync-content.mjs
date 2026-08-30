@@ -12,14 +12,94 @@ const rootDir = path.resolve(__dirname, "..");
 const LIVE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://apoorva.hmorix.in";
 const MONGODB_URI = process.env.MONGODB_URI;
 
+const VERSIONS_DIR = path.join(rootDir, "data", "versions");
+const INDEX_FILE = path.join(VERSIONS_DIR, "versions-index.json");
+
 console.log("\n=======================================================");
 console.log("   HMoriX Cloud Sync — Downloading Live Content & Media");
 console.log("=======================================================\n");
 
+function ensureVersions() {
+  if (!fs.existsSync(VERSIONS_DIR)) {
+    fs.mkdirSync(VERSIONS_DIR, { recursive: true });
+  }
+}
+
+function computeChanges(prev, next, downloadCount) {
+  if (!prev) return ["Initial baseline version created"];
+  const changes = [];
+
+  if (prev.hero?.heroTitle !== next.hero?.heroTitle) changes.push(`Hero Title updated to "${next.hero?.heroTitle || ""}"`);
+  if (prev.hero?.heroTagline !== next.hero?.heroTagline) changes.push("Hero Tagline modified");
+  if (prev.contact?.email !== next.contact?.email) changes.push(`Email updated to ${next.contact?.email}`);
+  if (prev.contact?.whatsappNumber !== next.contact?.whatsappNumber) changes.push(`WhatsApp updated to ${next.contact?.whatsappNumber}`);
+  if (prev.services?.starterPrice !== next.services?.starterPrice) changes.push(`Starter price: ${next.services?.starterPrice}`);
+  if (prev.services?.growthPrice !== next.services?.growthPrice) changes.push(`Growth price: ${next.services?.growthPrice}`);
+  if (prev.services?.premiumPrice !== next.services?.premiumPrice) changes.push(`Premium price: ${next.services?.premiumPrice}`);
+
+  if (downloadCount > 0) {
+    changes.push(`Downloaded & synced ${downloadCount} remote media file(s)`);
+  }
+
+  const prevPhotos = prev.photos || {};
+  const nextPhotos = next.photos || {};
+  const changedPhotos = Object.keys(nextPhotos).filter((k) => nextPhotos[k] !== prevPhotos[k]);
+  if (changedPhotos.length > 0) {
+    changes.push(`Updated photo slots: ${changedPhotos.slice(0, 3).join(", ")}${changedPhotos.length > 3 ? "..." : ""}`);
+  }
+
+  return changes.length > 0 ? changes : ["Sync live content updates"];
+}
+
+function saveVersionSnapshot(content, downloadCount) {
+  ensureVersions();
+  let index = [];
+  if (fs.existsSync(INDEX_FILE)) {
+    try {
+      index = JSON.parse(fs.readFileSync(INDEX_FILE, "utf-8"));
+    } catch {}
+  }
+
+  let prevContent = null;
+  if (index.length > 0) {
+    const latest = index[index.length - 1];
+    const prevFilePath = path.join(VERSIONS_DIR, latest.file);
+    if (fs.existsSync(prevFilePath)) {
+      try {
+        prevContent = JSON.parse(fs.readFileSync(prevFilePath, "utf-8"));
+      } catch {}
+    }
+  }
+
+  const nextVersionNum = (index[index.length - 1]?.version || 0) + 1;
+  const timestamp = new Date().toISOString();
+  const safeDate = timestamp.replace(/[:.]/g, "-");
+  const versionId = `v${nextVersionNum}_${safeDate}`;
+  const filename = `${versionId}.json`;
+  const changes = computeChanges(prevContent, content, downloadCount);
+  const note = `Sync live v${nextVersionNum} (${new Date().toLocaleTimeString()})`;
+
+  fs.writeFileSync(path.join(VERSIONS_DIR, filename), JSON.stringify(content, null, 2), "utf-8");
+
+  const updatedIndex = index.map((v) => ({ ...v, active: false }));
+  const newVer = {
+    version: nextVersionNum,
+    versionId,
+    timestamp,
+    note,
+    changes,
+    file: filename,
+    active: true,
+  };
+  updatedIndex.push(newVer);
+  fs.writeFileSync(INDEX_FILE, JSON.stringify(updatedIndex, null, 2), "utf-8");
+
+  return newVer;
+}
+
 async function downloadFile(url, destPath) {
   return new Promise((resolve, reject) => {
     if (url.startsWith("data:")) {
-      // Handle Base64 Data URL
       const matches = url.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
       if (matches && matches.length === 3) {
         const buffer = Buffer.from(matches[2], "base64");
@@ -31,7 +111,6 @@ async function downloadFile(url, destPath) {
 
     const client = url.startsWith("https") ? https : http;
     const request = client.get(url, (res) => {
-      // Handle HTTP redirects (Google Drive, Cloudinary 302/301)
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         return downloadFile(res.headers.location, destPath).then(resolve).catch(reject);
       }
@@ -62,7 +141,6 @@ async function downloadFile(url, destPath) {
 }
 
 async function fetchPublishedContent() {
-  // 1. Try fetching directly from live API endpoint
   try {
     console.log(`[1/3] Fetching latest published data from ${LIVE_URL}...`);
     const res = await fetch(`${LIVE_URL}/api/hmorix/content?mode=published`, {
@@ -80,7 +158,6 @@ async function fetchPublishedContent() {
     console.warn("  Could not fetch via HTTP API:", err.message);
   }
 
-  // 2. Try fetching from MongoDB Atlas if URI present
   if (MONGODB_URI) {
     try {
       console.log("[1/3] Connecting directly to MongoDB Atlas...");
@@ -100,7 +177,6 @@ async function fetchPublishedContent() {
     }
   }
 
-  // 3. Fallback to current local data/site-content.json
   console.log("  Using local data/site-content.json as base...");
   const localPath = path.join(rootDir, "data", "site-content.json");
   if (fs.existsSync(localPath)) {
@@ -144,7 +220,6 @@ async function main() {
       }
     }
 
-    // Sync gallery items
     const updatedGallery = Array.isArray(content.gallery) ? [...content.gallery] : [];
     for (let i = 0; i < updatedGallery.length; i++) {
       const item = updatedGallery[i];
@@ -168,7 +243,7 @@ async function main() {
 
     console.log(`✓ ${downloadCount} media files saved locally to public/photos/\n`);
 
-    // 3. Update data/site-content.json
+    // 3. Freeze changes into data/site-content.json
     console.log("[3/3] Freezing changes into data/site-content.json...");
     const finalContent = {
       ...content,
@@ -179,11 +254,20 @@ async function main() {
     const siteContentPath = path.join(rootDir, "data", "site-content.json");
     fs.writeFileSync(siteContentPath, JSON.stringify(finalContent, null, 2), "utf-8");
 
+    // 4. Create version snapshot
+    const versionInfo = saveVersionSnapshot(finalContent, downloadCount);
+
     console.log("\n=======================================================");
-    console.log("  🎉 SYNC COMPLETED SUCCESSFULLY!");
+    console.log(`  🎉 SYNC COMPLETED — VERSION v${versionInfo.version} RECORDED!`);
+    console.log(`  - Version:   v${versionInfo.version} (${versionInfo.versionId})`);
+    console.log(`  - Note:      ${versionInfo.note}`);
+    if (versionInfo.changes && versionInfo.changes.length > 0) {
+      console.log(`  - Changes:   ${versionInfo.changes.join("; ")}`);
+    }
     console.log("  - Content saved to: data/site-content.json");
     console.log("  - Media assets saved to: public/photos/");
-    console.log("  - Your static website now has all live cloud updates.");
+    console.log("  - Snapshots stored in: data/versions/");
+    console.log(`  - To rollback to any version: npm run version:switch <num>`);
     console.log("=======================================================\n");
   } catch (err) {
     console.error("\n❌ Sync failed:", err.message);

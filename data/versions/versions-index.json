@@ -1,0 +1,24 @@
+[
+  {
+    "version": 1,
+    "versionId": "v1_initial_base",
+    "timestamp": "2026-08-30T15:05:58.065Z",
+    "note": "Initial Base Content",
+    "changes": [
+      "Initial baseline state"
+    ],
+    "file": "v1_initial_base.json",
+    "active": false
+  },
+  {
+    "version": 2,
+    "versionId": "v2_2026-08-30T15-06-27-695Z",
+    "timestamp": "2026-08-30T15:06:27.695Z",
+    "note": "Sync live v2 (10:06:27 PM)",
+    "changes": [
+      "Downloaded & synced 2 remote media file(s)"
+    ],
+    "file": "v2_2026-08-30T15-06-27-695Z.json",
+    "active": true
+  }
+]
