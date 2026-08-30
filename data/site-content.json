@@ -44,5 +44,32 @@
     "facebookUrl": "https://facebook.com/",
     "location": "Hathras, Uttar Pradesh, India",
     "postalCode": "204101"
-  }
+  },
+  "photos": {
+    "profile": "/photos/profile.jpg",
+    "whoami": "/photos/IMG-20260205-WA0035.jpg",
+    "qualifications": "/photos/IMG-20250107-WA0012.jpg",
+    "work1": "/photos/IMG-20241220-WA0002.jpg",
+    "work2": "/photos/IMG-20260202-WA0003.jpg",
+    "work3": "/photos/Screenshot_2025-11-15-14-35-32-55.jpg",
+    "work4": "/photos/IMG-20260106-WA0002.jpg",
+    "work6": "/photos/IMG-20260205-WA0036.jpg",
+    "insta1": "/photos/IMG-20260205-WA0035.jpg",
+    "insta2": "/photos/IMG-20240205-WA0003.jpg",
+    "insta3": "/photos/IMG-20260106-WA0010.jpg",
+    "insta4": "/photos/IMG-20260202-WA0003.jpg",
+    "insta5": "/photos/IMG-20260108-WA0003.jpg",
+    "insta6": "/photos/IMG_20260131_225741.jpg",
+    "insta7": "/photos/IMG-20260608-WA0016.jpg",
+    "insta8": "/photos/IMG-20260212-WA0000.jpg",
+    "phone1": "/photos/profile.jpg",
+    "phone2": "/photos/IMG-20260205-WA0035.jpg",
+    "phone3": "/photos/Screenshot_2026-01-16-12-45-41-89.jpg",
+    "add1": "/photos/IMG-20260202-WA0003.jpg",
+    "add2": "/photos/IMG-20260212-WA0000.jpg",
+    "add3": "/photos/IMG-20260106-WA0009.jpg",
+    "add4": "/photos/IMG-20260608-WA0016.jpg",
+    "storyPhoto": "/photos/synced-storyPhoto.jpg"
+  },
+  "videos": {}
 }
