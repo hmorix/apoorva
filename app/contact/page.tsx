@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getSiteSettings } from "@/sanity/lib/queries";
 import {
   WhatsAppIcon,
   MailIcon,
@@ -107,7 +108,47 @@ const coverageAreas = [
   "International",
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+
+  const channels = [
+    {
+      icon: <WhatsAppIcon size={20} />,
+      label: "WhatsApp",
+      val: settings?.whatsappNumber ? `+${settings.whatsappNumber}` : "+91 9368153189",
+      href: `https://wa.me/${settings?.whatsappNumber || "919368153189"}?text=Hi%20Apoorva!`,
+      sub: "Fastest response — typically within 2 hours",
+    },
+    {
+      icon: <MailIcon size={20} />,
+      label: "Email",
+      val: "apoorva@apoorvakaushal.com",
+      href: "mailto:apoorva@apoorvakaushal.com",
+      sub: "Detailed inquiries — response within 24 hours",
+    },
+    {
+      icon: <InstagramIcon size={20} />,
+      label: "Instagram DM",
+      val: settings?.instagramHandle || "@apoorva__kaushal",
+      href: `https://instagram.com/${(settings?.instagramHandle || "@apoorva__kaushal").replace("@", "")}`,
+      sub: "Direct message for quick collaboration inquiries",
+    },
+    {
+      icon: <YouTubeIcon size={20} />,
+      label: "YouTube",
+      val: settings?.youtubeHandle || "@_apoorva7__",
+      href: `https://youtube.com/${settings?.youtubeHandle || "@_apoorva7__"}`,
+      sub: "Official video channel & community updates",
+    },
+    {
+      icon: <MapPinIcon size={20} />,
+      label: "Location",
+      val: "Hathras, Uttar Pradesh, India (204101)",
+      href: null,
+      sub: "Serving clients across India & internationally",
+    },
+  ];
+
   return (
     <>
       <script
@@ -140,7 +181,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {contactChannels.map((c) => (
+          {channels.map((c) => (
             <div className="contact-info-item" key={c.label}>
               <span className="contact-info-icon">{c.icon}</span>
               <div>

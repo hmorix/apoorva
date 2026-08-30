@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { Studio } from "sanity";
+import sanityConfig from "@/sanity.config";
+
 
 // ── SVG ICONS ───────────────────────────────────────────────────────────────
 function HomeIcon({ size = 18 }: { size?: number }) {
@@ -460,6 +464,16 @@ type UploadStateMap = Record<string, "idle" | "uploading" | "success" | "error">
 type PhotoSrcMap = Record<string, string>;
 
 export default function AdminDashboard() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/admin/studio")) {
+    return (
+      <div style={{ height: "100vh", width: "100vw", position: "fixed", inset: 0, zIndex: 99999, background: "#101112" }}>
+        <Studio config={sanityConfig} />
+      </div>
+    );
+  }
+
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const [contentSection, setContentSection] = useState<"hero" | "homepage" | "about" | "services" | "contact">("hero");
   const [uploadStates, setUploadStates] = useState<UploadStateMap>({});

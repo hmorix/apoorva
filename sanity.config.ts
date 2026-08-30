@@ -13,7 +13,7 @@ import { schema } from "./sanity/schemaTypes";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 
 export default defineConfig({
-  basePath: "/admin",
+  basePath: "/admin/studio",
   projectId: projectId || "placeholder",
   dataset: dataset || "production",
   title: "Apoorva Kaushal — Content Manager",

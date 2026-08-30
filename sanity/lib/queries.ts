@@ -4,13 +4,13 @@ import { getLocalContent } from "@/lib/contentStore";
 
 // Helper to resolve custom Sanity image or fallback to default original image path
 export function resolveImage(customImage: any, defaultPath: string): string {
-  if (customImage) {
-    try {
-      const url = urlForImage(customImage)?.url();
-      if (url) return url;
-    } catch {
-      // fallback
-    }
+  if (!customImage) return defaultPath;
+  if (typeof customImage === "string") return customImage;
+  try {
+    const url = urlForImage(customImage)?.url();
+    if (url) return url;
+  } catch {
+    // fallback
   }
   return defaultPath;
 }
@@ -114,13 +114,13 @@ export async function getHomePage() {
   }
 
   return {
-    heroTitle: local?.hero?.heroTitle || sanityData?.heroTitle || "Apoorva Kaushal",
-    heroTagline: local?.hero?.heroTagline || sanityData?.heroTagline || "Authentic storytelling that connects brands with audiences through relatable experiences",
-    heroSignature: local?.hero?.heroSignature || sanityData?.heroSignature || "Appu",
+    heroTitle: sanityData?.heroTitle || local?.hero?.heroTitle || "Apoorva Kaushal",
+    heroTagline: sanityData?.heroTagline || local?.hero?.heroTagline || "Authentic storytelling that connects brands with audiences through relatable experiences",
+    heroSignature: sanityData?.heroSignature || local?.hero?.heroSignature || "Appu",
     heroPhotoUrl: sanityData?.heroPhoto ? urlForImage(sanityData.heroPhoto)?.url() : null,
-    whoAmIHeading: local?.homepage?.whoAmIHeading || sanityData?.whoAmIHeading || "WHO AM I",
-    whoAmIBio1: local?.homepage?.whoAmIBio1 || sanityData?.whoAmIBio1 || "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.",
-    whoAmIBio2: local?.homepage?.whoAmIBio2 || sanityData?.whoAmIBio2 || "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.",
+    whoAmIHeading: sanityData?.whoAmIHeading || local?.homepage?.whoAmIHeading || "WHO AM I",
+    whoAmIBio1: sanityData?.whoAmIBio1 || local?.homepage?.whoAmIBio1 || "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.",
+    whoAmIBio2: sanityData?.whoAmIBio2 || local?.homepage?.whoAmIBio2 || "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.",
     whoAmIPhotoUrl: sanityData?.whoAmIPhoto ? urlForImage(sanityData.whoAmIPhoto)?.url() : null,
     qualificationsPhotoUrl: sanityData?.qualificationsPhoto
       ? urlForImage(sanityData.qualificationsPhoto)?.url()
@@ -145,12 +145,12 @@ export async function getAboutPage() {
   }
 
   return {
-    pageHeroTitle: local?.about?.pageHeroTitle || sanityData?.pageHeroTitle || "APOORVA KAUSHAL",
-    pageHeroSub: local?.about?.pageHeroSub || sanityData?.pageHeroSub || "Social Media Creator & Content Creator · Hathras, Uttar Pradesh, India",
-    storyHeading: local?.about?.storyHeading || sanityData?.storyHeading || "FROM HATHRAS\nTO THE DIGITAL WORLD",
-    storyBio1: local?.about?.storyBio1 || sanityData?.storyBio1 || null,
-    storyBio2: local?.about?.storyBio2 || sanityData?.storyBio2 || null,
-    storyBio3: local?.about?.storyBio3 || sanityData?.storyBio3 || null,
+    pageHeroTitle: sanityData?.pageHeroTitle || local?.about?.pageHeroTitle || "APOORVA KAUSHAL",
+    pageHeroSub: sanityData?.pageHeroSub || local?.about?.pageHeroSub || "Social Media Creator & Content Creator · Hathras, Uttar Pradesh, India",
+    storyHeading: sanityData?.storyHeading || local?.about?.storyHeading || "FROM HATHRAS\nTO THE DIGITAL WORLD",
+    storyBio1: sanityData?.storyBio1 || local?.about?.storyBio1 || null,
+    storyBio2: sanityData?.storyBio2 || local?.about?.storyBio2 || null,
+    storyBio3: sanityData?.storyBio3 || local?.about?.storyBio3 || null,
     storyPhotoUrl: sanityData?.storyPhoto ? urlForImage(sanityData.storyPhoto)?.url() : null,
     contentPillars: sanityData?.contentPillars || null,
     creatorValues: sanityData?.creatorValues || null,
@@ -238,20 +238,21 @@ export async function getSiteSettings() {
   }
 
   return {
-    heroTitle: local?.hero?.heroTitle || sanityData?.heroTitle || "Apoorva Kaushal",
-    heroTagline: local?.hero?.heroTagline || sanityData?.heroTagline || "Authentic storytelling that connects brands with audiences through relatable experiences",
-    heroSignature: local?.hero?.heroSignature || sanityData?.heroSignature || "Appu",
+    heroTitle: sanityData?.heroTitle || local?.hero?.heroTitle || "Apoorva Kaushal",
+    heroTagline: sanityData?.heroTagline || local?.hero?.heroTagline || "Authentic storytelling that connects brands with audiences through relatable experiences",
+    heroSignature: sanityData?.heroSignature || local?.hero?.heroSignature || "Appu",
     profilePhotoUrl: sanityData?.profilePhoto ? urlForImage(sanityData.profilePhoto)?.url() : null,
-    whoAmIHeading: local?.homepage?.whoAmIHeading || sanityData?.whoAmIHeading || "WHO AM I",
-    whoAmIBio1: local?.homepage?.whoAmIBio1 || sanityData?.whoAmIBio1 || null,
-    whoAmIBio2: local?.homepage?.whoAmIBio2 || sanityData?.whoAmIBio2 || null,
+    whoAmIHeading: sanityData?.whoAmIHeading || local?.homepage?.whoAmIHeading || "WHO AM I",
+    whoAmIBio1: sanityData?.whoAmIBio1 || local?.homepage?.whoAmIBio1 || null,
+    whoAmIBio2: sanityData?.whoAmIBio2 || local?.homepage?.whoAmIBio2 || null,
     whoAmIPhotoUrl: sanityData?.whoAmIPhoto ? urlForImage(sanityData.whoAmIPhoto)?.url() : null,
     qualificationsPhotoUrl: sanityData?.qualificationsPhoto
       ? urlForImage(sanityData.qualificationsPhoto)?.url()
       : null,
     stats: sanityData?.stats || null,
-    whatsappNumber: local?.contact?.whatsappNumber || sanityData?.whatsappNumber || "919368153189",
-    instagramHandle: local?.contact?.instagramHandle || sanityData?.instagramHandle || "@apoorva__kaushal",
-    youtubeHandle: local?.contact?.youtubeHandle || sanityData?.youtubeHandle || "@_apoorva7__",
+    whatsappNumber: sanityData?.whatsappNumber || local?.contact?.whatsappNumber || "919368153189",
+    instagramHandle: sanityData?.instagramHandle || local?.contact?.instagramHandle || "@apoorva__kaushal",
+    youtubeHandle: sanityData?.youtubeHandle || local?.contact?.youtubeHandle || "@_apoorva7__",
   };
 }
+
