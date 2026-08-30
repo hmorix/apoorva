@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Gallery from "@/components/Gallery";
-import { getContent } from "@/lib/contentStore";
+import { getLocalContent } from "@/lib/contentStore";
 import {
   YouTubeIcon,
   InstagramIcon,
@@ -15,8 +15,6 @@ import {
   WhatsAppIcon,
   SparkleIcon,
 } from "@/components/Icons";
-
-export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Apoorva Kaushal — Social Media Manager & Content Creator | Hathras, India",
@@ -81,8 +79,8 @@ const faqSchema = {
   ],
 };
 
-export default async function HomePage() {
-  const content = await getContent();
+export default function HomePage() {
+  const content = getLocalContent();
 
   const hero = content.hero || {};
   const homepage = content.homepage || {};
@@ -100,7 +98,6 @@ export default async function HomePage() {
   const whoAmIPhoto = photos.whoami || "/photos/IMG-20260205-WA0035.jpg";
   const qualificationsPhoto = photos.qualifications || "/photos/IMG-20250107-WA0012.jpg";
 
-  const whoAmIHeading = homepage.whoAmIHeading || "WHO AM I";
   const whoAmIBio1 =
     homepage.whoAmIBio1 ||
     "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.";
@@ -110,14 +107,14 @@ export default async function HomePage() {
 
   const statBrands = homepage.statBrands || "5+";
   const statReach = homepage.statReach || "2M+";
-  const statFollowers = homepage.statFollowers || "5K+" ;
+  const statFollowers = homepage.statFollowers || "5K+";
   const statExp = homepage.statExp || "3YRS+";
 
   const whatsappNum = contact.whatsappNumber || "919368153189";
   const youtubeUrl = contact.youtubeUrl || "https://youtube.com/@_apoorva7__";
   const instagramUrl = contact.instagramUrl || "https://instagram.com/apoorva__kaushal";
-  const twitterUrl = contact.twitterUrl || "https://twitter.com/apoorva_kaushal";
-  const facebookUrl = contact.facebookUrl || "https://facebook.com/apoorva_kaushal";
+  const twitterUrl = contact.twitterUrl || "https://twitter.com/";
+  const facebookUrl = contact.facebookUrl || "https://facebook.com/";
 
   // Work Photos
   const workPhoto1 = photos.work1 || "/photos/IMG-20241220-WA0002.jpg";
@@ -229,7 +226,7 @@ export default async function HomePage() {
           <div className="dots">⋯</div>
           <div className="panel-head">
             <span className="spark-icon"><SparkleIcon size={16} /></span>
-            <h2 className="display">{whoAmIHeading}</h2>
+            <h2 className="display">{homepage.whoAmIHeading || "WHO AM I"}</h2>
           </div>
           <div className="whoami-body">
             <div className="whoami-text">

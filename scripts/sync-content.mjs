@@ -134,13 +134,35 @@ async function main() {
       const localFilePath = path.join(photosDir, filename);
 
       try {
-        process.stdout.write(`  - Downloading "${slotId}" (${filename})... `);
+        process.stdout.write(`  - Downloading photo "${slotId}" (${filename})... `);
         await downloadFile(remoteUrl, localFilePath);
         updatedPhotos[slotId] = `/photos/${filename}`;
         downloadCount++;
         console.log("✓ Done");
       } catch (dlErr) {
         console.log(`✗ Skipped (${dlErr.message})`);
+      }
+    }
+
+    // Sync gallery items
+    const updatedGallery = Array.isArray(content.gallery) ? [...content.gallery] : [];
+    for (let i = 0; i < updatedGallery.length; i++) {
+      const item = updatedGallery[i];
+      if (item.mediaUrl && !item.mediaUrl.startsWith("/photos/") && (item.mediaUrl.startsWith("http") || item.mediaUrl.startsWith("data:"))) {
+        const extMatch = item.mediaUrl.match(/\.(jpg|jpeg|png|webp|gif|avif|mp4)/i);
+        const ext = extMatch ? extMatch[1].toLowerCase() : (item.type === "video" ? "mp4" : "jpg");
+        const filename = `synced-gallery-${item.id || i}.${ext}`;
+        const localFilePath = path.join(photosDir, filename);
+
+        try {
+          process.stdout.write(`  - Downloading gallery item "${item.title || i}"... `);
+          await downloadFile(item.mediaUrl, localFilePath);
+          updatedGallery[i] = { ...item, mediaUrl: `/photos/${filename}` };
+          downloadCount++;
+          console.log("✓ Done");
+        } catch (gErr) {
+          console.log(`✗ Skipped (${gErr.message})`);
+        }
       }
     }
 
@@ -151,6 +173,7 @@ async function main() {
     const finalContent = {
       ...content,
       photos: updatedPhotos,
+      gallery: updatedGallery,
     };
 
     const siteContentPath = path.join(rootDir, "data", "site-content.json");

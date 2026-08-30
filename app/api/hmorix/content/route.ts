@@ -9,6 +9,15 @@ import {
 } from "@/lib/mongodb";
 import { getLocalContent, SiteContent } from "@/lib/contentStore";
 
+async function persistLocalJson(data: any) {
+  try {
+    const fs = await import("fs/promises");
+    const path = await import("path");
+    const filePath = path.join(process.cwd(), "data", "site-content.json");
+    await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8");
+  } catch {}
+}
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -61,6 +70,9 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Missing revisionId" }, { status: 400 });
       }
       const result = await restoreRevision(revisionId);
+      if (result.data) {
+        await persistLocalJson(result.data);
+      }
       return NextResponse.json(result);
     }
 
@@ -70,14 +82,15 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Invalid draft data" }, { status: 400 });
       }
       const result = await saveDraftContent(data);
+      await persistLocalJson(data);
       return NextResponse.json(result);
     }
 
     // ── 3. ACTION: PUBLISH DRAFT TO LIVE SITE ────────────────────────────────
     if (action === "publish") {
-      // If data provided in publish payload, save it to draft first
       if (data && typeof data === "object") {
         await saveDraftContent(data);
+        await persistLocalJson(data);
       }
       const result = await publishContent(note || "Published from /hmorix/admin");
       return NextResponse.json(result);
@@ -87,6 +100,7 @@ export async function POST(req: NextRequest) {
     if (action === "reset_to_default") {
       const defaultContent = getLocalContent();
       await saveDraftContent(defaultContent);
+      await persistLocalJson(defaultContent);
       await publishContent("Reset to default system content");
       return NextResponse.json({ success: true, message: "Reset to default content successfully!" });
     }

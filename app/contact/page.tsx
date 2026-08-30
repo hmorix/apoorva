@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { getContent } from "@/lib/contentStore";
+import { getLocalContent } from "@/lib/contentStore";
 import {
   WhatsAppIcon,
   MailIcon,
   InstagramIcon,
   YouTubeIcon,
-  TwitterXIcon,
-  FacebookIcon,
   MapPinIcon,
   CompassIcon,
   SparkleIcon,
 } from "@/components/Icons";
-
-export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Contact Apoorva Kaushal — Hathras, Uttar Pradesh, India",
@@ -29,9 +25,52 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://apoorvakaushal.vercel.app/contact" },
 };
 
-export default async function ContactPage() {
-  const content = await getContent();
-  const contact = content.contact;
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Apoorva Kaushal — Social Media Management",
+  description: "Social media management, content creation and digital marketing services.",
+  url: "https://apoorvakaushal.vercel.app",
+  telephone: "+91-9368153189",
+  email: "apoorva@apoorvakaushal.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Hathras",
+    addressRegion: "Uttar Pradesh",
+    addressCountry: "IN",
+    postalCode: "204101",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: "27.5954",
+    longitude: "78.0524",
+  },
+  areaServed: [
+    { "@type": "State", name: "Uttar Pradesh" },
+    { "@type": "Country", name: "India" },
+  ],
+  sameAs: [
+    "https://instagram.com/apoorva__kaushal",
+    "https://youtube.com/@_apoorva7__",
+  ],
+};
+
+const coverageAreas = [
+  "Hathras",
+  "Agra",
+  "Mathura",
+  "Aligarh",
+  "Uttar Pradesh",
+  "Delhi NCR",
+  "Mumbai",
+  "Bengaluru",
+  "Pan India",
+  "International",
+];
+
+export default function ContactPage() {
+  const content = getLocalContent();
+  const contact = content.contact || {};
 
   const email = contact.email || "apoorva@apoorvakaushal.com";
   const whatsappNumber = contact.whatsappNumber || "919368153189";
@@ -39,37 +78,8 @@ export default async function ContactPage() {
   const instagramUrl = contact.instagramUrl || `https://instagram.com/${instagramHandle.replace("@", "")}`;
   const youtubeHandle = contact.youtubeHandle || "@_apoorva7__";
   const youtubeUrl = contact.youtubeUrl || `https://youtube.com/${youtubeHandle}`;
-  const twitterUrl = contact.twitterUrl || "https://twitter.com/apoorva_kaushal";
-  const facebookUrl = contact.facebookUrl || "https://facebook.com/apoorva_kaushal";
   const location = contact.location || "Hathras, Uttar Pradesh, India";
   const postalCode = contact.postalCode || "204101";
-
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: `${content.hero?.heroTitle || "Apoorva Kaushal"} — Social Media Management`,
-    description: "Social media management, content creation and digital marketing services.",
-    url: "https://apoorvakaushal.vercel.app",
-    telephone: `+${whatsappNumber}`,
-    email: email,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: location.split(",")[0]?.trim() || "Hathras",
-      addressRegion: "Uttar Pradesh",
-      addressCountry: "IN",
-      postalCode: postalCode,
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "27.5954",
-      longitude: "78.0524",
-    },
-    areaServed: [
-      { "@type": "State", name: "Uttar Pradesh" },
-      { "@type": "Country", name: "India" },
-    ],
-    sameAs: [instagramUrl, youtubeUrl],
-  };
 
   const channels = [
     {
@@ -109,19 +119,6 @@ export default async function ContactPage() {
     },
   ];
 
-  const coverageAreas = contact.coverageAreas || [
-    "Hathras",
-    "Agra",
-    "Mathura",
-    "Aligarh",
-    "Uttar Pradesh",
-    "Delhi NCR",
-    "Mumbai",
-    "Bengaluru",
-    "Pan India",
-    "International",
-  ];
-
   return (
     <>
       <script
@@ -133,11 +130,11 @@ export default async function ContactPage() {
       <section className="page-hero">
         <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
           <span className="tag">Contact</span>
-          <span className="tag tag-maroon">{location.split(",")[0]?.trim() || "Hathras, UP"}</span>
+          <span className="tag tag-maroon">Hathras, UP</span>
         </div>
         <h1 className="page-hero-title display">GET IN TOUCH</h1>
         <p className="page-hero-sub">
-          Based in {location} — serving brands and creators across India and internationally. Reach out via WhatsApp, email, or this form.
+          Based in Hathras, Uttar Pradesh, India — serving brands and creators across India and internationally. Reach out via WhatsApp, email, or this form.
         </p>
       </section>
 
@@ -181,25 +178,6 @@ export default async function ContactPage() {
             </div>
           ))}
 
-          {/* Social Links Row */}
-          <div style={{ display: "flex", gap: 10, marginTop: 20, flexWrap: "wrap" }}>
-            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="social-btn" title="Instagram">
-              <InstagramIcon size={16} />
-            </a>
-            <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" className="social-btn" title="YouTube">
-              <YouTubeIcon size={16} />
-            </a>
-            <a href={twitterUrl} target="_blank" rel="noopener noreferrer" className="social-btn" title="X (Twitter)">
-              <TwitterXIcon size={15} />
-            </a>
-            <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="social-btn" title="Facebook">
-              <FacebookIcon size={16} />
-            </a>
-            <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="social-btn" title="WhatsApp">
-              <WhatsAppIcon size={16} />
-            </a>
-          </div>
-
           {/* Location Details Card */}
           <div
             style={{
@@ -215,11 +193,11 @@ export default async function ContactPage() {
             <div style={{ color: "var(--navy)", marginBottom: 10, display: "flex", justifyContent: "center" }}>
               <CompassIcon size={36} />
             </div>
-            <div className="display" style={{ fontSize: 18, marginBottom: 4, color: "var(--navy)", textTransform: "uppercase" }}>
-              {location}
+            <div className="display" style={{ fontSize: 18, marginBottom: 4, color: "var(--navy)" }}>
+              HATHRAS, UTTAR PRADESH
             </div>
             <p style={{ fontSize: 13, color: "var(--muted)" }}>
-              Postal Code: {postalCode} · India
+              Postal Code: {postalCode} · Agra Division · India
             </p>
             <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 8 }}>
               50 km from Mathura · 85 km from Agra · 170 km from Delhi NCR
@@ -237,8 +215,8 @@ export default async function ContactPage() {
           </p>
 
           <form
-            action={`mailto:${email}`}
-            method="GET"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST"
             style={{ display: "flex", flexDirection: "column", gap: 18 }}
           >
             <div className="form-row-2">
@@ -376,7 +354,7 @@ export default async function ContactPage() {
           ))}
         </div>
         <p style={{ fontSize: 14, color: "var(--muted)", marginTop: 24, lineHeight: 1.7 }}>
-          I am based in <strong style={{ color: "var(--navy)" }}>{location}</strong> and partner with clients across India — from major metros (Delhi NCR, Mumbai, Bengaluru) to vibrant Tier-2 and Tier-3 cities. With deep cultural understanding of Hindi-speaking audiences, my campaigns deliver high engagement across UP, MP, Rajasthan, Haryana, and beyond.
+          I am based in <strong style={{ color: "var(--navy)" }}>Hathras, Uttar Pradesh</strong> and partner with clients across India — from major metros (Delhi NCR, Mumbai, Bengaluru) to vibrant Tier-2 and Tier-3 cities. With deep cultural understanding of Hindi-speaking audiences, my campaigns deliver high engagement across UP, MP, Rajasthan, Haryana, and beyond.
         </p>
       </section>
     </>
