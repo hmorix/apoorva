@@ -43,6 +43,17 @@
       "Updated photo slots: whoami"
     ],
     "file": "v4_2026-08-31T01-59-36-803Z.json",
+    "active": false
+  },
+  {
+    "version": 5,
+    "versionId": "v5_2026-08-31T02-31-52-252Z",
+    "timestamp": "2026-08-31T02:31:52.252Z",
+    "note": "Sync live v5 (9:31:52 AM)",
+    "changes": [
+      "Sync live content updates"
+    ],
+    "file": "v5_2026-08-31T02-31-52-252Z.json",
     "active": true
   }
 ]

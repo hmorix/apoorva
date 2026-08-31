@@ -1,0 +1,503 @@
+{
+  "hero": {
+    "heroTitle": "Apoorva Kaushal",
+    "heroTagline": "Authentic storytelling that connects brands with audiences through relatable experiences",
+    "heroSignature": "Appu",
+    "domain": "apoorva.hmorix.in"
+  },
+  "homepage": {
+    "whoAmIHeading": "WHO AM I",
+    "whoAmIBio1": "I'm Apoorva, a Hathras & Uttar Pradesh–based Social Media Influencer and Content Creator. I help brands grow through cohesive visual identity, creative content, and high-performing advertising campaigns.",
+    "whoAmIBio2": "I've elevated the online presence of brands across India, helping them take control of their digital narrative with authentic Hindi comedy, parody, informative videos, and Krishna spiritual content.",
+    "statBrands": "5+",
+    "statReach": "2M+",
+    "statFollowers": "5K+",
+    "statExp": "3YRS+"
+  },
+  "about": {
+    "pageHeroTitle": "APOORVA KAUSHAL",
+    "pageHeroSub": "Social Media Creator & Content Creator · Hathras, Uttar Pradesh, India",
+    "storyHeading": "FROM HATHRAS TO THE DIGITAL WORLD",
+    "storyBio1": "I'm Apoorva Kaushal — born and raised in Hathras, Uttar Pradesh, a historic cultural hub in the Braj/Agra region. My journey into social media strategy began with a clear conviction: audiences don't just watch content; they connect with authenticity, cultural nuance, and relatable humor.",
+    "storyBio2": "What started as creative sketches and storytelling has evolved into a full-fledged multi-channel digital footprint reaching 2M+ all-time reach, 400k+ YouTube views, and over 5K+ combined followers across Instagram, YouTube, and Facebook.",
+    "storyBio3": "As a social media manager and content creator, I blend creative UGC video production with data-driven Meta ad campaigns, having collaborated with 5+ brands across fashion, beauty, lifestyle, and local retail."
+  },
+  "services": {
+    "starterPrice": "₹15,000",
+    "starterPeriod": "month",
+    "starterDesc": "Ideal for emerging brands and personal accounts starting their content journey with curated visuals and community growth.",
+    "growthPrice": "₹35,000",
+    "growthPeriod": "month",
+    "growthDesc": "Comprehensive social strategy with weekly UGC Reels, engaging copy, and optimized Meta ad management.",
+    "premiumPrice": "₹65,000",
+    "premiumPeriod": "month",
+    "premiumDesc": "Full-funnel digital branding, high-frequency UGC production, scriptwriting, dedicated Meta ad scaling, and weekly analytics."
+  },
+  "hire": {
+    "pageHeroTitle": "HIRE APOORVA KAUSHAL",
+    "pageHeroSub": "Available for full-service social media management, creative UGC video production, sponsored brand integrations, and digital growth consulting."
+  },
+  "contact": {
+    "whatsappNumber": "919368153189",
+    "email": "apoorva@hmorix.com",
+    "instagramHandle": "@apoorva__kaushal",
+    "instagramUrl": "https://instagram.com/apoorva__kaushal",
+    "youtubeHandle": "@_apoorva7__",
+    "youtubeUrl": "https://youtube.com/@_apoorva7__",
+    "twitterUrl": "https://twitter.com/",
+    "facebookUrl": "https://facebook.com/",
+    "location": "Hathras, Uttar Pradesh, India",
+    "postalCode": "204101"
+  },
+  "cases": {
+    "pageHeroTitle": "CASE STUDIES & CAMPAIGN RESULTS",
+    "pageHeroSub": "Real verifiable performance benchmarks across organic viral reels and paid Meta advertising campaigns.",
+    "caseStudiesList": [
+      {
+        "num": "01",
+        "brand": "Fashion Brand — Hathras",
+        "category": "Social Media Management",
+        "tagline": "From invisible to viral in 90 days",
+        "challenge": "A Hathras-based fashion boutique had no social presence and zero engagement. Their content was inconsistent, had no visual identity, and the owner was posting randomly without a strategy.",
+        "solution": "I audited the brand, built a 30-day content calendar, redesigned the feed aesthetic with a cohesive navy-and-gold palette, scripted 8 Reels, and set up a Meta ad campaign targeting women aged 18–35 in UP.",
+        "result": "In 3 months, Instagram followers grew from 240 to 18,400. Engagement rate went from 0.8% to 7.2%. Two posts went viral, each exceeding 500K views organically.",
+        "metrics": [
+          {
+            "num": "120%",
+            "label": "Engagement Growth"
+          },
+          {
+            "num": "18.4K",
+            "label": "New Followers"
+          },
+          {
+            "num": "500K+",
+            "label": "Organic Views"
+          }
+        ],
+        "tags": [
+          "Social Media",
+          "Content Creation",
+          "Reels",
+          "Meta Ads"
+        ]
+      },
+      {
+        "num": "02",
+        "brand": "Local Business — Uttar Pradesh",
+        "category": "Meta Ads Campaign",
+        "tagline": "3.2× return on every rupee spent",
+        "challenge": "A local service business in UP was spending money on Facebook ads with no ROI. Campaigns were running without proper targeting, and ad creative was stock-photo generic with no local relevance.",
+        "solution": "I rebuilt the entire campaign from scratch — new audience targeting segmented by city (Hathras, Agra, Mathura), new Hindi ad copy, UGC-style video creative, retargeting funnel, and daily budget optimisation.",
+        "result": "Within 60 days, cost per acquisition dropped by 64%. The campaign achieved 3.2× ROAS. Monthly revenue from digital increased from ₹40,000 to ₹1.28L.",
+        "metrics": [
+          {
+            "num": "3.2×",
+            "label": "Return on Ad Spend"
+          },
+          {
+            "num": "64%",
+            "label": "Lower Acquisition Cost"
+          },
+          {
+            "num": "₹1.28L",
+            "label": "Monthly Digital Revenue"
+          }
+        ],
+        "tags": [
+          "Meta Ads",
+          "Facebook",
+          "Instagram Ads",
+          "ROAS"
+        ]
+      },
+      {
+        "num": "03",
+        "brand": "Spiritual Page — Krishna Content",
+        "category": "Content Creation & Growth",
+        "tagline": "500K followers through devotion and strategy",
+        "challenge": "A new devotional page focused on Krishna/Radha-Krishna content had 0 followers and needed to build an authentic following without paid ads. The niche is spiritual, so content needed deep cultural sensitivity.",
+        "solution": "I developed a content series blending storytelling, Bhagavad Gita verses, Krishna life lessons and relatable devotional poetry — all in authentic Hindi. Posting schedule was 2× daily, timed for morning and evening puja time.",
+        "result": "The page gained 500,000 organic followers in 6 months. 12 posts exceeded 1M views each. The page became a go-to for Hindi Krishna content across India.",
+        "metrics": [
+          {
+            "num": "500K+",
+            "label": "New Followers"
+          },
+          {
+            "num": "12",
+            "label": "Posts 1M+ Views"
+          },
+          {
+            "num": "6M+",
+            "label": "Monthly Reach"
+          }
+        ],
+        "tags": [
+          "Krishna Content",
+          "Spiritual",
+          "Hindi",
+          "Organic Growth"
+        ]
+      },
+      {
+        "num": "04",
+        "brand": "Beauty Brand — India-wide",
+        "category": "Brand Collaboration",
+        "tagline": "Authentic UGC that actually converts",
+        "challenge": "A D2C beauty brand wanted authentic UGC content for their Instagram targeting Tier-2 India audiences. Previous influencer content felt scripted and had low saves/shares.",
+        "solution": "I created a 5-video UGC series — honest product reviews, tutorial content and 'before/after' Reels in Hindi. Content was filmed in a natural, relatable style with local context that resonated with the target audience.",
+        "result": "Average save rate was 8.4% (industry average: 2%). The brand's Instagram conversion rate increased 42%. One reel reached 2.3M views organically.",
+        "metrics": [
+          {
+            "num": "8.4%",
+            "label": "Save Rate"
+          },
+          {
+            "num": "42%",
+            "label": "Conversion Rate Increase"
+          },
+          {
+            "num": "2.3M",
+            "label": "Organic Reel Views"
+          }
+        ],
+        "tags": [
+          "UGC",
+          "Brand Collab",
+          "Beauty",
+          "Hindi Content"
+        ]
+      }
+    ]
+  },
+  "dashboard": {
+    "kpis": [
+      {
+        "label": "Total Reach (All-time)",
+        "num": "2M+",
+        "change": "18% vs last quarter",
+        "up": true,
+        "sub": "Across all platforms"
+      },
+      {
+        "label": "Avg. Reel Views",
+        "num": "340K",
+        "change": "24% vs last month",
+        "up": true,
+        "sub": "Per organic video"
+      },
+      {
+        "label": "Engagement Rate",
+        "num": "6.8%",
+        "change": "1.2pp vs last month",
+        "up": true,
+        "sub": "Industry benchmark 2.1%"
+      },
+      {
+        "label": "Brands Collaborated",
+        "num": "5+",
+        "change": "3 new this year",
+        "up": true,
+        "sub": "D2C, Fashion & Local"
+      },
+      {
+        "label": "Total Subscribers",
+        "num": "550",
+        "change": "60+ this month",
+        "up": true,
+        "sub": "YouTube official channel"
+      },
+      {
+        "label": "Total Youtube Views",
+        "num": "400k+",
+        "change": "2× improvement",
+        "up": true,
+        "sub": "Long-form & Shorts"
+      },
+      {
+        "label": "Followers (Combined)",
+        "num": "5K+",
+        "change": "3K this year",
+        "up": true,
+        "sub": "Instagram, YT & FB"
+      },
+      {
+        "label": "Content Pieces Created",
+        "num": "510+",
+        "change": "40 this month",
+        "up": true,
+        "sub": "Reels, Posts & UGC"
+      }
+    ],
+    "monthlyReach": [
+      95,
+      125,
+      160,
+      145,
+      210,
+      255,
+      240,
+      295,
+      330,
+      310,
+      340,
+      365
+    ],
+    "monthlyEngagement": [
+      5.1,
+      5.4,
+      5.8,
+      5.5,
+      6.1,
+      6.5,
+      6.3,
+      6.6,
+      6.7,
+      6.4,
+      6.8,
+      6.8
+    ],
+    "platforms": [
+      {
+        "name": "Instagram",
+        "handle": "@apoorva__kaushal",
+        "followers": "3.8K",
+        "pct": 74,
+        "fill": "#E4405F"
+      },
+      {
+        "name": "YouTube",
+        "handle": "@_apoorva7__",
+        "followers": "550",
+        "pct": 11,
+        "fill": "#FF0000"
+      },
+      {
+        "name": "Facebook",
+        "handle": "@apoorva_kaushal",
+        "followers": "450",
+        "pct": 9,
+        "fill": "#1877F2"
+      },
+      {
+        "name": "X (Twitter)",
+        "handle": "@apoorva_kaushal",
+        "followers": "350",
+        "pct": 7,
+        "fill": "#152049"
+      }
+    ],
+    "topLocations": [
+      {
+        "loc": "Uttar Pradesh, India",
+        "pct": 44
+      },
+      {
+        "loc": "Delhi NCR",
+        "pct": 22
+      },
+      {
+        "loc": "Mumbai & Maharashtra",
+        "pct": 14
+      },
+      {
+        "loc": "Rest of India",
+        "pct": 14
+      },
+      {
+        "loc": "International",
+        "pct": 6
+      }
+    ],
+    "campaigns": [
+      {
+        "name": "Fashion Boutique Launch — Hathras",
+        "platform": "Instagram Reels & Stories",
+        "reach": "420K",
+        "spend": "₹12,000",
+        "roas": "3.4×",
+        "status": "completed"
+      },
+      {
+        "name": "D2C Ayurvedic Skincare UGC",
+        "platform": "Instagram UGC & Reels",
+        "reach": "340K",
+        "spend": "₹0 (Organic)",
+        "roas": "4.2× ROI",
+        "status": "completed"
+      },
+      {
+        "name": "Krishna Devotional Story Series",
+        "platform": "YouTube Shorts & Reels",
+        "reach": "560K",
+        "spend": "₹0 (Organic)",
+        "roas": "400k+ Views",
+        "status": "completed"
+      },
+      {
+        "name": "UP Local Retail Lead Generation",
+        "platform": "Meta Ads (FB + IG)",
+        "reach": "280K",
+        "spend": "₹9,500",
+        "roas": "3.9×",
+        "status": "completed"
+      },
+      {
+        "name": "Festive Ethnic Lookbook Shoot",
+        "platform": "Instagram & Facebook",
+        "reach": "290K",
+        "spend": "₹14,000",
+        "roas": "2.8×",
+        "status": "active"
+      },
+      {
+        "name": "Wellness Routine UGC Collab",
+        "platform": "Instagram Reels",
+        "reach": "180K",
+        "spend": "₹6,500",
+        "roas": "3.6×",
+        "status": "active"
+      }
+    ]
+  },
+  "gallery": [
+    {
+      "id": "v1",
+      "type": "video",
+      "src": "/photos/VID_33401029_075125_655.mp4",
+      "poster": "/photos/profile.jpg",
+      "title": "Instagram Reel — Lifestyle & Aesthetic",
+      "category": "video",
+      "caption": "Short-form video styled for high watch-time and organic discoverability.",
+      "tag": "Reel / Video"
+    },
+    {
+      "id": "v2",
+      "type": "video",
+      "src": "/photos/VID_53140524_081603_903.mp4",
+      "poster": "/photos/IMG-20260205-WA0035.jpg",
+      "title": "Trending Hindi Content & Dialogue",
+      "category": "video",
+      "caption": "Relatable storytelling connecting with Hindi-speaking audiences across India.",
+      "tag": "Trending Reel"
+    },
+    {
+      "id": "v3",
+      "type": "video",
+      "src": "/photos/lv_0_20260127221107.mp4",
+      "poster": "/photos/IMG-20260608-WA0016.jpg",
+      "title": "Full Campaign Reel & Narrative",
+      "category": "video",
+      "caption": "Dynamic creative campaign edit featuring authentic UGC styling and soundtrack.",
+      "tag": "Campaign Video"
+    },
+    {
+      "id": "p1",
+      "type": "photo",
+      "src": "/photos/IMG-20260205-WA0035.jpg",
+      "poster": "/photos/IMG-20260205-WA0035.jpg",
+      "title": "Editorial Portrait — Apoorva Kaushal",
+      "category": "portrait",
+      "caption": "Creative director and social media manager portrait in Hathras, UP.",
+      "tag": "Portrait"
+    },
+    {
+      "id": "p2",
+      "type": "photo",
+      "src": "/photos/IMG-20260106-WA0010.jpg",
+      "poster": "/photos/IMG-20260106-WA0010.jpg",
+      "title": "Festive & Ethnic Lookbook Campaign",
+      "category": "portrait",
+      "caption": "Traditional Indian wear styling for festival and cultural campaigns.",
+      "tag": "Festive Style"
+    },
+    {
+      "id": "p3",
+      "type": "photo",
+      "src": "/photos/IMG-20260202-WA0003.jpg",
+      "poster": "/photos/IMG-20260202-WA0003.jpg",
+      "title": "Retro Sunglasses & Vinyl Aesthetic",
+      "category": "ugc",
+      "caption": "Vintage pastel aesthetic shot for lifestyle product integration.",
+      "tag": "UGC / Aesthetic"
+    },
+    {
+      "id": "p4",
+      "type": "photo",
+      "src": "/photos/IMG-20241220-WA0002.jpg",
+      "poster": "/photos/IMG-20241220-WA0002.jpg",
+      "title": "Casual Creator Behind-the-Scenes",
+      "category": "lifestyle",
+      "caption": "Everyday creator energy and relatable mood for student and youth audiences.",
+      "tag": "Lifestyle"
+    },
+    {
+      "id": "p5",
+      "type": "photo",
+      "src": "/photos/IMG-20260608-WA0016.jpg",
+      "poster": "/photos/IMG-20260608-WA0016.jpg",
+      "title": "Radha Raman Devotional Quote Post",
+      "category": "devotional",
+      "caption": "'When the world falls silent under the midnight sky, Radha Raman\\'s love shines bright.'",
+      "tag": "Krishna Content"
+    },
+    {
+      "id": "p6",
+      "type": "photo",
+      "src": "/photos/IMG-20250107-WA0012.jpg",
+      "poster": "/photos/IMG-20250107-WA0012.jpg",
+      "title": "Corporate Blazer & Business Headshot",
+      "category": "portrait",
+      "caption": "Professional agency portfolio portrait for corporate and B2B brand inquiries.",
+      "tag": "Headshot"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Who is Apoorva Kaushal?",
+      "answer": "Apoorva Kaushal is a social media manager, content creator, and digital strategist based in Hathras, Uttar Pradesh, India. She is known for creating viral Hindi comedy, parody, educational facts, and devotional Krishna content with over 2M+ total reach."
+    },
+    {
+      "question": "Where is Apoorva Kaushal from?",
+      "answer": "Apoorva Kaushal is from Hathras, Uttar Pradesh, India (located in the Agra division near Mathura and Aligarh)."
+    },
+    {
+      "question": "What services does Apoorva Kaushal provide?",
+      "answer": "Apoorva provides short-form video creation (Reels, Shorts), script writing, full social media management, Meta & Instagram ad campaigns, SEO content, and sponsored brand integrations."
+    },
+    {
+      "question": "How can brands collaborate with Apoorva Kaushal?",
+      "answer": "Brands can get in touch via WhatsApp (+91 9368153189), email, or the contact form for sponsored video reels, UGC campaigns, or full monthly social management."
+    }
+  ],
+  "photos": {
+    "profile": "/photos/synced-profile.jpg",
+    "whoami": "/photos/synced-whoami.jpg",
+    "qualifications": "/photos/IMG-20250107-WA0012.jpg",
+    "storyPhoto": "/photos/synced-storyPhoto.jpg",
+    "work1": "/photos/IMG-20241220-WA0002.jpg",
+    "work2": "/photos/IMG-20260202-WA0003.jpg",
+    "work3": "/photos/Screenshot_2025-11-15-14-35-32-55.jpg",
+    "work4": "/photos/IMG-20260106-WA0002.jpg",
+    "work6": "/photos/IMG-20260205-WA0036.jpg",
+    "insta1": "/photos/IMG-20260205-WA0035.jpg",
+    "insta2": "/photos/IMG-20240205-WA0003.jpg",
+    "insta3": "/photos/IMG-20260106-WA0010.jpg",
+    "insta4": "/photos/IMG-20260202-WA0003.jpg",
+    "insta5": "/photos/IMG-20260108-WA0003.jpg",
+    "insta6": "/photos/IMG_20260131_225741.jpg",
+    "insta7": "/photos/IMG-20260608-WA0016.jpg",
+    "insta8": "/photos/IMG-20260212-WA0000.jpg",
+    "add1": "/photos/IMG-20260202-WA0003.jpg",
+    "add2": "/photos/IMG-20260212-WA0000.jpg",
+    "add3": "/photos/IMG-20260106-WA0009.jpg",
+    "add4": "/photos/IMG-20260608-WA0016.jpg",
+    "hire1": "/photos/profile.jpg",
+    "hire2": "/photos/IMG-20260205-WA0035.jpg",
+    "phone1": "/photos/synced-phone1.jpg",
+    "phone2": "/photos/IMG-20260205-WA0035.jpg",
+    "phone3": "/photos/Screenshot_2026-01-16-12-45-41-89.jpg"
+  },
+  "videos": {}
+}
