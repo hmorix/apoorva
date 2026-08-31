@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "Apoorva Kaushal content creator", "Apoorva Kaushal Uttar Pradesh", "Hindi comedy creator",
     "Indian digital creator", "Krishna content creator India", "social media manager Hathras",
   ],
-  authors: [{ name: "Apoorva Kaushal", url: "https://apoorva..hmorix.in" }],
+  authors: [{ name: "Apoorva Kaushal", url: "https://apoorva.hmorix.in" }],
   creator: "Apoorva Kaushal",
   publisher: "Apoorva Kaushal",
   openGraph: {
@@ -97,7 +97,7 @@ const graphSchema = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://apoorvakaushal.vercel.app/#person",
+      "@id": "https://apoorva.hmorix.in/#person",
       name: "Apoorva Kaushal",
       alternateName: [
         "Apoova",
@@ -108,8 +108,8 @@ const graphSchema = {
       ],
       description:
         "Indian Social Media Manager and Content Creator based in Hathras, Uttar Pradesh. Known for Hindi comedy, parodies, informative videos, and Krishna prem devotional content.",
-      url: "https://apoorvakaushal.vercel.app",
-      image: "https://apoorvakaushal.vercel.app/photos/profile.jpg",
+      url: "https://apoorva.hmorix.in",
+      image: "https://apoorva.hmorix.in/photos/profile.jpg",
       gender: "Female",
       nationality: { "@type": "Country", name: "India" },
       homeLocation: {
@@ -148,20 +148,20 @@ const graphSchema = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://apoorvakaushal.vercel.app/#website",
-      url: "https://apoorvakaushal.vercel.app",
+      "@id": "https://apoorva.hmorix.in/#website",
+      url: "https://apoorva.hmorix.in",
       name: "Apoorva Kaushal Official",
       description: "Official portfolio, analytics dashboard, case studies, and Q&A for Apoorva Kaushal.",
-      publisher: { "@id": "https://apoorvakaushal.vercel.app/#person" },
+      publisher: { "@id": "https://apoorva.hmorix.in/#person" },
     },
     {
       "@type": "ProfessionalService",
-      "@id": "https://apoorvakaushal.vercel.app/#business",
+      "@id": "https://apoorva.hmorix.in/#business",
       name: "Apoorva Kaushal Digital Media Services",
-      url: "https://apoorvakaushal.vercel.app",
+      url: "https://apoorva.hmorix.in",
       telephone: "+91-9368153189",
       priceRange: "₹₹",
-      image: "https://apoorvakaushal.vercel.app/photos/profile.jpg",
+      image: "https://apoorva.hmorix.in/photos/profile.jpg",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Hathras",

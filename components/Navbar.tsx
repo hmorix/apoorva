@@ -126,7 +126,7 @@ export default function Navbar() {
                 >
                   <YouTubeIcon size={18} />
                 </a>
-                <a href="mailto:apoorva@apoorvakaushal.com" aria-label="Email">
+                <a href="mailto:apoorva@hmorix.in" aria-label="Email">
                   <MailIcon size={18} />
                 </a>
               </div>

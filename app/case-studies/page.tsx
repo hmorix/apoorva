@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "content creator results India",
     "Hindi creator campaign results",
   ],
-  alternates: { canonical: "https://apoorvakaushal.vercel.app/case-studies" },
+  alternates: { canonical: "https://apoorva.hmorix.in/case-studies" },
 };
 
 export interface CaseStudy {

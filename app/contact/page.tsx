@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "Apoorva Kaushal WhatsApp",
     "apoorva@hmorix.in",
   ],
-  alternates: { canonical: "https://apoorvakaushal.vercel.app/contact" },
+  alternates: { canonical: "https://apoorva.hmorix.in/contact" },
 };
 
 const localBusinessSchema = {
@@ -31,7 +31,7 @@ const localBusinessSchema = {
   "@type": "LocalBusiness",
   name: "Apoorva Kaushal — Social Media Management",
   description: "Social media management, content creation and digital marketing services.",
-  url: "https://apoorvakaushal.vercel.app",
+  url: "https://apoorva.hmorix.in",
   telephone: "+91-9368153189",
   email: "apoorva@hmorix.in",
   address: {

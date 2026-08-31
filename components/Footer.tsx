@@ -101,8 +101,8 @@ export default function Footer() {
               <WhatsAppIcon size={16} />
             </a>
             <a
-              href="mailto:apoorva@apoorvakaushal.com"
-              aria-label="Email (apoorva@apoorvakaushal.com)"
+              href="mailto:apoorva@hmorix.in"
+              aria-label="Email (apoorva@hmorix.in)"
               className="social-btn"
               title="Email"
             >
@@ -155,7 +155,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <a href="mailto:apoorva@apoorvakaushal.com" className="footer-icon-link">
+              <a href="mailto:apoorva@hmorix.in" className="footer-icon-link">
                 <MailIcon size={14} />
                 <span>apoorva@apoorva.hmorix.in</span>
               </a>

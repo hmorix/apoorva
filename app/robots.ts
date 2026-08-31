@@ -6,11 +6,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: ["/api/", "/hmorix/", "/_next/"],
       },
       {
         userAgent: "Googlebot",
         allow: "/",
+        disallow: ["/api/", "/hmorix/"],
       },
       {
         userAgent: "Googlebot-Image",
@@ -21,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: ["/photos/", "/"],
       },
     ],
-    sitemap: "https://apoorvakaushal.vercel.app/sitemap.xml",
-    host: "https://apoorvakaushal.vercel.app",
+    sitemap: "https://apoorva.hmorix.in/sitemap.xml",
+    host: "https://apoorva.hmorix.in",
   };
 }

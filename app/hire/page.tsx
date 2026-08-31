@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "hire influencer Uttar Pradesh",
     "social media manager for hire India",
   ],
-  alternates: { canonical: "https://apoorvakaushal.vercel.app/hire" },
+  alternates: { canonical: "https://apoorva.hmorix.in/hire" },
 };
 
 const defaultPackages = [

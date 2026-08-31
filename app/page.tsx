@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     "Indian content creator",
     "Krishna content creator India",
   ],
-  alternates: { canonical: "https://apoorvakaushal.vercel.app" },
+  alternates: { canonical: "https://apoorva.hmorix.in" },
 };
 
 const faqSchema = {

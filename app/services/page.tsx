@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     "HMorix services",
     "social media creator Hathras",
   ],
-  alternates: { canonical: "https://apoorvakaushal.vercel.app/services" },
+  alternates: { canonical: "https://apoorva.hmorix.in/services" },
 };
 
 export interface ServiceItem {
