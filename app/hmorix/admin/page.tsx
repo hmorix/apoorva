@@ -10,6 +10,7 @@ import {
   KpiItem,
   CampaignItem,
   FaqItem,
+  getLocalContent,
 } from "@/lib/contentStore";
 
 // ── SVG ICONS ─────────────────────────────────────────────────────────────────
@@ -503,13 +504,123 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
+// STABLE HELPER COMPONENTS (Declared outside to prevent input re-mounting/blur)
+// ──────────────────────────────────────────────────────────────────────────────
+interface TextFieldProps {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  multiline?: boolean;
+  helper?: string;
+}
+
+function TextField({ label, value, onChange, placeholder = "", multiline = false, helper = "" }: TextFieldProps) {
+  return (
+    <div className="adm-field">
+      <label className="adm-label">{label}</label>
+      {multiline ? (
+        <textarea
+          value={value || ""}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="adm-input adm-textarea"
+          rows={3}
+        />
+      ) : (
+        <input
+          type="text"
+          value={value || ""}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="adm-input"
+        />
+      )}
+      {helper && <div className="adm-helper">{helper}</div>}
+    </div>
+  );
+}
+
+interface PhotoCardViewProps {
+  slotId: string;
+  customLabel?: string;
+  src: string;
+  isUploading: boolean;
+  shape: string;
+  metaLabel: string;
+  location: string;
+  onTriggerUpload: (slotId: string) => void;
+  onCrop: (src: string, slotId: string, shape: string) => void;
+}
+
+function PhotoCardView({
+  slotId,
+  customLabel,
+  src,
+  isUploading,
+  shape,
+  metaLabel,
+  location,
+  onTriggerUpload,
+  onCrop,
+}: PhotoCardViewProps) {
+  return (
+    <div className="adm-photo-card">
+      <div className="adm-photo-preview">
+        <img
+          src={src}
+          alt={metaLabel}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/photos/profile.jpg";
+          }}
+        />
+        <div
+          onClick={() => onTriggerUpload(slotId)}
+          className="adm-photo-overlay"
+          title="Click or tap to upload replacement photo"
+        >
+          {isUploading ? (
+            <div style={{ width: 22, height: 22, border: "2px solid #fff", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+              <CameraIcon size={20} />
+              <span style={{ fontSize: 11, fontWeight: 700 }}>Replace</span>
+            </div>
+          )}
+        </div>
+        <span className="adm-photo-badge">{shape}</span>
+      </div>
+      <div className="adm-photo-info">
+        <div className="adm-photo-title">{customLabel || metaLabel}</div>
+        <div className="adm-photo-loc">{location}</div>
+        <button
+          type="button"
+          onClick={() => onTriggerUpload(slotId)}
+          className="adm-photo-btn"
+        >
+          <CameraIcon size={13} /> Replace Photo
+        </button>
+        <button
+          type="button"
+          onClick={() => onCrop(src, slotId, shape)}
+          className="adm-photo-btn"
+          style={{ marginTop: 5, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff" }}
+        >
+          ✂ Crop Photo
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
 // MAIN ADMIN DASHBOARD
 // ──────────────────────────────────────────────────────────────────────────────
 export default function HmorixAdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [currentPage, setCurrentPage] = useState<PageId>("home");
   const [viewMode, setViewMode] = useState<ViewMode>("editor");
-  const [content, setContent] = useState<SiteContent | null>(null);
+  const [content, setContent] = useState<SiteContent>(() => getLocalContent());
   const [revisions, setRevisions] = useState<Revision[]>([]);
   const [status, setStatus] = useState<ServerStatus>({ mongoConnected: false, googleDriveConnected: false });
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -526,7 +637,7 @@ export default function HmorixAdminPage() {
   useEffect(() => {
     fetch("/api/hmorix/auth")
       .then((r) => r.json())
-      .then((j) => setIsAuthenticated(j.authenticated))
+      .then((j) => setIsAuthenticated(Boolean(j.authenticated)))
       .catch(() => setIsAuthenticated(false));
   }, []);
 
@@ -760,50 +871,27 @@ export default function HmorixAdminPage() {
     }
   };
 
-  if (isAuthenticated === null || !content) {
+  if (isAuthenticated === false) {
+    return <LoginScreen onLogin={() => { setIsAuthenticated(true); fetchContent(); }} />;
+  }
+
+  if (isAuthenticated === null) {
     return (
       <div style={{ minHeight: "100vh", background: "#0f172a", display: "flex", alignItems: "center", justifyContent: "center", color: "#94a3b8" }}>
         <div style={{ textAlign: "center" }}>
-          <div style={{ width: 40, height: 40, border: "3px solid #334155", borderTopColor: "#3b82f6", borderRadius: "50%", margin: "0 auto 16px", animation: "spin 0.8s linear infinite" }} />
-          Loading HMoriX Visual Studio...
+          <div style={{ width: 36, height: 36, border: "3px solid #334155", borderTopColor: "#3b82f6", borderRadius: "50%", margin: "0 auto 14px", animation: "spin 0.6s linear infinite" }} />
+          <div style={{ fontSize: 13, fontWeight: 600, color: "#cbd5e1" }}>Opening HMoriX Visual Studio...</div>
         </div>
       </div>
     );
   }
 
-  if (!isAuthenticated) {
-    return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
-  }
-
   const isEditing = viewMode === "editor";
   const currentPageInfo = PAGES.find((p) => p.id === currentPage) || PAGES[0];
 
-  // Helper Field Components
-  function TextField({ label, value, onChange, placeholder = "", multiline = false, helper = "" }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; multiline?: boolean; helper?: string }) {
-    return (
-      <div className="adm-field">
-        <label className="adm-label">{label}</label>
-        {multiline ? (
-          <textarea
-            value={value || ""}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder={placeholder}
-            className="adm-input adm-textarea"
-            rows={3}
-          />
-        ) : (
-          <input
-            type="text"
-            value={value || ""}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder={placeholder}
-            className="adm-input"
-          />
-        )}
-        {helper && <div className="adm-helper">{helper}</div>}
-      </div>
-    );
-  }
+  const handleOpenCrop = (cropSrc: string, cropSlotId: string, shape: string) => {
+    setCropModal({ src: cropSrc, slotId: cropSlotId, aspectHint: shape, file: new File([], cropSlotId) });
+  };
 
   function PhotoSlotCard({ slotId, customLabel }: { slotId: string; customLabel?: string }) {
     const meta = PHOTO_SLOT_DESCRIPTIONS[slotId] || { label: slotId, location: "Website page", shape: "Standard" };
@@ -811,53 +899,17 @@ export default function HmorixAdminPage() {
     const isUploading = uploadingSlot === slotId;
 
     return (
-      <div className="adm-photo-card">
-        <div className="adm-photo-preview">
-          <img
-            src={src}
-            alt={meta.label}
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = "/photos/profile.jpg";
-            }}
-          />
-          <div
-            onClick={() => triggerUpload(slotId)}
-            className="adm-photo-overlay"
-            title="Click or tap to upload replacement photo"
-          >
-            {isUploading ? (
-              <div style={{ width: 22, height: 22, border: "2px solid #fff", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
-            ) : (
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                <CameraIcon size={20} />
-                <span style={{ fontSize: 11, fontWeight: 700 }}>Replace</span>
-              </div>
-            )}
-          </div>
-          <span className="adm-photo-badge">{meta.shape}</span>
-        </div>
-        <div className="adm-photo-info">
-          <div className="adm-photo-title">{customLabel || meta.label}</div>
-          <div className="adm-photo-loc">{meta.location}</div>
-          <button
-            type="button"
-            onClick={() => triggerUpload(slotId)}
-            className="adm-photo-btn"
-          >
-            <CameraIcon size={13} /> Replace Photo
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setCropModal({ src, slotId, aspectHint: meta.shape, file: new File([], slotId) });
-            }}
-            className="adm-photo-btn"
-            style={{ marginTop: 5, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff" }}
-          >
-            ✂ Crop Photo
-          </button>
-        </div>
-      </div>
+      <PhotoCardView
+        slotId={slotId}
+        customLabel={customLabel}
+        src={src}
+        isUploading={isUploading}
+        shape={meta.shape}
+        metaLabel={meta.label}
+        location={meta.location}
+        onTriggerUpload={triggerUpload}
+        onCrop={handleOpenCrop}
+      />
     );
   }
 
