@@ -147,49 +147,11 @@ body:has(.admin-root) {
   letter-spacing: 0.05em;
   white-space: nowrap;
   color: var(--navy);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 .navbar-logo:hover {
   color: var(--maroon);
-}
-.navbar-logo-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, #7a1421 0%, #9e1c2e 60%, #4e0c15 100%);
-  border: 1.5px solid #d4af37;
-  box-shadow: 0 2px 8px rgba(122, 20, 33, 0.25);
-  position: relative;
-  flex-shrink: 0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.navbar-logo:hover .navbar-logo-badge {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(122, 20, 33, 0.35);
-}
-.navbar-logo-text {
-  font-family: 'Anton', 'Inter', system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -0.5px;
-  line-height: 1;
-}
-.navbar-logo-sparkle {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  font-size: 9px;
-  color: #ffd700;
-  line-height: 1;
-  text-shadow: 0 0 4px rgba(255, 215, 0, 0.6);
 }
 .navbar-links {
   display: flex;

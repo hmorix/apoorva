@@ -43,12 +43,8 @@ export default function Footer() {
       <div className="footer-inner">
         {/* Brand Column */}
         <div className="footer-brand-col">
-          <Link href="/" className="footer-brand-name" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-            <span className="navbar-logo-badge" aria-hidden="true" style={{ width: 28, height: 28 }}>
-              <span className="navbar-logo-text" style={{ fontSize: 12 }}>AK</span>
-              <span className="navbar-logo-sparkle" style={{ fontSize: 8 }}>✦</span>
-            </span>
-            <span>APOORVA KAUSHAL</span>
+          <Link href="/" className="footer-brand-name">
+            APOORVA KAUSHAL
           </Link>
           <p className="footer-brand-desc">
             Social Media Creator &amp; Digital Content Creator based in Hathras, Uttar Pradesh, India. Specializing in authentic Hindi comedy, parody skits, educational explainers, and devotional Krishna content.
