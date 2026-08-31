@@ -83,14 +83,15 @@ export function listLocalVersions(): VersionInfo[] {
         file: "v1_initial_base.json",
         active: true,
       };
-      fs.writeFileSync(path.join(VERSIONS_DIR, "v1_initial_base.json"), JSON.stringify(initialContent, null, 2), "utf8");
-      fs.writeFileSync(INDEX_FILE, JSON.stringify([v1], null, 2), "utf8");
+      try {
+        fs.writeFileSync(path.join(VERSIONS_DIR, "v1_initial_base.json"), JSON.stringify(initialContent, null, 2), "utf8");
+        fs.writeFileSync(INDEX_FILE, JSON.stringify([v1], null, 2), "utf8");
+      } catch {}
       return [v1];
     }
     const raw = fs.readFileSync(INDEX_FILE, "utf8");
     return JSON.parse(raw) as VersionInfo[];
   } catch (err) {
-    console.error("[VersionStore] Failed to read version index:", err);
     return [];
   }
 }
@@ -117,12 +118,7 @@ export function createLocalVersion(content: SiteContent, note = "Update Snapshot
   const filename = `${versionId}.json`;
   const changes = computeChangesSummary(prevContent, content);
 
-  // Write content file
-  fs.writeFileSync(path.join(VERSIONS_DIR, filename), JSON.stringify(content, null, 2), "utf8");
-
-  // Mark all existing as inactive
   const updatedVersions: VersionInfo[] = versions.map((v) => ({ ...v, active: false }));
-
   const newVersion: VersionInfo = {
     version: nextVersionNum,
     versionId,
@@ -133,12 +129,18 @@ export function createLocalVersion(content: SiteContent, note = "Update Snapshot
     active: true,
   };
 
-  updatedVersions.push(newVersion);
-  fs.writeFileSync(INDEX_FILE, JSON.stringify(updatedVersions, null, 2), "utf8");
+  try {
+    // Write content file (safely ignored if serverless read-only filesystem)
+    fs.writeFileSync(path.join(VERSIONS_DIR, filename), JSON.stringify(content, null, 2), "utf8");
+    updatedVersions.push(newVersion);
+    fs.writeFileSync(INDEX_FILE, JSON.stringify(updatedVersions, null, 2), "utf8");
 
-  // Also sync current active content to data/site-content.json
-  const mainContentPath = path.join(process.cwd(), "data", "site-content.json");
-  fs.writeFileSync(mainContentPath, JSON.stringify(content, null, 2), "utf8");
+    // Also sync current active content to data/site-content.json
+    const mainContentPath = path.join(process.cwd(), "data", "site-content.json");
+    fs.writeFileSync(mainContentPath, JSON.stringify(content, null, 2), "utf8");
+  } catch (fsErr) {
+    // In serverless read-only environment like Vercel Lambda, disk writes fail silently
+  }
 
   return newVersion;
 }
@@ -181,16 +183,18 @@ export function switchLocalVersion(versionIdOrNumber: string | number): { succes
     return { success: false, message: `Could not load data for version "${target.versionId}".` };
   }
 
-  // Update site-content.json
-  const mainContentPath = path.join(process.cwd(), "data", "site-content.json");
-  fs.writeFileSync(mainContentPath, JSON.stringify(content, null, 2), "utf8");
+  try {
+    // Update site-content.json
+    const mainContentPath = path.join(process.cwd(), "data", "site-content.json");
+    fs.writeFileSync(mainContentPath, JSON.stringify(content, null, 2), "utf8");
 
-  // Update active flag in index
-  const updatedVersions: VersionInfo[] = versions.map((v, i) => ({
-    ...v,
-    active: i === targetIndex,
-  }));
-  fs.writeFileSync(INDEX_FILE, JSON.stringify(updatedVersions, null, 2), "utf8");
+    // Update active flag in index
+    const updatedVersions: VersionInfo[] = versions.map((v, i) => ({
+      ...v,
+      active: i === targetIndex,
+    }));
+    fs.writeFileSync(INDEX_FILE, JSON.stringify(updatedVersions, null, 2), "utf8");
+  } catch {}
 
   return {
     success: true,

@@ -43,8 +43,12 @@ export async function GET(req: NextRequest) {
       history ? getRevisionHistory(30) : Promise.resolve([]),
     ]);
 
-    // Merge local file version snapshots with MongoDB revisions
-    const localVersions = history ? listLocalVersions() : [];
+    // Safely retrieve local version snapshots
+    let localVersions: any[] = [];
+    try {
+      localVersions = history ? listLocalVersions() : [];
+    } catch {}
+
     const formattedLocal = localVersions.map((v) => ({
       revisionId: v.versionId,
       version: v.version,
@@ -107,15 +111,17 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Missing revisionId or versionNum" }, { status: 400 });
       }
 
-      // Try local version store first
-      const localResult = switchLocalVersion(target);
-      if (localResult.success && localResult.data) {
-        await saveDraftContent(localResult.data);
-        await publishContent(`Restored ${localResult.version?.note || target}`);
-        return NextResponse.json(localResult);
-      }
+      // 1. Try local version store
+      try {
+        const localResult = switchLocalVersion(target);
+        if (localResult.success && localResult.data) {
+          await saveDraftContent(localResult.data);
+          await publishContent(`Restored ${localResult.version?.note || target}`);
+          return NextResponse.json(localResult);
+        }
+      } catch {}
 
-      // Fallback to MongoDB restore
+      // 2. Fallback to MongoDB restore
       const result = await restoreRevision(String(target));
       if (result.data) {
         await persistLocalJson(result.data);
@@ -136,18 +142,33 @@ export async function POST(req: NextRequest) {
     // ── 3. ACTION: PUBLISH DRAFT TO LIVE SITE ────────────────────────────────
     if (action === "publish") {
       const targetData = data && typeof data === "object" ? data : getLocalContent();
+      
+      // Save draft in MongoDB
       await saveDraftContent(targetData);
       
-      // Create local version snapshot
-      const versionNote = note || "Published from /hmorix/admin";
-      const newVersion = createLocalVersion(targetData, versionNote);
-
       // Publish in MongoDB
+      const versionNote = note || "Published from /hmorix/admin";
       const mongoResult = await publishContent(versionNote);
+
+      // Create local version snapshot (safely ignored if serverless filesystem is read-only)
+      let newVersion: any = null;
+      try {
+        newVersion = createLocalVersion(targetData, versionNote);
+      } catch (vErr) {
+        newVersion = {
+          version: mongoResult.version || 1,
+          versionId: `v${mongoResult.version || 1}`,
+          timestamp: new Date().toISOString(),
+          note: versionNote,
+          changes: ["Published to MongoDB Atlas"],
+          file: "",
+          active: true,
+        };
+      }
 
       return NextResponse.json({
         success: true,
-        message: `Version v${newVersion.version} published live and version snapshot saved!`,
+        message: `Version v${mongoResult.version || newVersion?.version || 1} published live to website!`,
         version: newVersion,
         mongoResult,
       });
@@ -155,13 +176,19 @@ export async function POST(req: NextRequest) {
 
     // ── 4. ACTION: RESET TO ORIGINAL BASE (v1) ───────────────────────────────
     if (action === "reset_to_default" || action === "reset_to_v1") {
-      const versions = listLocalVersions();
-      const v1 = versions.find((v) => v.version === 1);
-      const v1Content = v1 ? getVersionContent(v1.versionId) : getLocalContent();
-      const defaultContent = v1Content || getLocalContent();
+      let defaultContent = getLocalContent();
+      try {
+        const versions = listLocalVersions();
+        const v1 = versions.find((v) => v.version === 1);
+        const v1Content = v1 ? getVersionContent(v1.versionId) : null;
+        if (v1Content) defaultContent = v1Content;
+      } catch {}
 
       await saveDraftContent(defaultContent);
-      const newVer = createLocalVersion(defaultContent, "Reset to Original Version (v1)");
+      let newVer: any = null;
+      try {
+        newVer = createLocalVersion(defaultContent, "Reset to Original Version (v1)");
+      } catch {}
       await publishContent("Reset to Original Version (v1)");
 
       return NextResponse.json({
