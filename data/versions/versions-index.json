@@ -54,6 +54,63 @@
       "Sync live content updates"
     ],
     "file": "v5_2026-08-31T02-31-52-252Z.json",
+    "active": false
+  },
+  {
+    "version": 6,
+    "versionId": "v6_2026-08-31T13-42-18-752Z",
+    "timestamp": "2026-08-31T13:42:18.752Z",
+    "note": "Sync live v6 (8:42:18 PM)",
+    "changes": [
+      "Hero Title updated to \"Apoorva Kaushal.\"",
+      "Hero Tagline modified",
+      "Downloaded & synced 4 remote media file(s)"
+    ],
+    "file": "v6_2026-08-31T13-42-18-752Z.json",
+    "active": false
+  },
+  {
+    "version": 7,
+    "versionId": "v7_2026-08-31T13-42-45-385Z",
+    "timestamp": "2026-08-31T13:42:45.385Z",
+    "note": "Sync live v7 (8:42:45 PM)",
+    "changes": [
+      "Downloaded & synced 4 remote media file(s)"
+    ],
+    "file": "v7_2026-08-31T13-42-45-385Z.json",
+    "active": false
+  },
+  {
+    "version": 8,
+    "versionId": "v8_2026-08-31T13-46-20-023Z",
+    "timestamp": "2026-08-31T13:46:20.023Z",
+    "note": "Sync live v8 (8:46:20 PM)",
+    "changes": [
+      "Downloaded & synced 4 remote media file(s)"
+    ],
+    "file": "v8_2026-08-31T13-46-20-023Z.json",
+    "active": false
+  },
+  {
+    "version": 9,
+    "versionId": "v9_2026-08-31T13-46-53-329Z",
+    "timestamp": "2026-08-31T13:46:53.329Z",
+    "note": "Sync live v9 (8:46:53 PM)",
+    "changes": [
+      "Downloaded & synced 4 remote media file(s)"
+    ],
+    "file": "v9_2026-08-31T13-46-53-329Z.json",
+    "active": false
+  },
+  {
+    "version": 10,
+    "versionId": "v10_2026-08-31T13-47-38-846Z",
+    "timestamp": "2026-08-31T13:47:38.846Z",
+    "note": "Sync live v10 (8:47:38 PM)",
+    "changes": [
+      "Downloaded & synced 4 remote media file(s)"
+    ],
+    "file": "v10_2026-08-31T13-47-38-846Z.json",
     "active": true
   }
 ]
