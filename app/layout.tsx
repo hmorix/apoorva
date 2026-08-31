@@ -77,7 +77,7 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: "https://apoorva.hmorix.in" },
   verification: {
-    google: "J3Ye67XomlkhUSkpLf7AIDPo_qXhc2YMDB6c1BkR5yQ",
+    google: "wovu_sEDNpFkunMFVEFi_xQUu05h1gjg_5zCxJRrtmc",
   },
   other: {
     "geo.region": "IN-UP",
