@@ -9,7 +9,7 @@ export interface VersionInfo {
   note: string;
   changes: string[];
   file: string;
-  active?: boolean;
+  active: boolean;
 }
 
 const VERSIONS_DIR = path.join(process.cwd(), "data", "versions");
@@ -73,7 +73,6 @@ export function listLocalVersions(): VersionInfo[] {
   ensureVersionsDir();
   try {
     if (!fs.existsSync(INDEX_FILE)) {
-      // Create initial v1 snapshot if none exists
       const initialContent = getLocalContent();
       const v1: VersionInfo = {
         version: 1,
@@ -122,7 +121,7 @@ export function createLocalVersion(content: SiteContent, note = "Update Snapshot
   fs.writeFileSync(path.join(VERSIONS_DIR, filename), JSON.stringify(content, null, 2), "utf8");
 
   // Mark all existing as inactive
-  const updatedVersions = versions.map((v) => ({ ...v, active: false }));
+  const updatedVersions: VersionInfo[] = versions.map((v) => ({ ...v, active: false }));
 
   const newVersion: VersionInfo = {
     version: nextVersionNum,
@@ -187,7 +186,7 @@ export function switchLocalVersion(versionIdOrNumber: string | number): { succes
   fs.writeFileSync(mainContentPath, JSON.stringify(content, null, 2), "utf8");
 
   // Update active flag in index
-  const updatedVersions = versions.map((v, i) => ({
+  const updatedVersions: VersionInfo[] = versions.map((v, i) => ({
     ...v,
     active: i === targetIndex,
   }));
