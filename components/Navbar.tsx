@@ -65,7 +65,11 @@ export default function Navbar() {
     <header className="navbar-container">
       <nav className="navbar" aria-label="Main Navigation">
         <Link href="/" className="navbar-logo" onClick={() => setOpen(false)}>
-          APOORVA KAUSHAL
+          <span className="navbar-logo-badge" aria-hidden="true">
+            <span className="navbar-logo-text">AK</span>
+            <span className="navbar-logo-sparkle">✦</span>
+          </span>
+          <span>APOORVA KAUSHAL</span>
         </Link>
 
         {/* Desktop Links */}

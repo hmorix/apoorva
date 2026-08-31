@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7a1421" />
+      <stop offset="60%" stop-color="#9e1c2e" />
+      <stop offset="100%" stop-color="#4e0c15" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe082" />
+      <stop offset="50%" stop-color="#ffd54f" />
+      <stop offset="100%" stop-color="#ffb300" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Rounded Square Container -->
+  <rect width="64" height="64" rx="16" fill="url(#bgGrad)" />
+  
+  <!-- Inner Gold Border Ring -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="url(#goldGrad)" stroke-width="2" stroke-opacity="0.9" />
+  
+  <!-- Brand Monogram AK -->
+  <text x="32" y="42" font-family="'Anton', 'Inter', system-ui, -apple-system, sans-serif" font-size="28" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="-1" filter="url(#shadow)">AK</text>
+  
+  <!-- Luxury Star Sparkle Accent -->
+  <path d="M50 11 L51.8 15.2 L56 17 L51.8 18.8 L50 23 L48.2 18.8 L44 17 L48.2 15.2 Z" fill="url(#goldGrad)" />
+  <circle cx="16" cy="48" r="2" fill="url(#goldGrad)" opacity="0.8" />
+</svg>
