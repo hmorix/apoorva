@@ -157,7 +157,7 @@ export default function Footer() {
             <li>
               <a href="mailto:apoorva@hmorix.in" className="footer-icon-link">
                 <MailIcon size={14} />
-                <span>apoorva@apoorva.hmorix.in</span>
+                <span>apoorva@hmorix.in</span>
               </a>
             </li>
             <li>
