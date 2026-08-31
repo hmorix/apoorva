@@ -123,6 +123,18 @@
       "Downloaded & synced 4 remote media file(s)"
     ],
     "file": "v11_2026-08-31T13-57-41-727Z.json",
+    "active": false
+  },
+  {
+    "version": 12,
+    "versionId": "v12_2026-08-31T14-19-35-501Z",
+    "timestamp": "2026-08-31T14:19:35.501Z",
+    "note": "Sync live v12 (9:19:35 PM)",
+    "changes": [
+      "Hero Title updated to \"Apoorva Kaushal .\"",
+      "Downloaded & synced 4 remote media file(s)"
+    ],
+    "file": "v12_2026-08-31T14-19-35-501Z.json",
     "active": true
   }
 ]
