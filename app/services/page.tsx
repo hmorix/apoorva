@@ -1,7 +1,8 @@
+export const revalidate = 60;
 import type { Metadata } from "next";
 import type React from "react";
 import Link from "next/link";
-import { getLocalContent } from "@/lib/contentStore";
+import { getContent } from "@/lib/contentStore";
 import {
   VideoIcon,
   PhoneIcon,
@@ -54,8 +55,8 @@ const defaultServiceIcons: React.ReactNode[] = [
   <SpiritualIcon key="5" size={24} />,
 ];
 
-export default function ServicesPage() {
-  const content = getLocalContent();
+export default async function ServicesPage() {
+  const content = await getContent();
   const services = content.services || {};
   const contact = content.contact || {};
   const whatsappNum = contact.whatsappNumber || "919368153189";

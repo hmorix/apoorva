@@ -137,11 +137,21 @@ function CropModal({ src, aspectHint, onApply, onCancel }: {
     img.crossOrigin = "anonymous";
     img.onload = () => {
       imgRef.current = img;
-      // default crop: full image
       setCrop({ x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight });
       setLoaded(true);
     };
-    img.src = src;
+    img.onerror = () => {
+      // If direct load fails (CORS), try the server-side proxy
+      if (!src.startsWith("/api/hmorix/proxy-image")) {
+        img.src = `/api/hmorix/proxy-image?src=${encodeURIComponent(src)}`;
+      }
+    };
+    // For external http/https URLs, route through our proxy to avoid CORS tainted-canvas issues
+    if (src.startsWith("http://") || src.startsWith("https://")) {
+      img.src = `/api/hmorix/proxy-image?src=${encodeURIComponent(src)}`;
+    } else {
+      img.src = src;
+    }
   }, [src]);
 
   useEffect(() => {

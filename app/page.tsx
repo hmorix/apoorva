@@ -1,7 +1,8 @@
+export const revalidate = 60;
 import type { Metadata } from "next";
 import Link from "next/link";
 import Gallery from "@/components/Gallery";
-import { getLocalContent } from "@/lib/contentStore";
+import { getContent } from "@/lib/contentStore";
 import {
   YouTubeIcon,
   InstagramIcon,
@@ -79,8 +80,8 @@ const faqSchema = {
   ],
 };
 
-export default function HomePage() {
-  const content = getLocalContent();
+export default async function HomePage() {
+  const content = await getContent();
 
   const hero = content.hero || {};
   const homepage = content.homepage || {};

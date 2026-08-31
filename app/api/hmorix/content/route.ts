@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import {
   connectToDatabase,
   getStoredContent,
@@ -165,6 +166,17 @@ export async function POST(req: NextRequest) {
           active: true,
         };
       }
+
+      // Revalidate all public pages so Next.js fetches fresh content from MongoDB
+      try {
+        revalidatePath("/");
+        revalidatePath("/about");
+        revalidatePath("/services");
+        revalidatePath("/hire");
+        revalidatePath("/contact");
+        revalidatePath("/case-studies");
+        revalidatePath("/dashboard");
+      } catch {}
 
       return NextResponse.json({
         success: true,

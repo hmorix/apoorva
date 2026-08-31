@@ -1,6 +1,7 @@
+export const revalidate = 60;
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getLocalContent } from "@/lib/contentStore";
+import { getContent } from "@/lib/contentStore";
 import {
   LaughIcon,
   MaskIcon,
@@ -175,8 +176,8 @@ const valueIcons = [
   <LayersIcon key="3" size={22} />,
 ];
 
-export default function AboutPage() {
-  const content = getLocalContent();
+export default async function AboutPage() {
+  const content = await getContent();
   const about = content.about || {};
   const photos = content.photos || {};
 

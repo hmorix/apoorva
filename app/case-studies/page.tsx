@@ -1,6 +1,7 @@
+export const revalidate = 60;
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getLocalContent } from "@/lib/contentStore";
+import { getContent } from "@/lib/contentStore";
 import { SparkleIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
@@ -98,8 +99,8 @@ const defaultCases: CaseStudy[] = [
   },
 ];
 
-export default function CaseStudiesPage() {
-  const content = getLocalContent();
+export default async function CaseStudiesPage() {
+  const content = await getContent();
   const casesData = content.cases || {};
 
   const pageHeroTitle = casesData.pageHeroTitle || "CASE STUDIES";

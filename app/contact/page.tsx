@@ -1,5 +1,6 @@
+export const revalidate = 60;
 import type { Metadata } from "next";
-import { getLocalContent } from "@/lib/contentStore";
+import { getContent } from "@/lib/contentStore";
 import {
   WhatsAppIcon,
   MailIcon,
@@ -68,8 +69,8 @@ const coverageAreas = [
   "International",
 ];
 
-export default function ContactPage() {
-  const content = getLocalContent();
+export default async function ContactPage() {
+  const content = await getContent();
   const contact = content.contact || {};
 
   const email = contact.email || "apoorva@apoorvakaushal.com";

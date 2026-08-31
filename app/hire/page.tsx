@@ -1,6 +1,7 @@
+export const revalidate = 60;
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getLocalContent } from "@/lib/contentStore";
+import { getContent } from "@/lib/contentStore";
 import {
   HandshakeIcon,
   MicIcon,
@@ -125,8 +126,8 @@ const testimonials = [
   },
 ];
 
-export default function HirePage() {
-  const content = getLocalContent();
+export default async function HirePage() {
+  const content = await getContent();
   const contact = content.contact || {};
   const services = content.services || {};
   const hire = content.hire || {};
