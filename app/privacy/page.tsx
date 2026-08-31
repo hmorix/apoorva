@@ -73,7 +73,7 @@ export default function PrivacyPage() {
           <li>Request deletion of your data (where legally permissible)</li>
           <li>Opt out of marketing communications at any time</li>
         </ul>
-        <p>To exercise these rights, contact us at <a href="mailto:apoorva@apoorvakaushal.com">apoorva@apoorvakaushal.com</a>.</p>
+        <p>To exercise these rights, contact us at <a href="mailto:apoorva@hmorix.in">apoorva@hmorix.in</a>.</p>
 
         <h2>9. Children's Privacy</h2>
         <p>Our Website and services are not directed to children under 13. We do not knowingly collect personal data from children.</p>
@@ -82,7 +82,7 @@ export default function PrivacyPage() {
         <p>We may update this Privacy Policy from time to time. The updated date will be reflected at the top of this page. We encourage you to review this page periodically.</p>
 
         <h2>11. Contact</h2>
-        <p>For privacy-related questions or requests: <a href="mailto:apoorva@apoorvakaushal.com">apoorva@apoorvakaushal.com</a></p>
+        <p>For privacy-related questions or requests: <a href="mailto:apoorva@hmorix.in">apoorva@hmorix.in</a></p>
         <p>Apoorva Kaushal · Hathras, Uttar Pradesh, India · apoorvakaushal.com</p>
       </div>
     </>

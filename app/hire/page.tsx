@@ -138,7 +138,7 @@ export default async function HirePage() {
     "Available for full-service social media management, creative UGC video production, sponsored brand integrations, and digital growth consulting.";
 
   const whatsappNumber = contact.whatsappNumber || "919368153189";
-  const email = contact.email || "apoorva@apoorvakaushal.com";
+  const email = contact.email || "apoorva@hmorix.in";
   const instagramHandle = contact.instagramHandle || "@apoorva__kaushal";
   const location = contact.location || "Hathras, Uttar Pradesh, India";
 

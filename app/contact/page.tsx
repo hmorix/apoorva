@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "social media manager contact India",
     "content creator contact Hathras",
     "Apoorva Kaushal WhatsApp",
-    "apoorva@apoorvakaushal.com",
+    "apoorva@hmorix.in",
   ],
   alternates: { canonical: "https://apoorvakaushal.vercel.app/contact" },
 };
@@ -33,7 +33,7 @@ const localBusinessSchema = {
   description: "Social media management, content creation and digital marketing services.",
   url: "https://apoorvakaushal.vercel.app",
   telephone: "+91-9368153189",
-  email: "apoorva@apoorvakaushal.com",
+  email: "apoorva@hmorix.in",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Hathras",
@@ -73,7 +73,7 @@ export default async function ContactPage() {
   const content = await getContent();
   const contact = content.contact || {};
 
-  const email = contact.email || "apoorva@apoorvakaushal.com";
+  const email = contact.email || "apoorva@hmorix.in";
   const whatsappNumber = contact.whatsappNumber || "919368153189";
   const instagramHandle = contact.instagramHandle || "@apoorva__kaushal";
   const instagramUrl = contact.instagramUrl || `https://instagram.com/${instagramHandle.replace("@", "")}`;

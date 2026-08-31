@@ -79,7 +79,7 @@ export default function LegalPage() {
         <p>This Agreement, together with the Terms &amp; Conditions and Privacy Policy, constitutes the entire agreement between the parties. It supersedes all prior discussions, representations, and agreements.</p>
 
         <h2>11. Contact</h2>
-        <p>Legal queries: <a href="mailto:apoorva@apoorvakaushal.com">apoorva@apoorvakaushal.com</a></p>
+        <p>Legal queries: <a href="mailto:apoorva@hmorix.in">apoorva@hmorix.in</a></p>
         <p>Apoorva Kaushal · Hathras, Uttar Pradesh, India 204101 · apoorvakaushal.com</p>
       </div>
     </>

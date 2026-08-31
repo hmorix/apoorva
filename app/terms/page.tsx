@@ -72,7 +72,7 @@ export default function TermsPage() {
         <p>We reserve the right to modify these Terms at any time. Changes will be posted on this page with an updated date. Continued use of our services constitutes acceptance of the updated Terms.</p>
 
         <h2>11. Contact</h2>
-        <p>For questions about these Terms, contact us at: <a href="mailto:apoorva@apoorvakaushal.com">apoorva@apoorvakaushal.com</a></p>
+        <p>For questions about these Terms, contact us at: <a href="mailto:apoorva@hmorix.in">apoorva@hmorix.in</a></p>
         <p>Apoorva Kaushal · Hathras, Uttar Pradesh, India · apoorvakaushal.com</p>
       </div>
     </>

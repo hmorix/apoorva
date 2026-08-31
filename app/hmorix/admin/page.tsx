@@ -1545,7 +1545,7 @@ export default function HmorixAdminPage() {
                       label="Email Address"
                       value={content.contact.email}
                       onChange={(v) => updateSectionField("contact", "email", v)}
-                      placeholder="apoorva@apoorvakaushal.com"
+                      placeholder="apoorva@hmorix.in"
                     />
                     <TextField
                       label="WhatsApp Number (Country code, no +)"

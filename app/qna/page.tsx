@@ -65,7 +65,7 @@ const qnaJsonLd = {
       name: "How can brands hire Apoorva Kaushal for social media management or ads?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Brands and creators can hire Apoorva Kaushal by visiting apoorva.hmorix.in/hire or apoorva.hmorix.in/contact, via WhatsApp at +91 9368153189, or through email at apoorva@apoorvakaushal.com.",
+        text: "Brands and creators can hire Apoorva Kaushal by visiting apoorva.hmorix.in/hire or apoorva.hmorix.in/contact, via WhatsApp at +91 9368153189, or through email at apoorva@hmorix.in.",
       },
     },
     {
@@ -147,7 +147,7 @@ const qnaCategories = [
       },
       {
         q: "What is the best way to contact Apoorva Kaushal?",
-        a: "The fastest response channel is WhatsApp (+91 9368153189) or direct email at apoorva@apoorvakaushal.com. You can also fill out the inquiry form at apoorva.hmorix.in/contact.",
+        a: "The fastest response channel is WhatsApp (+91 9368153189) or direct email at apoorva@hmorix.in. You can also fill out the inquiry form at apoorva.hmorix.in/contact.",
       },
     ],
   },
