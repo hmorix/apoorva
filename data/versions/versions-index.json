@@ -31,6 +31,18 @@
       "Updated photo slots: profile"
     ],
     "file": "v3_2026-08-30T15-18-01-948Z.json",
+    "active": false
+  },
+  {
+    "version": 4,
+    "versionId": "v4_2026-08-31T01-59-36-803Z",
+    "timestamp": "2026-08-31T01:59:36.803Z",
+    "note": "Sync live v4 (8:59:36 AM)",
+    "changes": [
+      "Downloaded & synced 4 remote media file(s)",
+      "Updated photo slots: whoami"
+    ],
+    "file": "v4_2026-08-31T01-59-36-803Z.json",
     "active": true
   }
 ]
