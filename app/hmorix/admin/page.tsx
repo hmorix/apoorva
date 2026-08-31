@@ -116,66 +116,124 @@ interface Revision {
 }
 
 // ── IMAGE CROP MODAL ──────────────────────────────────────────────────────────
-interface CropState {
-  x: number; y: number; w: number; h: number;
+interface CropState { x: number; y: number; w: number; h: number; }
+
+function dataUrlToBlob(dataUrl: string): Blob {
+  const [header, base64] = dataUrl.split(",");
+  const mime = (header.match(/:(.*?);/) || [])[1] || "image/jpeg";
+  const bytes = atob(base64);
+  const arr = new Uint8Array(bytes.length);
+  for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+  return new Blob([arr], { type: mime });
 }
+
 function CropModal({ src, aspectHint, onApply, onCancel }: {
   src: string; aspectHint: string;
-  onApply: (croppedDataUrl: string) => void;
+  onApply: (blob: Blob) => void;
   onCancel: () => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
-  const [crop, setCrop] = useState<CropState>({ x: 0, y: 0, w: 100, h: 100 });
-  const [dragging, setDragging] = useState<null | "move" | "br">(null);
-  const [dragStart, setDragStart] = useState({ mx: 0, my: 0, cx: 0, cy: 0, cw: 0, ch: 0 });
+  const [crop, setCrop] = useState<CropState>({ x: 0, y: 0, w: 0, h: 0 });
   const [loaded, setLoaded] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [loadError, setLoadError] = useState(false);
+  const dragRef = useRef<{ type: "move" | "br" | null; startMx: number; startMy: number; startCrop: CropState }>({ type: null, startMx: 0, startMy: 0, startCrop: { x: 0, y: 0, w: 0, h: 0 } });
 
+  // Parse aspect ratio from shape hint e.g. "3:4 Vertical" → 3/4
+  const getPresetAspect = (hint: string): number | null => {
+    const m = hint.match(/(\d+):(\d+)/);
+    if (!m) return null;
+    return parseInt(m[1]) / parseInt(m[2]);
+  };
+
+  const resetCrop = () => {
+    const img = imgRef.current;
+    if (!img) return;
+    setCrop({ x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight });
+  };
+
+  const applyAspect = (ratio: number) => {
+    const img = imgRef.current;
+    if (!img) return;
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    let w = iw, h = Math.round(iw / ratio);
+    if (h > ih) { h = ih; w = Math.round(ih * ratio); }
+    const x = Math.round((iw - w) / 2), y = Math.round((ih - h) / 2);
+    setCrop({ x, y, w, h });
+  };
+
+  // Load image through proxy for external URLs
   useEffect(() => {
+    setLoaded(false);
+    setLoadError(false);
     const img = new Image();
     img.crossOrigin = "anonymous";
+    const proxied = (src.startsWith("http://") || src.startsWith("https://"))
+      ? `/api/hmorix/proxy-image?src=${encodeURIComponent(src)}`
+      : src;
     img.onload = () => {
       imgRef.current = img;
       setCrop({ x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight });
+      // Auto-apply aspect ratio from shape hint
+      const preset = getPresetAspect(aspectHint);
+      if (preset) {
+        const iw = img.naturalWidth, ih = img.naturalHeight;
+        let w = iw, h = Math.round(iw / preset);
+        if (h > ih) { h = ih; w = Math.round(ih * preset); }
+        const x = Math.round((iw - w) / 2), y = Math.round((ih - h) / 2);
+        setCrop({ x, y, w, h });
+      }
       setLoaded(true);
     };
-    img.onerror = () => {
-      // If direct load fails (CORS), try the server-side proxy
-      if (!src.startsWith("/api/hmorix/proxy-image")) {
-        img.src = `/api/hmorix/proxy-image?src=${encodeURIComponent(src)}`;
-      }
-    };
-    // For external http/https URLs, route through our proxy to avoid CORS tainted-canvas issues
-    if (src.startsWith("http://") || src.startsWith("https://")) {
-      img.src = `/api/hmorix/proxy-image?src=${encodeURIComponent(src)}`;
-    } else {
-      img.src = src;
-    }
-  }, [src]);
+    img.onerror = () => setLoadError(true);
+    img.src = proxied;
+  }, [src, aspectHint]);
 
+  // Draw canvas whenever crop or loaded changes
   useEffect(() => {
-    if (!loaded || !canvasRef.current || !imgRef.current) return;
+    if (!loaded || !canvasRef.current || !imgRef.current || crop.w === 0) return;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const ctx = canvas.getContext("2d")!;
     const img = imgRef.current;
-    const scale = Math.min(340 / img.naturalWidth, 340 / img.naturalHeight, 1);
+    const MAX = 300;
+    const scale = Math.min(MAX / img.naturalWidth, MAX / img.naturalHeight, 1);
     canvas.width = Math.round(img.naturalWidth * scale);
     canvas.height = Math.round(img.naturalHeight * scale);
+
+    // Draw full image
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    // draw crop overlay
-    const sx = crop.x * scale, sy = crop.y * scale, sw = crop.w * scale, sh = crop.h * scale;
-    ctx.fillStyle = "rgba(0,0,0,0.45)";
+
+    // Dark overlay
+    ctx.fillStyle = "rgba(0,0,0,0.5)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.clearRect(sx, sy, sw, sh);
+
+    // Clear crop area and redraw image there
+    const sx = Math.round(crop.x * scale), sy = Math.round(crop.y * scale);
+    const sw = Math.round(crop.w * scale), sh = Math.round(crop.h * scale);
     ctx.drawImage(img, crop.x, crop.y, crop.w, crop.h, sx, sy, sw, sh);
+
+    // Crop border
     ctx.strokeStyle = "#3b82f6";
     ctx.lineWidth = 2;
     ctx.strokeRect(sx, sy, sw, sh);
-    // resize handle
+
+    // Rule-of-thirds grid lines
+    ctx.strokeStyle = "rgba(255,255,255,0.25)";
+    ctx.lineWidth = 1;
+    for (let i = 1; i < 3; i++) {
+      ctx.beginPath(); ctx.moveTo(sx + sw * i / 3, sy); ctx.lineTo(sx + sw * i / 3, sy + sh); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(sx, sy + sh * i / 3); ctx.lineTo(sx + sw, sy + sh * i / 3); ctx.stroke();
+    }
+
+    // Resize handle (bottom-right corner)
     ctx.fillStyle = "#3b82f6";
-    ctx.fillRect(sx + sw - 8, sy + sh - 8, 8, 8);
+    ctx.fillRect(sx + sw - 10, sy + sh - 10, 10, 10);
+
+    // Corner handles
+    ctx.fillStyle = "#fff";
+    [[sx, sy], [sx + sw - 6, sy], [sx, sy + sh - 6], [sx + sw - 6, sy + sh - 6]].forEach(([hx, hy]) => {
+      ctx.fillRect(hx, hy, 6, 6);
+    });
   }, [loaded, crop]);
 
   const getScale = () => {
@@ -183,80 +241,127 @@ function CropModal({ src, aspectHint, onApply, onCancel }: {
     return canvasRef.current.width / imgRef.current.naturalWidth;
   };
 
-  const onMouseDown = (e: React.MouseEvent) => {
-    if (!canvasRef.current || !imgRef.current) return;
-    const rect = canvasRef.current.getBoundingClientRect();
+  const getPointerPos = (canvas: HTMLCanvasElement, clientX: number, clientY: number) => {
+    const rect = canvas.getBoundingClientRect();
     const scale = getScale();
-    const mx = (e.clientX - rect.left) / scale;
-    const my = (e.clientY - rect.top) / scale;
-    const { x, y, w, h } = crop;
-    if (mx > x + w - 14 && my > y + h - 14) {
-      setDragging("br");
-    } else if (mx >= x && mx <= x + w && my >= y && my <= y + h) {
-      setDragging("move");
-    }
-    setDragStart({ mx, my, cx: x, cy: y, cw: w, ch: h });
+    return {
+      mx: (clientX - rect.left) * (canvas.width / rect.width) / scale,
+      my: (clientY - rect.top) * (canvas.height / rect.height) / scale,
+    };
   };
 
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!dragging || !imgRef.current) return;
-    const rect = canvasRef.current!.getBoundingClientRect();
-    const scale = getScale();
-    const mx = (e.clientX - rect.left) / scale;
-    const my = (e.clientY - rect.top) / scale;
-    const dx = mx - dragStart.mx, dy = my - dragStart.my;
+  const startDrag = (clientX: number, clientY: number) => {
+    if (!canvasRef.current || !imgRef.current) return;
+    const { mx, my } = getPointerPos(canvasRef.current, clientX, clientY);
+    const { x, y, w, h } = crop;
+    const type = (mx > x + w - 18 && my > y + h - 18) ? "br"
+      : (mx >= x && mx <= x + w && my >= y && my <= y + h) ? "move" : null;
+    dragRef.current = { type, startMx: mx, startMy: my, startCrop: { ...crop } };
+  };
+
+  const moveDrag = (clientX: number, clientY: number) => {
+    if (!dragRef.current.type || !imgRef.current || !canvasRef.current) return;
+    const { mx, my } = getPointerPos(canvasRef.current, clientX, clientY);
+    const dx = mx - dragRef.current.startMx, dy = my - dragRef.current.startMy;
+    const { x: cx, y: cy, w: cw, h: ch } = dragRef.current.startCrop;
     const img = imgRef.current;
-    if (dragging === "move") {
+    if (dragRef.current.type === "move") {
       setCrop(prev => ({
         ...prev,
-        x: Math.max(0, Math.min(img.naturalWidth - prev.w, dragStart.cx + dx)),
-        y: Math.max(0, Math.min(img.naturalHeight - prev.h, dragStart.cy + dy)),
+        x: Math.max(0, Math.min(img.naturalWidth - prev.w, cx + dx)),
+        y: Math.max(0, Math.min(img.naturalHeight - prev.h, cy + dy)),
       }));
-    } else if (dragging === "br") {
+    } else {
       setCrop(prev => ({
         ...prev,
-        w: Math.max(40, Math.min(img.naturalWidth - prev.x, dragStart.cw + dx)),
-        h: Math.max(40, Math.min(img.naturalHeight - prev.y, dragStart.ch + dy)),
+        w: Math.max(30, Math.min(img.naturalWidth - prev.x, cw + dx)),
+        h: Math.max(30, Math.min(img.naturalHeight - prev.y, ch + dy)),
       }));
     }
   };
+
+  const endDrag = () => { dragRef.current.type = null; };
 
   const handleApply = () => {
-    if (!imgRef.current) return;
+    if (!imgRef.current || crop.w === 0) return;
     const out = document.createElement("canvas");
     out.width = Math.round(crop.w);
     out.height = Math.round(crop.h);
-    const ctx = out.getContext("2d");
-    if (!ctx) return;
+    const ctx = out.getContext("2d")!;
     ctx.drawImage(imgRef.current, crop.x, crop.y, crop.w, crop.h, 0, 0, out.width, out.height);
-    onApply(out.toDataURL("image/jpeg", 0.92));
+    const dataUrl = out.toDataURL("image/jpeg", 0.92);
+    onApply(dataUrlToBlob(dataUrl));
   };
 
+  const presets = [
+    { label: "Full", fn: resetCrop },
+    { label: "1:1", fn: () => applyAspect(1) },
+    { label: "4:3", fn: () => applyAspect(4 / 3) },
+    { label: "3:4", fn: () => applyAspect(3 / 4) },
+    { label: "16:9", fn: () => applyAspect(16 / 9) },
+    { label: "9:16", fn: () => applyAspect(9 / 16) },
+  ];
+
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-      <div style={{ background: "#1e293b", borderRadius: 16, padding: "20px 18px", maxWidth: 420, width: "100%", boxShadow: "0 25px 60px rgba(0,0,0,0.5)" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-          <div style={{ color: "#fff", fontWeight: 800, fontSize: 14 }}>Crop Photo <span style={{ color: "#94a3b8", fontWeight: 500, fontSize: 12 }}>({aspectHint})</span></div>
-          <button onClick={onCancel} style={{ background: "transparent", border: "none", color: "#94a3b8", fontSize: 20, cursor: "pointer", lineHeight: 1 }}>✕</button>
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.8)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: 12 }}>
+      <div style={{ background: "#1e293b", borderRadius: 16, padding: "18px 16px", maxWidth: 380, width: "100%", boxShadow: "0 25px 60px rgba(0,0,0,0.6)" }}>
+        {/* Header */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+          <div style={{ color: "#fff", fontWeight: 800, fontSize: 14 }}>✂ Crop Photo <span style={{ color: "#64748b", fontWeight: 500, fontSize: 11 }}>({aspectHint})</span></div>
+          <button onClick={onCancel} style={{ background: "transparent", border: "none", color: "#64748b", fontSize: 20, cursor: "pointer", padding: "2px 6px" }}>✕</button>
         </div>
-        <div style={{ fontSize: 11, color: "#64748b", marginBottom: 10 }}>Drag to move crop area • Drag blue handle (bottom-right) to resize</div>
-        <div ref={containerRef} style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
-          {!loaded ? (
-            <div style={{ width: 340, height: 200, background: "#0f172a", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", color: "#64748b", fontSize: 13 }}>Loading image...</div>
+
+        {/* Hint */}
+        <div style={{ fontSize: 11, color: "#475569", marginBottom: 8 }}>
+          {window?.matchMedia?.("(pointer: coarse)")?.matches
+            ? "Touch & drag inside box to move • Drag blue corner to resize"
+            : "Drag inside box to move • Drag blue corner to resize"}
+        </div>
+
+        {/* Canvas */}
+        <div style={{ display: "flex", justifyContent: "center", background: "#0f172a", borderRadius: 10, marginBottom: 10, minHeight: 160, alignItems: "center" }}>
+          {loadError ? (
+            <div style={{ color: "#ef4444", fontSize: 12, padding: 20, textAlign: "center" }}>
+              Could not load image.<br />
+              <span style={{ color: "#64748b", fontSize: 11 }}>Try re-uploading the photo first.</span>
+            </div>
+          ) : !loaded ? (
+            <div style={{ color: "#64748b", fontSize: 12, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 20, height: 20, border: "2px solid #3b82f6", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+              Loading image...
+            </div>
           ) : (
             <canvas
               ref={canvasRef}
-              style={{ borderRadius: 8, cursor: dragging ? "grabbing" : "crosshair", maxWidth: "100%", userSelect: "none" }}
-              onMouseDown={onMouseDown}
-              onMouseMove={onMouseMove}
-              onMouseUp={() => setDragging(null)}
-              onMouseLeave={() => setDragging(null)}
+              style={{ borderRadius: 8, maxWidth: "100%", touchAction: "none", userSelect: "none", cursor: "crosshair" }}
+              // Mouse events
+              onMouseDown={e => startDrag(e.clientX, e.clientY)}
+              onMouseMove={e => moveDrag(e.clientX, e.clientY)}
+              onMouseUp={endDrag}
+              onMouseLeave={endDrag}
+              // Touch events for mobile
+              onTouchStart={e => { e.preventDefault(); const t = e.touches[0]; startDrag(t.clientX, t.clientY); }}
+              onTouchMove={e => { e.preventDefault(); const t = e.touches[0]; moveDrag(t.clientX, t.clientY); }}
+              onTouchEnd={endDrag}
             />
           )}
         </div>
-        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
-          <button onClick={onCancel} style={{ background: "#334155", color: "#fff", border: "none", borderRadius: 8, padding: "8px 16px", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>Cancel</button>
-          <button onClick={handleApply} disabled={!loaded} style={{ background: "linear-gradient(135deg,#3b82f6,#8b5cf6)", color: "#fff", border: "none", borderRadius: 8, padding: "8px 18px", fontWeight: 700, fontSize: 13, cursor: "pointer", opacity: loaded ? 1 : 0.5 }}>Apply Crop</button>
+
+        {/* Aspect presets */}
+        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
+          {presets.map(({ label, fn }) => (
+            <button key={label} onClick={fn} style={{ background: "#334155", color: "#94a3b8", border: "none", borderRadius: 6, padding: "4px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer" }}>
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Actions */}
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={onCancel} style={{ flex: 1, background: "#334155", color: "#fff", border: "none", borderRadius: 8, padding: "10px", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>Cancel</button>
+          <button onClick={handleApply} disabled={!loaded || loadError} style={{ flex: 2, background: "linear-gradient(135deg,#3b82f6,#8b5cf6)", color: "#fff", border: "none", borderRadius: 8, padding: "10px", fontWeight: 800, fontSize: 13, cursor: "pointer", opacity: (loaded && !loadError) ? 1 : 0.4 }}>
+            Apply & Upload Crop
+          </button>
         </div>
       </div>
     </div>
@@ -587,15 +692,12 @@ export default function HmorixAdminPage() {
     }
   };
 
-  const handleCropApply = async (croppedDataUrl: string) => {
+  const handleCropApply = async (blob: Blob) => {
     if (!cropModal) return;
     const { slotId } = cropModal;
     setCropModal(null);
     setUploadingSlot(slotId);
     try {
-      // Convert data URL to Blob then to File
-      const res = await fetch(croppedDataUrl);
-      const blob = await res.blob();
       const croppedFile = new File([blob], `${slotId}-cropped.jpg`, { type: "image/jpeg" });
       const form = new FormData();
       form.append("file", croppedFile);
@@ -604,7 +706,7 @@ export default function HmorixAdminPage() {
       const j = await uploadRes.json();
       if (j.url) {
         updatePhoto(slotId, j.url);
-        showToast(`Photo cropped & uploaded (${j.provider})`);
+        showToast(`✂ Photo cropped & uploaded! (${j.provider})`);
       } else {
         throw new Error(j.error || "Upload failed");
       }
@@ -744,21 +846,16 @@ export default function HmorixAdminPage() {
           >
             <CameraIcon size={13} /> Replace Photo
           </button>
-          {content?.photos?.[slotId] && (
-            <button
-              type="button"
-              onClick={() => {
-                const existingSrc = content?.photos?.[slotId] || "";
-                if (existingSrc) {
-                  setCropModal({ src: existingSrc, slotId, aspectHint: meta.shape, file: new File([], slotId) });
-                }
-              }}
-              className="adm-photo-btn"
-              style={{ marginTop: 4, background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}
-            >
-              ✂ Crop Photo
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => {
+              setCropModal({ src, slotId, aspectHint: meta.shape, file: new File([], slotId) });
+            }}
+            className="adm-photo-btn"
+            style={{ marginTop: 5, background: "linear-gradient(135deg,#4f46e5,#7c3aed)", color: "#fff" }}
+          >
+            ✂ Crop Photo
+          </button>
         </div>
       </div>
     );
