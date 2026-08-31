@@ -147,6 +147,18 @@
       "Downloaded & synced 4 remote media file(s)"
     ],
     "file": "v13_2026-08-31T14-22-49-572Z.json",
+    "active": false
+  },
+  {
+    "version": 14,
+    "versionId": "v14_2026-08-31T14-25-59-782Z",
+    "timestamp": "2026-08-31T14:25:59.782Z",
+    "note": "Sync live v14 (9:25:59 PM)",
+    "changes": [
+      "Downloaded & synced 5 remote media file(s)",
+      "Updated photo slots: qualifications"
+    ],
+    "file": "v14_2026-08-31T14-25-59-782Z.json",
     "active": true
   }
 ]
